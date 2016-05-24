@@ -4,6 +4,8 @@ using System.Collections;
 public class SoundManager : MonoBehaviour {
 	public static SoundManager instance;
 
+	public AudioSource source;
+
 	public AudioClip cardMove;
 	public AudioClip click;
 	public AudioClip coinFlip;
@@ -14,6 +16,11 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip impact;
 	public AudioClip brightBell;
 	public AudioClip pageFlip;
+	public AudioClip splat;
+	public AudioClip falling;
+
+	public AudioClip menuMusic;
+	public AudioClip battleMusic;
 
 	void Awake() {
 		if (instance == null) {
@@ -62,9 +69,46 @@ public class SoundManager : MonoBehaviour {
 		PlaySound (pageFlip);
 	}
 
+	public void PlaySplat() {
+		PlaySound (splat);
+	}
+
+	public void PlayFalling() {
+		PlaySound (falling);	
+	}
+
+	public void ChangeToMenuMusic() {
+		StartCoroutine(FadeMusicOutAndPlayAnother(menuMusic));
+	}
+
+	public void ChangeToBattleMusic() {
+		StartCoroutine(FadeMusicOutAndPlayAnother(battleMusic));
+	}
+
 	private void PlaySound (AudioClip clip) {
 		if (clip) {
 			AudioSource.PlayClipAtPoint (clip, Vector3.zero);
+		}
+	}
+
+	IEnumerator FadeMusicOutAndPlayAnother(AudioClip newMusic) {
+		float volume = source.volume;
+
+		while(volume > 0) {
+
+			volume -= 0.01f;
+
+			yield return new WaitForSeconds (0.1f);
+		}
+
+		source.clip = newMusic;
+		source.Play ();
+
+		while(volume < 0.1f) {
+
+			volume += 0.01f;
+
+			yield return new WaitForSeconds (0.1f);
 		}
 	}
 }

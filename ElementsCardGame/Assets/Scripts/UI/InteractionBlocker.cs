@@ -8,9 +8,13 @@ public class InteractionBlocker : MonoBehaviour {
 
 	public bool startsHalfFaded;
 	public bool startsFadingIn;
+	public bool startsFadingInToHalf;
 	public int waitToStartFadingIn;
 
 	void Start() {
+		if(startsFadingInToHalf) {
+			FadeInToHalf ();
+		}
 		if(startsHalfFaded) {
 			HalfFaded ();
 		}
@@ -36,6 +40,12 @@ public class InteractionBlocker : MonoBehaviour {
 	public void FadeOut() {
 		if(myAnimator != null) {
 			myAnimator.Play ("FadeOut");
+		}
+	}
+
+	public void FadeInToHalf() {
+		if(myAnimator != null) {
+			myAnimator.Play ("FadeInToHalf");
 		}
 	}
 

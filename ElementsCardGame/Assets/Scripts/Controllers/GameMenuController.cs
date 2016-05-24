@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameMenuController : MonoBehaviour {
@@ -22,10 +23,11 @@ public class GameMenuController : MonoBehaviour {
 
 	public void SinglePlayerButtonPress() {
 		if(!singlePlayerWasStarted) {
+			particleWhisps.Stop ();
 			singlePlayerWasStarted = true;
 			SoundManager.instance.PlayClickSound ();
 			GUIMenuController.instance.FadeScreenOut ();
-			particleWhisps.Stop ();
+			StartCoroutine (WaitAndLoadGameSinglePlayerMode());
 		}
 	}
 
@@ -59,5 +61,15 @@ public class GameMenuController : MonoBehaviour {
 		if(particleWhisps != null) {
 			particleWhisps.Play ();
 		}
+	}
+
+	IEnumerator WaitAndLoadGameSinglePlayerMode() {
+		yield return new WaitForSeconds (2);
+
+		SoundManager.instance.ChangeToBattleMusic ();
+
+		yield return new WaitForSeconds (2);
+
+		SceneManager.LoadScene ("SinglePlayer");
 	}
 }

@@ -16,7 +16,7 @@ public class LogoBehaviour : MonoBehaviour {
 	}
 
 	public void PlayBrightBellSound() {
-		SoundManager.instance.PlayBrightBell ();
+		//SoundManager.instance.PlayBrightBell ();
 	}
 
 	public void ThroughParticles() {
