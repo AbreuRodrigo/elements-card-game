@@ -8,6 +8,8 @@ public class GameMenuController : MonoBehaviour {
 	public MessageManager messageManager;
 	public ParticleSystem particleWhisps;
 
+	private bool singlePlayerWasStarted;
+
 	void Awake() {
 		if(instance == null) {
 			instance = this;
@@ -19,8 +21,12 @@ public class GameMenuController : MonoBehaviour {
 	}
 
 	public void SinglePlayerButtonPress() {
-		SoundManager.instance.PlayClickSound ();
-		GUIMenuController.instance.FadeScreenOut ();
+		if(!singlePlayerWasStarted) {
+			singlePlayerWasStarted = true;
+			SoundManager.instance.PlayClickSound ();
+			GUIMenuController.instance.FadeScreenOut ();
+			particleWhisps.Stop ();
+		}
 	}
 
 	public void MultiplayerButtonPressed() {
