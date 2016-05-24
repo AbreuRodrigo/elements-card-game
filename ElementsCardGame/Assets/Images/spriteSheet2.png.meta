@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: 7f4a362c999377c4485056641f9560f0
+timeCreated: 1463855448
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: logo
+    21300002: btnBaseColor
+    21300004: btnSinglePlayer
+    21300006: btnBaseBW
+    21300008: btnMultiplayerBW
+    21300010: btnIconMenuBase
+    21300012: btnIconMenu
+    21300014: deckBuilderIcon
+    21300016: libraryIcon
+    21300018: bgCardDecoration1
+    21300020: bgCardDecoration2
+    21300022: closeLibraryBtn
+    21300024: brightStrep
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: logo
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 882
+        width: 249
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -55.5, y: 68}
+        - {x: -54.5, y: 65}
+        - {x: -7.5, y: 65}
+        - {x: -39.5, y: 65}
+        - {x: -124.5, y: 42}
+        - {x: -124.5, y: -29}
+        - {x: -107.5, y: -68}
+        - {x: 116.5, y: -68}
+        - {x: 124.5, y: -62}
+        - {x: 124.5, y: 64}
+        - {x: 110.5, y: 68}
+      - - {x: -124.5, y: 68}
+        - {x: -124.5, y: 65}
+        - {x: -114.5, y: 65}
+        - {x: -112.5, y: 67}
+        - {x: -112.5, y: 68}
+    - name: btnBaseColor
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 901
+        width: 343
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: 41}
+        - {x: 159.5, y: 47}
+        - {x: 154.5, y: 49}
+        - {x: -153.5, y: 49}
+        - {x: -159.5, y: 45}
+        - {x: -171.5, y: 26}
+        - {x: -171.5, y: -32}
+        - {x: -159.5, y: -49}
+        - {x: 158.5, y: -49}
+        - {x: 164.5, y: -45}
+        - {x: 171.5, y: -23}
+        - {x: 171.5, y: 19}
+    - name: btnSinglePlayer
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 908
+        width: 310
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -147, y: 42}
+        - {x: -152, y: 38}
+        - {x: -154, y: 36}
+        - {x: -155, y: 33}
+        - {x: -155, y: -33}
+        - {x: -150, y: -42}
+        - {x: 155, y: -42}
+        - {x: 155, y: 42}
+    - name: btnBaseBW
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 784
+        width: 343
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: 41}
+        - {x: 159.5, y: 47}
+        - {x: 154.5, y: 49}
+        - {x: -153.5, y: 49}
+        - {x: -159.5, y: 45}
+        - {x: -171.5, y: 26}
+        - {x: -171.5, y: -32}
+        - {x: -159.5, y: -49}
+        - {x: 158.5, y: -49}
+        - {x: 164.5, y: -45}
+        - {x: 171.5, y: -23}
+        - {x: 171.5, y: 19}
+    - name: btnMultiplayerBW
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 793
+        width: 310
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -147, y: 42}
+        - {x: -152, y: 38}
+        - {x: -154, y: 36}
+        - {x: -155, y: 33}
+        - {x: -155, y: -33}
+        - {x: -150, y: -42}
+        - {x: 155, y: -42}
+        - {x: 155, y: 42}
+    - name: btnIconMenuBase
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 584
+        width: 140
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -66, y: 73.5}
+        - {x: -70, y: 68.5}
+        - {x: -70, y: -73.5}
+        - {x: 70, y: -73.5}
+        - {x: 70, y: 69.5}
+        - {x: 65, y: 73.5}
+    - name: btnIconMenu
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 597
+        width: 107
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -53.5, y: 57}
+        - {x: -53.5, y: -56}
+        - {x: -52.5, y: -57}
+        - {x: 53.5, y: -57}
+        - {x: 53.5, y: 52}
+        - {x: 46.5, y: 57}
+    - name: deckBuilderIcon
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 613
+        width: 87
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -36.5, y: 41}
+        - {x: -43.5, y: 24}
+        - {x: -43.5, y: -41}
+        - {x: 43.5, y: -41}
+        - {x: 43.5, y: 33}
+        - {x: 17.5, y: 41}
+    - name: libraryIcon
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 613
+        width: 92
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -37, y: 38}
+        - {x: -46, y: 35}
+        - {x: -46, y: -2}
+        - {x: -19, y: -38}
+        - {x: 15, y: -38}
+        - {x: 46, y: -29}
+        - {x: 46, y: 9}
+        - {x: 24, y: 38}
+    - name: bgCardDecoration1
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 411
+        width: 303
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 127.5, y: -16}
+        - {x: 126.5, y: -4}
+        - {x: 129.5, y: 35}
+        - {x: 151.5, y: 79}
+        - {x: 151.5, y: 94}
+        - {x: 82.5, y: 130}
+        - {x: 41.5, y: 150}
+        - {x: 27.5, y: 150}
+        - {x: -19.5, y: 70}
+        - {x: -43.5, y: 93}
+        - {x: -56.5, y: 104}
+        - {x: -63.5, y: 104}
+        - {x: -151.5, y: 13}
+        - {x: -151.5, y: -3}
+        - {x: -14.5, y: -135}
+        - {x: -9.5, y: -144}
+        - {x: 43.5, y: -150}
+        - {x: 67.5, y: -150}
+        - {x: 100.5, y: -104}
+        - {x: 99.5, y: -89}
+        - {x: 74.5, y: -73}
+    - name: bgCardDecoration2
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 28
+        width: 374
+        height: 336
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 159, y: -21}
+        - {x: 129, y: 70}
+        - {x: 124, y: 74}
+        - {x: 110, y: 72}
+        - {x: 100, y: 67}
+        - {x: 31, y: 129}
+        - {x: 21, y: 130}
+        - {x: -1, y: 106}
+        - {x: 6, y: 133}
+        - {x: -106, y: 168}
+        - {x: -132, y: 168}
+        - {x: -134, y: 167}
+        - {x: -182, y: 4}
+        - {x: -187, y: -15}
+        - {x: -187, y: -34}
+        - {x: -165, y: -43}
+        - {x: -109, y: -59}
+        - {x: -100, y: -78}
+        - {x: -57, y: -83}
+        - {x: -17, y: -118}
+        - {x: -7, y: -118}
+        - {x: 26, y: -81}
+        - {x: 48, y: -144}
+        - {x: 50, y: -158}
+        - {x: 55, y: -168}
+        - {x: 74, y: -168}
+        - {x: 79, y: -167}
+        - {x: 155, y: -143}
+        - {x: 187, y: -130}
+        - {x: 187, y: -107}
+    - name: closeLibraryBtn
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 760
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: brightStrep
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 12
+        width: 149
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.5, y: -104.5}
+        - {x: 74.5, y: -104.5}
+        - {x: 74.5, y: -68.5}
+        - {x: -21.5, y: 104.5}
+        - {x: -74.5, y: 104.5}
+        - {x: -74.5, y: 60.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

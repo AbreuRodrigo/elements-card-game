@@ -1,0 +1,1544 @@
+fileFormatVersion: 2
+guid: 9121ace6f2e92e740a87134d6ed41695
+timeCreated: 1463657858
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: discardBase
+    21300002: mixingBase
+    21300004: saveBase
+    21300006: deckBase
+    21300008: discardingBase
+    21300010: savingBase
+    21300012: turnToken
+    21300014: lifeBarReflection
+    21300016: lifeBarBorder
+    21300018: lifeBarRedContent
+    21300020: lifeBarBlueContent
+    21300022: lifeBarInner
+    21300024: lifeBarBackGround
+    21300026: opponentHPShield
+    21300028: myHPShield
+    21300030: coinSwordFace
+    21300032: coinShieldFace
+    21300034: shadowOrbBig
+    21300036: cardSelectionBlue
+    21300038: waterOrbBig
+    21300040: bloodOrbBig
+    21300042: darkOrbBig
+    21300044: earthOrbBig
+    21300046: opponentHPShieldBroken
+    21300048: myHPShieldBroken
+    21300050: circleCardAction
+    21300052: squareCardAction
+    21300054: diamondCardAction
+    21300056: actionButtonTrails
+    21300058: logo
+    21300060: fireOrbBig
+    21300062: iceOrbBig
+    21300064: lightningOrbBig
+    21300066: lightOrbBig
+    21300068: natureOrbBig
+    21300070: cardSelection
+    21300072: fireOrbSmall
+    21300074: iceOrbSmall
+    21300076: lightningOrbSmall
+    21300078: lightOrbSmall
+    21300080: natureOrbSmall
+    21300082: shadowOrbSmall
+    21300084: waterOrbSmall
+    21300086: bloodOrbSmall
+    21300088: darkOrbSmall
+    21300090: earthOrbSmall
+    21300092: turnOrderRibbon
+    21300094: cardCircleAction
+    21300096: endTurnButton
+    21300098: cardSquareAction
+    21300100: coindSwordFace
+    21300102: coindShieldFace
+    21300104: cardDiamondAction
+    21300106: trailGreen
+    21300108: blueShieldAura
+    21300110: redShieldAura
+    21300112: cardSelectionGreen
+    21300114: cardSelectionRed
+    21300116: cardSelectionOrange
+    21300118: cardSelectionYellow
+    21300120: cardSelectionDarkenBlue
+    21300122: cardSelectionBrown
+    21300124: cardSelectionWhite
+    21300126: cardSelectionBlack
+    21300128: fireOrb
+    21300130: iceOrb
+    21300132: lightningOrb
+    21300134: lightOrb
+    21300136: natureOrb
+    21300138: shadowOrb
+    21300140: waterOrb
+    21300142: bloodOrb
+    21300144: darkOrb
+    21300146: earthOrb
+    21300148: cardSelectionPurple
+    21300150: trailDarkBlue
+    21300152: trailLightBlue
+    21300154: trailBlack
+    21300156: trailWhite
+    21300158: trailBrown
+    21300160: trailPurple
+    21300162: trailYellow
+    21300164: trailOrange
+    21300166: trailRed
+    21300168: diceFace6
+    21300170: diceFace3
+    21300172: diceFace4
+    21300174: diceFace1
+    21300176: diceFace5
+    21300178: diceFace2
+    21300180: youGoFirstMessage
+    21300182: enemyGoesFirstMessage
+    21300184: cardMixAction
+    21300186: cardSaveAction
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: turnToken
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 69
+        width: 134
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 76.5}
+        - {x: -67, y: 42.5}
+        - {x: -67, y: -42.5}
+        - {x: -19, y: -76.5}
+        - {x: 11, y: -76.5}
+        - {x: 67, y: -47.5}
+        - {x: 67, y: 55.5}
+        - {x: 17, y: 76.5}
+    - name: opponentHPShield
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 70
+        width: 128
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42, y: 74.5}
+        - {x: -64, y: 67.5}
+        - {x: -64, y: -0.5}
+        - {x: -63, y: -7.5}
+        - {x: -51, y: -34.5}
+        - {x: -13, y: -74.5}
+        - {x: 15, y: -74.5}
+        - {x: 64, y: -51.5}
+        - {x: 64, y: 74.5}
+    - name: myHPShield
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 70
+        width: 128
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42, y: 74.5}
+        - {x: -64, y: 67.5}
+        - {x: -64, y: -0.5}
+        - {x: -63, y: -7.5}
+        - {x: -51, y: -34.5}
+        - {x: -13, y: -74.5}
+        - {x: 15, y: -74.5}
+        - {x: 64, y: -51.5}
+        - {x: 64, y: 74.5}
+    - name: cardCircleAction
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 205
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: endTurnButton
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 161
+        width: 256
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 117, y: 49.5}
+        - {x: -119, y: 49.5}
+        - {x: -128, y: 43.5}
+        - {x: -128, y: -41.5}
+        - {x: -120, y: -49.5}
+        - {x: 121, y: -49.5}
+        - {x: 128, y: -42.5}
+        - {x: 128, y: 43.5}
+        - {x: 120, y: 48.5}
+    - name: cardSquareAction
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 115
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: coindSwordFace
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 46
+        width: 105
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.5, y: 60}
+        - {x: -52.5, y: 40}
+        - {x: -52.5, y: -36}
+        - {x: -22.5, y: -60}
+        - {x: 12.5, y: -60}
+        - {x: 38.5, y: -52}
+        - {x: 52.5, y: -34}
+        - {x: 52.5, y: 33}
+        - {x: 14.5, y: 60}
+    - name: coindShieldFace
+      rect:
+        serializedVersion: 2
+        x: 1918
+        y: 46
+        width: 105
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.5, y: 60}
+        - {x: -52.5, y: 40}
+        - {x: -52.5, y: -36}
+        - {x: -22.5, y: -60}
+        - {x: 12.5, y: -60}
+        - {x: 38.5, y: -52}
+        - {x: 52.5, y: -34}
+        - {x: 52.5, y: 33}
+        - {x: 14.5, y: 60}
+    - name: cardDiamondAction
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 23
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: trailGreen
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 47
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: cardSelectionGreen
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1465
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionRed
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 1465
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionOrange
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 1465
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionYellow
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 1465
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionDarkenBlue
+      rect:
+        serializedVersion: 2
+        x: 1646
+        y: 889
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 168.5, y: -267}
+        - {x: 175.5, y: -264}
+        - {x: 181.5, y: -258}
+        - {x: 184.5, y: -251}
+        - {x: 184.5, y: -249}
+        - {x: 185.5, y: -248}
+        - {x: 185.5, y: -244}
+        - {x: 186.5, y: -243}
+        - {x: 186.5, y: 245}
+        - {x: 185.5, y: 246}
+        - {x: 185.5, y: 250}
+        - {x: 184.5, y: 253}
+        - {x: 181.5, y: 260}
+        - {x: 175.5, y: 266}
+        - {x: 168.5, y: 269}
+        - {x: 166.5, y: 269}
+        - {x: 165.5, y: 270}
+        - {x: -165.5, y: 270}
+        - {x: -166.5, y: 269}
+        - {x: -168.5, y: 269}
+        - {x: -175.5, y: 266}
+        - {x: -181.5, y: 260}
+        - {x: -184.5, y: 253}
+        - {x: -184.5, y: 251}
+        - {x: -185.5, y: 250}
+        - {x: -185.5, y: 246}
+        - {x: -186.5, y: 245}
+        - {x: -186.5, y: -243}
+        - {x: -185.5, y: -244}
+        - {x: -185.5, y: -248}
+        - {x: -184.5, y: -249}
+        - {x: -184.5, y: -251}
+        - {x: -181.5, y: -258}
+        - {x: -175.5, y: -264}
+        - {x: -168.5, y: -267}
+        - {x: -166.5, y: -267}
+        - {x: -165.5, y: -268}
+        - {x: -161.5, y: -268}
+        - {x: -160.5, y: -269}
+        - {x: 160.5, y: -269}
+        - {x: 161.5, y: -268}
+        - {x: 165.5, y: -268}
+        - {x: 166.5, y: -267}
+    - name: cardSelectionBrown
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 890
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionWhite
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 890
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionBlack
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 890
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: cardSelectionBlue
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 890
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: turnOrderRibbon
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 430
+        width: 813
+        height: 309
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23.5, y: -83.5}
+        - {x: -4.5, y: -83.5}
+        - {x: -26.5, y: -92.5}
+        - {x: -26.5, y: -147.5}
+        - {x: -18.5, y: -149.5}
+        - {x: 24.5, y: -149.5}
+        - {x: 39.5, y: -131.5}
+        - {x: 39.5, y: -108.5}
+        - {x: 36.5, y: -96.5}
+      - - {x: -56.5, y: -79.5}
+        - {x: -84.5, y: -79.5}
+        - {x: -106.5, y: -88.5}
+        - {x: -106.5, y: -143.5}
+        - {x: -98.5, y: -145.5}
+        - {x: -55.5, y: -145.5}
+        - {x: -40.5, y: -127.5}
+        - {x: -40.5, y: -104.5}
+        - {x: -43.5, y: -92.5}
+      - - {x: 72.5, y: -79.5}
+        - {x: 49.5, y: -89.5}
+        - {x: 49.5, y: -143.5}
+        - {x: 58.5, y: -145.5}
+        - {x: 100.5, y: -145.5}
+        - {x: 115.5, y: -127.5}
+        - {x: 115.5, y: -93.5}
+        - {x: 99.5, y: -79.5}
+      - - {x: 111.5, y: -91.5}
+        - {x: 133.5, y: -134.5}
+        - {x: 175.5, y: -134.5}
+        - {x: 253.5, y: -89.5}
+        - {x: 277.5, y: -48.5}
+        - {x: 326.5, y: -89.5}
+        - {x: 406.5, y: -93.5}
+        - {x: 406.5, y: -31.5}
+        - {x: 286.5, y: 30.5}
+        - {x: 282.5, y: 99.5}
+        - {x: 251.5, y: 113.5}
+        - {x: 215.5, y: 113.5}
+        - {x: 200.5, y: 85.5}
+        - {x: 175.5, y: 61.5}
+        - {x: 132.5, y: 67.5}
+        - {x: 61.5, y: 74.5}
+        - {x: -56.5, y: 74.5}
+        - {x: -190.5, y: 78.5}
+        - {x: -207.5, y: 113.5}
+        - {x: -248.5, y: 113.5}
+        - {x: -272.5, y: 89.5}
+        - {x: -263.5, y: 64.5}
+        - {x: -292.5, y: 32.5}
+        - {x: -406.5, y: -31.5}
+        - {x: -406.5, y: -65.5}
+        - {x: -384.5, y: -89.5}
+        - {x: -341.5, y: -84.5}
+        - {x: -270.5, y: -51.5}
+        - {x: -237.5, y: -85.5}
+        - {x: -202.5, y: -93.5}
+        - {x: -171.5, y: -134.5}
+        - {x: -124.5, y: -134.5}
+        - {x: -110.5, y: -92.5}
+        - {x: -60.5, y: -79.5}
+        - {x: 105.5, y: -76.5}
+      - - {x: 111.5, y: 140.5}
+        - {x: 98.5, y: 126.5}
+        - {x: 98.5, y: 95.5}
+        - {x: 106.5, y: 73.5}
+        - {x: 149.5, y: 73.5}
+        - {x: 164.5, y: 87.5}
+        - {x: 164.5, y: 125.5}
+        - {x: 147.5, y: 140.5}
+      - - {x: -91.5, y: 140.5}
+        - {x: -137.5, y: 140.5}
+        - {x: -150.5, y: 123.5}
+        - {x: -150.5, y: 99.5}
+        - {x: -147.5, y: 92.5}
+        - {x: -135.5, y: 74.5}
+        - {x: -93.5, y: 74.5}
+        - {x: -84.5, y: 87.5}
+        - {x: -84.5, y: 126.5}
+        - {x: -86.5, y: 138.5}
+      - - {x: -18.5, y: 150.5}
+        - {x: -26.5, y: 143.5}
+        - {x: -26.5, y: 94.5}
+        - {x: -23.5, y: 84.5}
+        - {x: 23.5, y: 84.5}
+        - {x: 39.5, y: 90.5}
+        - {x: 39.5, y: 140.5}
+        - {x: 30.5, y: 150.5}
+    - name: fireOrb
+      rect:
+        serializedVersion: 2
+        x: 1598
+        y: 531
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 31}
+        - {x: -31, y: 20}
+        - {x: -31, y: -20}
+        - {x: -23, y: -31}
+        - {x: 21, y: -31}
+        - {x: 31, y: -28}
+        - {x: 31, y: 19}
+        - {x: 18, y: 31}
+    - name: iceOrb
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 531
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -25, y: 31}
+        - {x: -31, y: 25}
+        - {x: -31, y: -20}
+        - {x: -27, y: -31}
+        - {x: 26, y: -31}
+        - {x: 31, y: -25}
+        - {x: 31, y: 28}
+        - {x: 30, y: 31}
+    - name: lightningOrb
+      rect:
+        serializedVersion: 2
+        x: 1755
+        y: 531
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 31}
+        - {x: -31, y: 21}
+        - {x: -31, y: -17}
+        - {x: -21, y: -31}
+        - {x: 17, y: -31}
+        - {x: 31, y: -17}
+        - {x: 31, y: 20}
+        - {x: 16, y: 31}
+    - name: lightOrb
+      rect:
+        serializedVersion: 2
+        x: 1832
+        y: 531
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 31.5}
+        - {x: -31, y: 20.5}
+        - {x: -31, y: -20.5}
+        - {x: -14, y: -31.5}
+        - {x: 31, y: -31.5}
+        - {x: 31, y: 27.5}
+        - {x: 21, y: 31.5}
+    - name: natureOrb
+      rect:
+        serializedVersion: 2
+        x: 1905
+        y: 531
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 31}
+        - {x: -31, y: 21}
+        - {x: -31, y: -17}
+        - {x: -21, y: -31}
+        - {x: 17, y: -31}
+        - {x: 31, y: -17}
+        - {x: 31, y: 20}
+        - {x: 16, y: 31}
+    - name: shadowOrb
+      rect:
+        serializedVersion: 2
+        x: 1598
+        y: 438
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16, y: 31}
+        - {x: -16, y: 31}
+        - {x: -22, y: 30}
+        - {x: -31, y: 18}
+        - {x: -31, y: -18}
+        - {x: -30, y: -24}
+        - {x: -17, y: -31}
+        - {x: 19, y: -31}
+        - {x: 31, y: -18}
+        - {x: 31, y: 21}
+      - - {x: -22, y: 29}
+        - {x: -22, y: 31}
+        - {x: -27, y: 31}
+        - {x: -25, y: 28}
+    - name: waterOrb
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 438
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 20}
+        - {x: 27, y: 31}
+        - {x: -28, y: 31}
+        - {x: -31, y: 24}
+        - {x: -31, y: -18}
+        - {x: -30, y: -25}
+        - {x: -17, y: -31}
+        - {x: 16, y: -31}
+        - {x: 21, y: -30}
+        - {x: 31, y: -19}
+        - {x: 31, y: 15}
+    - name: bloodOrb
+      rect:
+        serializedVersion: 2
+        x: 1755
+        y: 438
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 20}
+        - {x: 27, y: 31}
+        - {x: -28, y: 31}
+        - {x: -31, y: 24}
+        - {x: -31, y: -18}
+        - {x: -30, y: -25}
+        - {x: -17, y: -31}
+        - {x: 16, y: -31}
+        - {x: 21, y: -30}
+        - {x: 31, y: -19}
+        - {x: 31, y: 15}
+    - name: darkOrb
+      rect:
+        serializedVersion: 2
+        x: 1832
+        y: 438
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 20}
+        - {x: 27, y: 31}
+        - {x: -28, y: 31}
+        - {x: -31, y: 24}
+        - {x: -31, y: -18}
+        - {x: -30, y: -25}
+        - {x: -17, y: -31}
+        - {x: 16, y: -31}
+        - {x: 21, y: -30}
+        - {x: 31, y: -19}
+        - {x: 31, y: 15}
+    - name: earthOrb
+      rect:
+        serializedVersion: 2
+        x: 1905
+        y: 438
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -25, y: 31}
+        - {x: -31, y: 25}
+        - {x: -31, y: -20}
+        - {x: -27, y: -31}
+        - {x: 26, y: -31}
+        - {x: 31, y: -25}
+        - {x: 31, y: 28}
+        - {x: 30, y: 31}
+    - name: cardSelectionPurple
+      rect:
+        serializedVersion: 2
+        x: 1646
+        y: 1465
+        width: 373
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 165.5, y: -269}
+        - {x: 166.5, y: -268}
+        - {x: 168.5, y: -268}
+        - {x: 175.5, y: -265}
+        - {x: 181.5, y: -259}
+        - {x: 184.5, y: -252}
+        - {x: 184.5, y: -250}
+        - {x: 185.5, y: -249}
+        - {x: 185.5, y: -245}
+        - {x: 186.5, y: -244}
+        - {x: 186.5, y: 244}
+        - {x: 185.5, y: 245}
+        - {x: 185.5, y: 249}
+        - {x: 184.5, y: 252}
+        - {x: 181.5, y: 259}
+        - {x: 175.5, y: 265}
+        - {x: 168.5, y: 268}
+        - {x: 166.5, y: 268}
+        - {x: 165.5, y: 269}
+        - {x: 161.5, y: 269}
+        - {x: 160.5, y: 270}
+        - {x: -160.5, y: 270}
+        - {x: -161.5, y: 269}
+        - {x: -165.5, y: 269}
+        - {x: -166.5, y: 268}
+        - {x: -168.5, y: 268}
+        - {x: -175.5, y: 265}
+        - {x: -181.5, y: 259}
+        - {x: -184.5, y: 252}
+        - {x: -184.5, y: 250}
+        - {x: -185.5, y: 249}
+        - {x: -185.5, y: 245}
+        - {x: -186.5, y: 244}
+        - {x: -186.5, y: -244}
+        - {x: -185.5, y: -245}
+        - {x: -185.5, y: -249}
+        - {x: -184.5, y: -250}
+        - {x: -184.5, y: -252}
+        - {x: -181.5, y: -259}
+        - {x: -175.5, y: -265}
+        - {x: -168.5, y: -268}
+        - {x: -166.5, y: -268}
+        - {x: -165.5, y: -269}
+        - {x: -161.5, y: -269}
+        - {x: -160.5, y: -270}
+        - {x: 160.5, y: -270}
+        - {x: 161.5, y: -269}
+    - name: trailDarkBlue
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 825
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailLightBlue
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 766
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailBlack
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 699
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailWhite
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 650
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailBrown
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 591
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailPurple
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 542
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailYellow
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 484
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailOrange
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 422
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: trailRed
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 366
+        width: 247
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: youGoFirstMessage
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 768
+        width: 400
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 113, y: 52.5}
+        - {x: -75, y: 52.5}
+        - {x: -200, y: 33.5}
+        - {x: -200, y: -30.5}
+        - {x: -177, y: -50.5}
+        - {x: -160, y: -52.5}
+        - {x: -115, y: -52.5}
+        - {x: 31, y: -31.5}
+        - {x: 129, y: -52.5}
+        - {x: 200, y: -52.5}
+        - {x: 200, y: 28.5}
+        - {x: 138, y: 36.5}
+    - name: enemyGoesFirstMessage
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 299
+        width: 459
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 229.5, y: 24}
+        - {x: 156.5, y: 45}
+        - {x: 79.5, y: 55}
+        - {x: -46.5, y: 55}
+        - {x: -188.5, y: 36}
+        - {x: -229.5, y: 21}
+        - {x: -229.5, y: -27}
+        - {x: -222.5, y: -46}
+        - {x: -220.5, y: -51}
+        - {x: -218.5, y: -53}
+        - {x: -214.5, y: -55}
+        - {x: -171.5, y: -55}
+        - {x: -49.5, y: -43}
+        - {x: 96.5, y: -55}
+        - {x: 229.5, y: -55}
+    - name: opponentHPShieldBroken
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 76
+        width: 137
+        height: 151
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 66.5, y: 70.5}
+        - {x: 32.5, y: 75.5}
+        - {x: -11.5, y: 75.5}
+        - {x: -49.5, y: 64.5}
+        - {x: -68.5, y: 58.5}
+        - {x: -68.5, y: -18.5}
+        - {x: -32.5, y: -75.5}
+        - {x: 19.5, y: -75.5}
+        - {x: 64.5, y: -33.5}
+        - {x: 68.5, y: -3.5}
+        - {x: 68.5, y: 69.5}
+    - name: myHPShieldBroken
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 70
+        width: 136
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38, y: 78.5}
+        - {x: -68, y: 66.5}
+        - {x: -68, y: -28.5}
+        - {x: -27, y: -78.5}
+        - {x: 29, y: -78.5}
+        - {x: 51, y: -60.5}
+        - {x: 68, y: 2.5}
+        - {x: 68, y: 77.5}
+        - {x: 64, y: 78.5}
+    - name: cardMixAction
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 387
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: cardSaveAction
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 297
+        width: 74
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 42}
+        - {x: -37, y: 24}
+        - {x: -37, y: -25}
+        - {x: -11, y: -42}
+        - {x: 10, y: -42}
+        - {x: 14, y: -41}
+        - {x: 37, y: -24}
+        - {x: 37, y: 25}
+        - {x: 10, y: 42}
+    - name: discardingBase
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 28
+        width: 128
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -29, y: 117.5}
+        - {x: -61, y: 102.5}
+        - {x: -64, y: 97.5}
+        - {x: -64, y: -92.5}
+        - {x: -44, y: -114.5}
+        - {x: -32, y: -117.5}
+        - {x: 33, y: -117.5}
+        - {x: 64, y: -93.5}
+        - {x: 64, y: 100.5}
+        - {x: 32, y: 117.5}
+    - name: mixingBase
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 28
+        width: 128
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -29, y: 117.5}
+        - {x: -61, y: 102.5}
+        - {x: -64, y: 97.5}
+        - {x: -64, y: -92.5}
+        - {x: -44, y: -114.5}
+        - {x: -32, y: -117.5}
+        - {x: 33, y: -117.5}
+        - {x: 64, y: -93.5}
+        - {x: 64, y: 100.5}
+        - {x: 32, y: 117.5}
+    - name: savingBase
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 28
+        width: 128
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -29, y: 117.5}
+        - {x: -61, y: 102.5}
+        - {x: -64, y: 97.5}
+        - {x: -64, y: -92.5}
+        - {x: -44, y: -114.5}
+        - {x: -32, y: -117.5}
+        - {x: 33, y: -117.5}
+        - {x: 64, y: -93.5}
+        - {x: 64, y: 100.5}
+        - {x: 32, y: 117.5}
+    - name: deckBase
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 28
+        width: 128
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -29, y: 117.5}
+        - {x: -61, y: 102.5}
+        - {x: -64, y: 97.5}
+        - {x: -64, y: -92.5}
+        - {x: -44, y: -114.5}
+        - {x: -32, y: -117.5}
+        - {x: 33, y: -117.5}
+        - {x: 64, y: -93.5}
+        - {x: 64, y: 100.5}
+        - {x: 32, y: 117.5}
+    - name: logo
+      rect:
+        serializedVersion: 2
+        x: 1642
+        y: 689
+        width: 261
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
