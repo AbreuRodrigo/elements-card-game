@@ -14,6 +14,7 @@ public class GUIMenuController : MonoBehaviour {
 	public GameObject libraryBtnObj;
 
 	private bool hasAlreadyCalledLibrary;
+	private bool hasAlreadyCalledDeckBuilder;
 
 	[Header("Components")]
 	public CardLibraryScrollView cardLibraryScroller;
@@ -72,6 +73,13 @@ public class GUIMenuController : MonoBehaviour {
 		if(interactionBlocker != null) {
 			interactionBlocker.Enable ();
 			interactionBlocker.FadeOut ();
+		}
+	}
+
+	public void ShowDeckBuilder() {
+		if(!hasAlreadyCalledDeckBuilder) {
+			hasAlreadyCalledDeckBuilder = true;
+			FadeScreenOut ();
 		}
 	}
 }

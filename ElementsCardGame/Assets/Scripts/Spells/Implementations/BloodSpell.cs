@@ -25,7 +25,7 @@ public class BloodSpell : SpellBase {
 
 	private void VampiricStrike(Player target, Player source) {
 		if(target.Debuffs.IsBleeding) {
-			int extraDamage = target.Debuffs.Bleed.ElapsedTurns;
+			extraDamage = target.Debuffs.Bleed.ElapsedTurns;
 
 			CauseDamage (1 + extraDamage, target);
 			HealDamage (3 + extraDamage, source);
@@ -38,7 +38,8 @@ public class BloodSpell : SpellBase {
 		CauseDamage (5, target);
 
 		if(target.Debuffs.IsBleeding) {
-			int extraDamage = 1;
+			extraDamageInDice = true;
+			extraDamage = 1;
 		}
 	}
 }

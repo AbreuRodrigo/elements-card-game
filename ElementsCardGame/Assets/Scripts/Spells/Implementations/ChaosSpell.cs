@@ -12,7 +12,17 @@ public class ChaosSpell : SpellBase {
 	}
 
 	private void Hellfire(Player target, Player source) {
-	
+		if(target != null) {
+			int damage = 10;
+
+			if(target.Debuffs.IsBurned || target.Debuffs.IsCursed) {
+				damage += 5;			
+			}
+
+			target.Debuffs.AddBurn ();
+
+			CauseDamage (damage, target);
+		}
 	}
 
 	private void SoulDestroyer(Player target, Player source) {

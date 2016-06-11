@@ -1,0 +1,374 @@
+fileFormatVersion: 2
+guid: 600b1dac4c25ce3418d0cfa1f023ba16
+timeCreated: 1464931784
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bloodCard
+    21300002: iceCard
+    21300004: lightCard
+    21300006: lightningCard
+    21300008: naturalCard
+    21300010: shadowCard
+    21300012: waterCard
+    21300014: darkCard
+    21300016: earthCard
+    21300018: fireCard
+    21300020: cardBack
+    21300022: magmaCard
+    21300024: chaosCard
+    21300026: zombieCard
+    21300028: wildCard
+    21300030: deckSideMask
+    21300032: aura
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 4096
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: bloodCard
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: iceCard
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: lightCard
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: lightningCard
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: naturalCard
+      rect:
+        serializedVersion: 2
+        x: 1561
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: shadowCard
+      rect:
+        serializedVersion: 2
+        x: 1957
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: waterCard
+      rect:
+        serializedVersion: 2
+        x: 2353
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: darkCard
+      rect:
+        serializedVersion: 2
+        x: 2748
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: earthCard
+      rect:
+        serializedVersion: 2
+        x: 3144
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: fireCard
+      rect:
+        serializedVersion: 2
+        x: 3542
+        y: 1501
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: cardBack
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 914
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: magmaCard
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 914
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: chaosCard
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 914
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: zombieCard
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 914
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: wildCard
+      rect:
+        serializedVersion: 2
+        x: 1561
+        y: 914
+        width: 350
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175, y: 273.5}
+        - {x: -175, y: -273.5}
+        - {x: 175, y: -273.5}
+        - {x: 175, y: 273.5}
+    - name: deckSideMask
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 124
+        width: 150
+        height: 674
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54, y: -330}
+        - {x: 65, y: -320}
+        - {x: 71, y: -312}
+        - {x: 75, y: -304}
+        - {x: 75, y: -285}
+        - {x: 69, y: -274}
+        - {x: 75, y: -267}
+        - {x: 75, y: 284}
+        - {x: 61, y: 303}
+        - {x: 71, y: 318}
+        - {x: 58, y: 332}
+        - {x: 49, y: 337}
+        - {x: 25, y: 337}
+        - {x: 18, y: 329}
+        - {x: 10, y: 337}
+        - {x: -5, y: 337}
+        - {x: -14, y: 329}
+        - {x: -22, y: 337}
+        - {x: -41, y: 337}
+        - {x: -52, y: 332}
+        - {x: -64, y: 320}
+        - {x: -68, y: 314}
+        - {x: -68, y: 309}
+        - {x: -60, y: 294}
+        - {x: -75, y: 278}
+        - {x: -75, y: -271}
+        - {x: -70, y: -279}
+        - {x: -75, y: -290}
+        - {x: -75, y: -308}
+        - {x: -74, y: -311}
+        - {x: -73, y: -315}
+        - {x: -57, y: -330}
+        - {x: -53, y: -332}
+        - {x: -34, y: -324}
+        - {x: -20, y: -337}
+        - {x: 18, y: -337}
+        - {x: 36, y: -323}
+        - {x: 41, y: -327}
+        - {x: 51, y: -331}
+    - name: aura
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 616
+        width: 137
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -62.5, y: 94}
+        - {x: -68.5, y: 91}
+        - {x: -68.5, y: -84}
+        - {x: -66.5, y: -88}
+        - {x: -58.5, y: -94}
+        - {x: 62.5, y: -94}
+        - {x: 68.5, y: -87}
+        - {x: 68.5, y: 89}
+        - {x: 67.5, y: 94}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

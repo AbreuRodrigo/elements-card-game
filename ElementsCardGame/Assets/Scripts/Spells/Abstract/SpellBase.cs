@@ -3,6 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class SpellBase {
+	protected int extraDamage;
+	public int ExtraDamage {
+		get { return extraDamage; }
+	}
+
+	protected bool alwaysGoesFirst;
+	public bool AlwaysGoesFirst {
+		get { return alwaysGoesFirst; }
+	}
+
+	protected bool extraDamageInDice;
+	public bool ExtraDamageInDice {
+		get { return extraDamageInDice; }
+	}
 
 	protected Dictionary<SpellSelection, SpellEffect> spellEffectBySelection;
 

@@ -126,12 +126,7 @@ public class GamePlayController : MonoBehaviour {
 	public void ShowBluePlayerArcaneCircle() {
 		if (bluePlayerArcaneCircle != null) {
 			bluePlayerArcaneCircle.ShowArcaneCircle ();
-		}
-	}
-
-	public void HideBluePlayerArcaneCircle() {
-		if (bluePlayerArcaneCircle != null) {
-			bluePlayerArcaneCircle.HideArcaneCircle ();
+			ProcessSpellsInGame ();
 		}
 	}
 
@@ -140,6 +135,12 @@ public class GamePlayController : MonoBehaviour {
 			redPlayerArcaneCircle.ShowArcaneCircle ();
 			ProcessSpellsInGame ();
 		}		
+	}
+
+	public void HideBluePlayerArcaneCircle() {
+		if (bluePlayerArcaneCircle != null) {
+			bluePlayerArcaneCircle.HideArcaneCircle ();
+		}
 	}
 
 	public void HideRedPlayerArcaneCircle() {
@@ -182,11 +183,13 @@ public class GamePlayController : MonoBehaviour {
 			PassTurnPhase ();
 
 			if(turnManager.IsCombatPhase()) {
-				//opponentPlayer.currentCard.EnemyReveal ();
-				//redPlayerArcaneCircle.HideArcaneCircle ();
+				if (opponentPlayer.goesFirst) {
+					StartCoroutine (OpponentGoesFirst ());
+				}
 
-				//localPlayer.currentCard.LocalPlayerReveal ();
-				//bluePlayerArcaneCircle.HideArcaneCircle ();
+				if(localPlayer.goesFirst) {
+					StartCoroutine (LocalPlayerGoesFirst ());
+				}
 			}
 		}
 	}
@@ -197,11 +200,11 @@ public class GamePlayController : MonoBehaviour {
 		}
 	}
 
-	public void RollDice() {	
+	public void RollDice() {
 	}
 
-	public void CastSpell(Card selectedCard, SpellSelection selection) {
-		StartCoroutine (CallSpellCastingBySpellSelection (selectedCard, selection));
+	public void CastSpell(Card selectedCard) {
+		StartCoroutine (CallSpellCastingBySpellSelection (selectedCard));
 	}
 
 	public void PutCardIntoGame() {
@@ -319,9 +322,13 @@ public class GamePlayController : MonoBehaviour {
 		if (result.Equals (CoinResult.Shield)) {
 			GUIController.instance.ShowEnemyGoesFirstRibbon ();
 			opponentPlayer.stats.ShowGoFirstToken ();
-		} else if(result.Equals (CoinResult.Sword)){
+			opponentPlayer.goesFirst = true;
+			localPlayer.goesFirst = false;
+		} else if(result.Equals (CoinResult.Sword)) {
 			GUIController.instance.ShowYouGoFirstRibbon ();
 			localPlayer.stats.ShowGoFirstToken ();
+			localPlayer.goesFirst = true;
+			opponentPlayer.goesFirst = false;
 		}
 
 		ChangeGameToMixedCardSetupState ();
@@ -371,6 +378,16 @@ public class GamePlayController : MonoBehaviour {
 		opponentPlayer.transform.position = GUIController.instance.GetOpponentShieldTransformPosition ();
 	}
 
+	private void RevealOpponentFirst() {
+		opponentPlayer.currentCard.EnemyReveal ();
+		redPlayerArcaneCircle.HideArcaneCircle ();	
+	}
+
+	private void RevealLocalPlayerFirst() {
+		localPlayer.currentCard.LocalPlayerReveal ();
+		bluePlayerArcaneCircle.HideArcaneCircle ();	
+	}
+
 	IEnumerator ChangeGameToHeadsAndTailsStateRoutine() {
 		//GUIController.instance.FadeInInteractionBlocker ();
 
@@ -380,7 +397,7 @@ public class GamePlayController : MonoBehaviour {
 			coin.Enable ();
 			coin.FadeIn ();
 
-			while(!coin.FadedIn) { 
+			while(!coin.FadedIn) {
 				yield return null;
 			}
 
@@ -398,11 +415,31 @@ public class GamePlayController : MonoBehaviour {
 		DrawMixedCardFromDeck ();
 	}
 
-	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard, SpellSelection selection) {
+	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard) {
 		if(spellManager != null && selectedCard != null) {
-			spellManager.CastSpell (selectedCard.element, selection, opponentPlayer, localPlayer);
+			spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, opponentPlayer, localPlayer);
 		}
 
 		yield return new WaitForSeconds (2);
+	}
+
+	IEnumerator OpponentGoesFirst() {
+		yield return new WaitForSeconds (2);
+
+		RevealOpponentFirst ();
+
+		yield return new WaitForSeconds (2);
+
+		RevealLocalPlayerFirst ();
+	}
+
+	IEnumerator LocalPlayerGoesFirst() {
+		yield return new WaitForSeconds (2);
+
+		RevealLocalPlayerFirst ();
+
+		yield return new WaitForSeconds (2);
+
+		RevealOpponentFirst ();
 	}
 }

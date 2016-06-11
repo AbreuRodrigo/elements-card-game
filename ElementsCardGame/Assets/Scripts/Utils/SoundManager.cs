@@ -18,6 +18,8 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip pageFlip;
 	public AudioClip splat;
 	public AudioClip falling;
+	public AudioClip cardMark;
+	public AudioClip magicDust;
 
 	public AudioClip menuMusic;
 	public AudioClip battleMusic;
@@ -75,6 +77,14 @@ public class SoundManager : MonoBehaviour {
 
 	public void PlayFalling() {
 		PlaySound (falling);	
+	}
+
+	public void PlayCardMark() {
+		PlaySound (cardMark);
+	}
+
+	public void PlayMagicDust() {
+		PlaySound (magicDust);
 	}
 
 	public void ChangeToMenuMusic() {

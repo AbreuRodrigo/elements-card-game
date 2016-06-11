@@ -5,6 +5,8 @@ using System.Collections;
 public class GameMenuController : MonoBehaviour {
 	public static GameMenuController instance;
 
+	public GameObject soundManagerPrefab;
+
 	[Header("Components")]
 	public MessageManager messageManager;
 	public ParticleSystem particleWhisps;
@@ -15,9 +17,14 @@ public class GameMenuController : MonoBehaviour {
 		if(instance == null) {
 			instance = this;
 		}
+		Application.targetFrameRate = 60;
 	}
 
 	void Start() {
+		if(SoundManager.instance == null && soundManagerPrefab != null) {
+			Instantiate (soundManagerPrefab);			
+		}
+
 		StartCoroutine (WaitAndStartParticles ());
 	}
 
@@ -39,7 +46,7 @@ public class GameMenuController : MonoBehaviour {
 	}
 
 	public void DeckBuilderButtonPress() {
-		SoundManager.instance.PlayClickSound ();
+		StartCoroutine (PrepareAndLoadDeckBuilder());
 	}
 
 	public void LibraryButtonPress() {
@@ -53,6 +60,15 @@ public class GameMenuController : MonoBehaviour {
 
 		GUIMenuController.instance.HideUI ();
 		GUIMenuController.instance.ShowLibrary ();
+	}
+
+	IEnumerator PrepareAndLoadDeckBuilder() {
+		SoundManager.instance.PlayClickSound ();
+		GUIMenuController.instance.ShowDeckBuilder ();
+
+		yield return new WaitForSeconds (1f);
+
+		SceneManager.LoadScene ("DeckBuilder");
 	}
 
 	IEnumerator WaitAndStartParticles() {
