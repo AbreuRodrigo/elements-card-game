@@ -13,11 +13,14 @@ public class DarkSpell : SpellBase {
 	}
 
 	private void CheapShot(Player target, Player source) {
+		Debug.Log ("CheapShot");
 	}
 
 	private void Copy(Player target, Player source) {
+		Debug.Log ("Copy");
 	}
 
 	private void Peek(Player target, Player source) {
+		Debug.Log ("Peek");
 	}
 }

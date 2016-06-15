@@ -12,12 +12,15 @@ public class EarthSpell : SpellBase {
 		};
 	}
 
-	private void RockPunch(Player target, Player source) {	
+	private void RockPunch(Player target, Player source) {
+		Debug.Log ("RockPunch");
 	}
 
 	private void BoulderWall(Player target, Player source) {
+		Debug.Log ("BoulderWall");
 	}
 
 	private void QuakeStomp(Player target, Player source) {
+		Debug.Log ("QuakeStomp");
 	}
 }

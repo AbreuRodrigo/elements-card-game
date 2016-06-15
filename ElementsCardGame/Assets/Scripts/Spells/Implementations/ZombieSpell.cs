@@ -12,8 +12,10 @@ public class ZombieSpell : SpellBase {
 	}
 
 	private void InfectedBite(Player target, Player source) {
+		Debug.Log ("InfectedBite");
 	}
 
 	private void Canibalize(Player target, Player source) {
+		Debug.Log ("Canibalize");
 	}
 }

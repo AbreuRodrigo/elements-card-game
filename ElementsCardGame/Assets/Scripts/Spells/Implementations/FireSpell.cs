@@ -13,11 +13,14 @@ public class FireSpell : SpellBase {
 	}
 
 	private void FireBall(Player target, Player source) {
+		Debug.Log ("FireBall");
 	}
 
 	private void Scorch(Player target, Player source) {
+		Debug.Log ("Scorch");
 	}
 
 	private void Overheat(Player target, Player source) {
+		Debug.Log ("Overheat");
 	}
 }

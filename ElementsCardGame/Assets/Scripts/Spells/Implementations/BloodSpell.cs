@@ -13,6 +13,8 @@ public class BloodSpell : SpellBase {
 	}
 
 	private void HeavyStrike(Player target, Player source) {
+		Debug.Log ("HeavyStrike");
+
 		CauseDamage (5, target);
 
 		if (target.Debuffs.IsBleeding) {
@@ -24,6 +26,8 @@ public class BloodSpell : SpellBase {
 	}
 
 	private void VampiricStrike(Player target, Player source) {
+		Debug.Log ("VampiricStrike");
+
 		if(target.Debuffs.IsBleeding) {
 			extraDamage = target.Debuffs.Bleed.ElapsedTurns;
 
@@ -35,6 +39,8 @@ public class BloodSpell : SpellBase {
 	}
 
 	private void Impale(Player target, Player source) {
+		Debug.Log ("Impale");
+
 		CauseDamage (5, target);
 
 		if(target.Debuffs.IsBleeding) {

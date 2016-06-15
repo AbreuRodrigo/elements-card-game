@@ -13,11 +13,14 @@ public class IceSpell : SpellBase {
 	}
 
 	private void IceShards(Player target, Player source) {
+		Debug.Log ("IceShards");
 	}
 
 	private void WallOfIce(Player target, Player source) {
+		Debug.Log ("WallOfIce");
 	}
 
 	private void GlacialBlast(Player target, Player source) {
+		Debug.Log ("GlacialBlast");
 	}
 }

@@ -12,8 +12,10 @@ public class MagmaSpell : SpellBase {
 	}
 
 	private void LavaBlast(Player target, Player source) {
+		Debug.Log ("LavaBlast");
 	}
 
 	private void MagmaPunch(Player target, Player source) {
+		Debug.Log ("MagmaPunch");
 	}
 }

@@ -13,11 +13,14 @@ public class LightiningSpell : SpellBase {
 	}
 
 	private void LightiningBolt(Player target, Player source) {
+		Debug.Log ("LightningBolt");
 	}
 
 	private void Thunder(Player target, Player source) {
+		Debug.Log ("Thunder");
 	}
 
 	private void Static(Player target, Player source) {
+		Debug.Log ("Static");
 	}
 }

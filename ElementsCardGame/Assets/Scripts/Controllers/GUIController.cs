@@ -18,6 +18,7 @@ public class GUIController : MonoBehaviour {
 
 	public GameObject mixedCardButton;
 	public GameObject savedCardButton;
+	public GameObject discardedCardButton;
 
 	public RectTransform deckButtonRect;
 	public RectTransform discardBaseRect;
@@ -213,6 +214,15 @@ public class GUIController : MonoBehaviour {
 			savedCardButton.GetComponent<Button> ().enabled = true;
 			savedCardButton.GetComponent<Image> ().enabled = true;
 			savedCardButton.GetComponent<Animator> ().enabled = true;
+		}
+	}
+
+	public void ShowDiscardedCardButton() {
+		if(discardedCardButton != null) {
+			discardedCardButton.SetActive (true);
+			discardedCardButton.GetComponent<Button> ().enabled = true;
+			discardedCardButton.GetComponent<Image> ().enabled = true;
+			discardedCardButton.GetComponent<Animator> ().enabled = true;
 		}
 	}
 

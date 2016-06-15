@@ -13,11 +13,14 @@ public class WaterSpell : SpellBase {
 	}
 
 	private void WaterBall(Player target, Player source) {
+		Debug.Log ("WaterBall");
 	}
 
 	private void Refresh(Player target, Player source) {
+		Debug.Log ("Refresh");
 	}
 
 	private void HighPressureBlast(Player target, Player source) {
+		Debug.Log ("HighPressureBlast");
 	}
 }

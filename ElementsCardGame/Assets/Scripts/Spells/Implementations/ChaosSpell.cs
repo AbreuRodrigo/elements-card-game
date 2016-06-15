@@ -12,6 +12,8 @@ public class ChaosSpell : SpellBase {
 	}
 
 	private void Hellfire(Player target, Player source) {
+		Debug.Log ("HellFire");
+
 		if(target != null) {
 			int damage = 10;
 
@@ -26,6 +28,6 @@ public class ChaosSpell : SpellBase {
 	}
 
 	private void SoulDestroyer(Player target, Player source) {
-	
+		Debug.Log ("SoulDestroyer");
 	}
 }

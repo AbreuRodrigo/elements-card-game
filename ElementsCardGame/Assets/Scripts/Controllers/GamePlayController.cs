@@ -28,6 +28,9 @@ public class GamePlayController : MonoBehaviour {
 	public ArcaneCircle redPlayerArcaneCircle;//AI or Opponent when in multiplayer mode
 	public MessageManager messageManager;
 
+	private bool endedTurn;
+	private Card previousCardPlayed;
+
 	void Awake() {
 		if(instance == null) {
 			instance = this;
@@ -55,9 +58,7 @@ public class GamePlayController : MonoBehaviour {
 	public void PressEndTurnButton() {
 		SoundManager.instance.PlayClickSound ();
 
-		GUIController.instance.HideInteractionBlocker ();
-
-		GUIController.instance.HideEndTurnButton ();
+		StartCoroutine (EndTurnRoutine());
 	}
 
 	public void PressDeckButtonLogics() {
@@ -75,7 +76,6 @@ public class GamePlayController : MonoBehaviour {
 		SoundManager.instance.PlayClickSound ();
 
 		if(localPlayer.currentCard != null && localPlayer.currentCard.IsCardStateInHand()) {
-			//CastSpell (currentSelectedCard, SpellSelection.Circle);
 			GUIController.instance.HideCardActionButtons();
 			localPlayer.currentCard.PutIntoGameAsLocalPlayer(SpellSelection.Circle);
 			ShowBluePlayerArcaneCircle ();
@@ -86,7 +86,6 @@ public class GamePlayController : MonoBehaviour {
 		SoundManager.instance.PlayClickSound ();
 
 		if(localPlayer.currentCard != null && localPlayer.currentCard.IsCardStateInHand()) {
-			//CastSpell (currentSelectedCard, SpellSelection.Square);
 			GUIController.instance.HideCardActionButtons();
 			localPlayer.currentCard.PutIntoGameAsLocalPlayer(SpellSelection.Square);
 			ShowBluePlayerArcaneCircle ();
@@ -97,7 +96,6 @@ public class GamePlayController : MonoBehaviour {
 		SoundManager.instance.PlayClickSound ();
 
 		if(localPlayer.currentCard != null && localPlayer.currentCard.IsCardStateInHand()) {
-			//CastSpell (currentSelectedCard, SpellSelection.Rhombus);
 			GUIController.instance.HideCardActionButtons();
 			localPlayer.currentCard.PutIntoGameAsLocalPlayer(SpellSelection.Rhombus);
 			ShowBluePlayerArcaneCircle ();
@@ -133,6 +131,7 @@ public class GamePlayController : MonoBehaviour {
 	public void ShowRedPlayerArcaneCircle() {
 		if (redPlayerArcaneCircle != null) {
 			redPlayerArcaneCircle.ShowArcaneCircle ();
+			PassTurnPhase ();
 			ProcessSpellsInGame ();
 		}		
 	}
@@ -176,6 +175,7 @@ public class GamePlayController : MonoBehaviour {
 		
 	}
 
+	//PROCESS CARD SPELLS IN GAME
 	private void ProcessSpellsInGame() {
 		spellsInGame++;
 
@@ -186,35 +186,34 @@ public class GamePlayController : MonoBehaviour {
 				if (opponentPlayer.goesFirst) {
 					StartCoroutine (OpponentGoesFirst ());
 				}
-
 				if(localPlayer.goesFirst) {
 					StartCoroutine (LocalPlayerGoesFirst ());
 				}
 			}
+
+			spellsInGame = 0;
 		}
 	}
 
 	public void PassTurnPhase() {
 		if (turnManager != null) {
-			turnManager.NextPhase ();				
+			turnManager.NextPhase ();
 		}
 	}
 
 	public void RollDice() {
 	}
 
-	public void CastSpell(Card selectedCard) {
-		StartCoroutine (CallSpellCastingBySpellSelection (selectedCard));
+	public void CastSpell(Card selectedCard, bool hideCards, Player target, Player source) {
+		if(!selectedCard.element.Equals(CardElement.Wild)) {
+			StartCoroutine (CallSpellCastingBySpellSelection (selectedCard, hideCards, target, source));
+		}
 	}
 
 	public void PutCardIntoGame() {
-		PassTurnPhase ();
-
 		if(IsHumanVSMachineGameMode()) {
 			aiAgent.AIDrawTopCardFromDeck ();
 		}
-
-		ProcessSpellsInGame ();
 	}
 
 	private void DrawTopCardFromDeck() {
@@ -362,6 +361,10 @@ public class GamePlayController : MonoBehaviour {
 		GUIController.instance.ShowMixedCardButton ();
 	}
 
+	public void EndPutToDiscardedCardPile() {
+		
+	}
+
 	public void EndPutToSavedCardPile() {
 		ChangeGameToGamePlayState ();
 
@@ -389,8 +392,6 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	IEnumerator ChangeGameToHeadsAndTailsStateRoutine() {
-		//GUIController.instance.FadeInInteractionBlocker ();
-
 		yield return new WaitForSeconds (1);
 
 		if(coin != null) {
@@ -408,38 +409,87 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	IEnumerator ChangeGameToMixedCardSetupStateRoutine() {
-		//GUIController.instance.FadeInInteractionBlocker ();
-
 		yield return new WaitForSeconds (2);
-
 		DrawMixedCardFromDeck ();
 	}
 
-	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard) {
+	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard, bool hideCards, Player target, Player source) {
 		if(spellManager != null && selectedCard != null) {
-			spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, opponentPlayer, localPlayer);
+			spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
 		}
 
-		yield return new WaitForSeconds (2);
+		if(!hideCards) {
+			yield return null;	
+		}else {
+			yield return new WaitForSeconds (1f);
+
+			localPlayer.currentCard.PutIntoDiscardedState ();
+			opponentPlayer.currentCard.ScaleOut ();
+		}
 	}
 
 	IEnumerator OpponentGoesFirst() {
 		yield return new WaitForSeconds (2);
 
 		RevealOpponentFirst ();
+		yield return new WaitForSeconds (1);
+		CastSpell (opponentPlayer.currentCard, false, localPlayer, opponentPlayer);
 
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.5f);
 
 		RevealLocalPlayerFirst ();
+		yield return new WaitForSeconds (1);
+		CastSpell(localPlayer.currentCard, true, opponentPlayer, localPlayer);
+
+		PassTurnPhase ();
+
+		yield return new WaitForSeconds (1);
+
+		GUIController.instance.ShowEndTurnButton ();
 	}
 
 	IEnumerator LocalPlayerGoesFirst() {
 		yield return new WaitForSeconds (2);
 
 		RevealLocalPlayerFirst ();
+		yield return new WaitForSeconds (1);
+		CastSpell (localPlayer.currentCard, false, opponentPlayer, localPlayer);
 
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.5f);
 
 		RevealOpponentFirst ();
+		yield return new WaitForSeconds (1);
+		CastSpell (opponentPlayer.currentCard, true, localPlayer, opponentPlayer);
+
+		PassTurnPhase ();
+
+		yield return new WaitForSeconds (1);
+
+		GUIController.instance.ShowEndTurnButton ();
+	}
+
+	IEnumerator EndTurnRoutine() {
+		if (!endedTurn) {
+			endedTurn = true;
+			yield return new WaitForSeconds (0.5f);
+
+			GUIController.instance.HideEndTurnButton ();
+
+			SoundManager.instance.PlayYourTurn ();
+
+			PassTurnPhase ();
+			endedTurn = false;
+
+			previousCardPlayed = null;
+
+			yield return new WaitForSeconds (0.5f);
+
+			GUIController.instance.HideInteractionBlocker ();
+
+			localPlayer.currentCard = null;
+			opponentPlayer.currentCard = null;
+
+			DrawTopCardFromDeck ();
+		}
 	}
 }

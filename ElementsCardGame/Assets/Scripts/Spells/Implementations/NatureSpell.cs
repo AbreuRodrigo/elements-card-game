@@ -13,11 +13,14 @@ public class NatureSpell : SpellBase {
 	}
 
 	private void RoseWhip(Player target, Player source) {
+		Debug.Log ("RoseWhip");
 	}
 
 	private void PoisonIvy(Player target, Player source) {
+		Debug.Log ("PoisonIvy");
 	}
 
 	private void HerbalMedicine(Player target, Player source) {
+		Debug.Log ("HerbalMedicine");
 	}
 }

@@ -25,8 +25,8 @@ public class DeckPatternManager : MonoBehaviour {
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Earth, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Dark, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Light, CardType.Element, 3);
-			DeckManager.instance.AddCardsToDeck (player, RandomizeMixedCard(), CardType.Mixed, 1);
-			DeckManager.instance.AddCardsToDeck (player, CardElement.Wild, CardType.Wild, 1);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Magma, CardType.Mixed, 1);
+			DeckManager.instance.AddCardsToDeck (player, player.localPlayer ?  CardElement.Wild : RandomizeWildCard(), CardType.Wild, 1);
 		}
 	}
 
@@ -41,5 +41,13 @@ public class DeckPatternManager : MonoBehaviour {
 		}
 
 		return CardElement.Magma;
+	}
+
+	private CardElement RandomizeWildCard() {
+		int i = Random.Range (0, 10);
+
+		System.Array enums = System.Enum.GetValues (typeof(CardElement));
+
+		return (CardElement) enums.GetValue (i);
 	}
 }

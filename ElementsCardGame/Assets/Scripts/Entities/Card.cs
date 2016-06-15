@@ -16,10 +16,7 @@ public class Card : MonoBehaviour {
 	[Header("Conditions")]
 	public bool zoomed;
 	public bool selected;
-
-	public void ShowRedArcaneCircle() {
-		GamePlayController.instance.ShowRedPlayerArcaneCircle ();
-	}
+	public bool wildCard;
 
 	public bool Zoomed {
 		get { return zoomed; }
@@ -164,6 +161,16 @@ public class Card : MonoBehaviour {
 		ChangeToWaitingToMixState ();
 	}
 
+	public void PutIntoDiscardedState() {
+		MoveCardToTargetPositionWithITween (
+			"easeOutCubic", GUIController.instance.GetDiscardBaseTransformedPosition (), 1f, 0.25f,
+			IsCardStateInGame (), "EndPutToDiscardedCardPile"
+		);
+
+		ScaleCardToTargetSizeWithITween ("linear", new Vector3 (0.25f, 0.25f, 1), 1f, 0.25f, IsCardStateInGame (), "");
+		RotateCardToTargetAngleWithITween ("linear", Vector3.zero, 0.8f, 0.25f, IsCardStateInGame (), "");
+	}
+
 	public void PutToSavedState() {
 		DeselectCard ();
 
@@ -191,6 +198,15 @@ public class Card : MonoBehaviour {
 
 	private void EndPutToMixedCardPile() { 
 		GamePlayController.instance.EndPutToMixedCardPile ();
+	}
+
+	private void EndPutToDiscardedCardPile() {
+		GamePlayController.instance.EndPutToDiscardedCardPile ();
+		GUIController.instance.ShowDiscardedCardButton ();
+
+		ChangeToDiscardedState ();
+
+		gameObject.SetActive (false);
 	}
 
 	private void EndPutToSavedCardPile() {
@@ -227,6 +243,10 @@ public class Card : MonoBehaviour {
 			myAnimator.Play ("EnemyReveal");
 			SoundManager.instance.PlayCardMoveSound ();
 		}
+	}
+
+	public void ScaleOut() {
+		ScaleCardToTargetSizeWithITween ("linear", new Vector3 (0, 0, 1), 0.5f, 0, IsCardStateInGame (), "");
 	}
 
 	private void PutCardIntoGameAsLocalPlayer() {

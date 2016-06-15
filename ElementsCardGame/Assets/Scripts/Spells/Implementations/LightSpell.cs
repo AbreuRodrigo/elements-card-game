@@ -13,11 +13,14 @@ public class LightSpell : SpellBase {
 	}
 
 	private void BlindingLight(Player target, Player source) {
+		Debug.Log ("BlindingLight");
 	}
 
 	private void Purge(Player target, Player source) {
+		Debug.Log ("Purge");
 	}
 
 	private void InnerGlow(Player target, Player source) {
+		Debug.Log ("InnerGlow");
 	}
 }

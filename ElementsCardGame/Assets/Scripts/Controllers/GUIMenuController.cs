@@ -41,7 +41,6 @@ public class GUIMenuController : MonoBehaviour {
 		multiplayerBtnObj.SetActive (false);
 		deckBuilderBtnObj.SetActive (false);
 		libraryBtnObj.SetActive (false);
-		messageManagerObj.Hide ();
 	}
 
 	public void ShowUI() {

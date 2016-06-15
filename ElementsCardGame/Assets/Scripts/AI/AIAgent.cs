@@ -38,6 +38,7 @@ public class AIAgent : MonoBehaviour {
 
 	private void PlayCardIntoGame() {
 		aiPlayer.currentCard.selectedSpell = SelectSpellRandomly ();
+		aiPlayer.currentCard.ChangeToInGameState ();
 		StartCoroutine (MoveCardToGamePlayPosition (aiPlayer.currentCard));
 	}
 
@@ -65,6 +66,8 @@ public class AIAgent : MonoBehaviour {
 
 		float animationSpeed = 0.2f;
 
+		GamePlayController.instance.ShowRedPlayerArcaneCircle ();
+
 		while(card.transform.position != inGamePlayPoint) {
 			card.transform.position = Vector3.SmoothDamp (card.transform.position, inGamePlayPoint, ref speedT, animationSpeed);
 			card.transform.localScale = Vector3.SmoothDamp (card.transform.localScale, finalScale, ref speedS, animationSpeed);
@@ -76,7 +79,5 @@ public class AIAgent : MonoBehaviour {
 
 			yield return new WaitForSeconds (0.01f);
 		}
-
-		GamePlayController.instance.ShowRedPlayerArcaneCircle ();
 	}
 }

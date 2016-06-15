@@ -13,11 +13,14 @@ public class ShadowSpell : SpellBase {
 	}
 
 	private void ShadowBall(Player target, Player source) {
+		Debug.Log ("ShadowBall");
 	}
 
 	private void SoulDrain(Player target, Player source) {
+		Debug.Log ("SoulDrain");
 	}
 
 	private void LifeTap(Player target, Player source) {
+		Debug.Log ("LifeTap");
 	}
 }
