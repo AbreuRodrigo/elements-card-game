@@ -24,8 +24,6 @@ public class TurnManager : MonoBehaviour {
 			{ TurnPhase.CombatPhase, TurnPhase.EndCombatPhase },
 			{ TurnPhase.EndCombatPhase, TurnPhase.BeginningPhase }
 		};
-
-		Debug.Log ("New Turn Phase: " + phase);
 	}
 
 	public void NextPhase() {
@@ -34,8 +32,6 @@ public class TurnManager : MonoBehaviour {
 		}
 
 		phase = phaseProgression[phase];
-
-		Debug.Log ("New Turn Phase: " + phase);
 	}
 
 	public bool IsBeginningPhase() {

@@ -12,14 +12,18 @@ public class GUIMenuController : MonoBehaviour {
 	public GameObject multiplayerBtnObj;
 	public GameObject deckBuilderBtnObj;
 	public GameObject libraryBtnObj;
+	public GameObject creditsBtnObj;
 
 	private bool hasAlreadyCalledLibrary;
 	private bool hasAlreadyCalledDeckBuilder;
+	private bool hasAlreadyCalledCredits;
 
 	[Header("Components")]
 	public CardLibraryScrollView cardLibraryScroller;
 	public MessageManager messageManagerObj;
 	public InteractionBlocker interactionBlocker;
+	public Credits credits;
+	public LogoBehaviour logo;
 
 	void Awake() {
 		if(instance == null) {
@@ -41,6 +45,7 @@ public class GUIMenuController : MonoBehaviour {
 		multiplayerBtnObj.SetActive (false);
 		deckBuilderBtnObj.SetActive (false);
 		libraryBtnObj.SetActive (false);
+		creditsBtnObj.SetActive (false);
 	}
 
 	public void ShowUI() {
@@ -50,6 +55,7 @@ public class GUIMenuController : MonoBehaviour {
 		multiplayerBtnObj.SetActive (true);
 		deckBuilderBtnObj.SetActive (true);
 		libraryBtnObj.SetActive (true);
+		creditsBtnObj.SetActive (true);
 	}
 
 	public void ShowLibrary() {
@@ -68,6 +74,18 @@ public class GUIMenuController : MonoBehaviour {
 		}
 	}
 
+	public void ShowLogo() {
+		if(logo != null) {
+			logo.gameObject.SetActive (true);
+		}
+	}
+
+	public void HideLogo() {
+		if(logo != null) {
+			logo.gameObject.SetActive (false);
+		}
+	}
+
 	public void FadeScreenOut() {
 		if(interactionBlocker != null) {
 			interactionBlocker.Enable ();
@@ -79,6 +97,28 @@ public class GUIMenuController : MonoBehaviour {
 		if(!hasAlreadyCalledDeckBuilder) {
 			hasAlreadyCalledDeckBuilder = true;
 			FadeScreenOut ();
+		}
+	}
+
+	public void ShowCredits() {
+		if(!hasAlreadyCalledCredits) {
+			hasAlreadyCalledCredits = true;
+
+			if (credits != null) {
+				credits.Show ();
+			}
+		}
+	}
+
+	public void HideCredits() {
+		if (hasAlreadyCalledCredits) {
+			hasAlreadyCalledCredits = false;
+
+			SoundManager.instance.PlayClickSound ();
+
+			if (credits != null) {
+				credits.Hide ();
+			}
 		}
 	}
 }

@@ -43,7 +43,13 @@ public class AIAgent : MonoBehaviour {
 	}
 
 	private SpellSelection SelectSpellRandomly() {
-		int decision = Random.Range (0, 3);
+		int limit = 3;
+
+		if(aiPlayer.currentCard.element.Equals(CardElement.Dark)) {
+			limit = 2;
+		}
+
+		int decision = Random.Range (0, limit);
 
 		if(decision == 0) {
 			return SpellSelection.Rhombus;

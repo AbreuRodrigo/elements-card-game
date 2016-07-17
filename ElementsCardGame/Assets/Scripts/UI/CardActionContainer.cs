@@ -31,10 +31,14 @@ public class CardActionContainer : MonoBehaviour {
 
 	private Dictionary<CardElement, Sprite> spriteTrailByCardName;
 
-	private CardElement lastActivated;
+	private ActionConditionProcessor actionConditionProcessor;
+
+	public Player currentPlayer;
 
 	void Start() {
-		spriteTrailByCardName = new Dictionary<CardElement, Sprite> () {
+		actionConditionProcessor = new ActionConditionProcessor (this);
+
+		spriteTrailByCardName = new Dictionary<CardElement, Sprite> (14) {
 			{CardElement.Blood, redTrail},
 			{CardElement.Chaos, purpleTrail},
 			{CardElement.Dark, blackTrail},
@@ -52,10 +56,8 @@ public class CardActionContainer : MonoBehaviour {
 		};
 	}
 
-	public void ShowActions(CardElement cardElement, CardState cardState) {
-		lastActivated = cardElement;
-		SetupTrails (cardState);
-
+	public void ShowActions(Player player) {
+		SetupTrails (player);
 		PlayAnimation ("Show");
 	}
 
@@ -69,35 +71,185 @@ public class CardActionContainer : MonoBehaviour {
 		}
 	}
 
-	private void SetupTrails(CardState cardState) {
-		circleActionTrail.sprite = spriteTrailByCardName [lastActivated];
-		squareActionTrail.sprite = spriteTrailByCardName [lastActivated];
-		rhombusActionTrail.sprite = spriteTrailByCardName [lastActivated];
-		saveActionTrail.sprite = spriteTrailByCardName [lastActivated];
-		mixActionTrail.sprite = spriteTrailByCardName [lastActivated];
+	private void SetupTrails(Player player) {
+		currentPlayer = player;
 
-		if (cardState.Equals (CardState.MixedSelection)) {
-			circleActionBtn.gameObject.SetActive (false);
-			circleActionTrail.gameObject.SetActive (false);
-			squareActionBtn.gameObject.SetActive (false);
-			squareActionTrail.gameObject.SetActive (false);
-			rhombusActionBtn.gameObject.SetActive (false);
-			rhombusActionTrail.gameObject.SetActive (false);
-			saveActionBtn.gameObject.SetActive (false);
-			saveActionTrail.gameObject.SetActive (false);
-			mixActionBtn.gameObject.SetActive (true);
-			mixActionTrail.gameObject.SetActive (true);
-		} else {
-			circleActionBtn.gameObject.SetActive (true);
-			circleActionTrail.gameObject.SetActive (true);
-			squareActionBtn.gameObject.SetActive (true);
-			squareActionTrail.gameObject.SetActive (true);
-			rhombusActionBtn.gameObject.SetActive (true);
-			rhombusActionTrail.gameObject.SetActive (true);
-			saveActionBtn.gameObject.SetActive (true);
-			saveActionTrail.gameObject.SetActive (true);
-			mixActionBtn.gameObject.SetActive (false);
-			mixActionTrail.gameObject.SetActive (false);
+		circleActionTrail.sprite = spriteTrailByCardName [player.currentCard.element];
+		squareActionTrail.sprite = spriteTrailByCardName [player.currentCard.element];
+		rhombusActionTrail.sprite = spriteTrailByCardName [player.currentCard.element];
+		saveActionTrail.sprite = spriteTrailByCardName [player.currentCard.element];
+		mixActionTrail.sprite = spriteTrailByCardName [player.currentCard.element];
+
+		if(player != null && !player.isAI) {
+			if (player.currentCard.state.Equals (CardState.MixedSelection)) {
+				DeactivateCircleAction ();
+				DeactivateSquareAction ();
+				DeactivateRhombusAction ();
+				DeactivateSaveAction ();
+				ActivateMixAction ();
+			} else if(player.currentCard.type.Equals(CardType.Element)) {
+				actionConditionProcessor.ProcessConditionsPerElement (player.currentCard.element);
+
+				if (player.savedCard != null && player.mixedCard != null) {
+					if ((player.mixedCard.IsRequirementA (player.savedCard.element) && player.mixedCard.IsRequirementB (player.currentCard.element)) ||
+					   (player.mixedCard.IsRequirementB (player.savedCard.element) && player.mixedCard.IsRequirementA (player.currentCard.element))) {
+						ActivateMixAction ();
+
+						return;
+					}
+				}
+
+				DeactivateMixAction ();
+			}else if(player.currentCard.type.Equals(CardType.Mixed)) {
+				ActivateCircleAction ();
+				ActivateSquareAction ();
+
+				DeactivateRhombusAction ();
+				DeactivateSaveAction ();
+				DeactivateMixAction ();
+			} else if(player.currentCard.type.Equals(CardType.Wild)) {
+				ActivateCircleAction ();
+				ActivateSquareAction ();
+				ActivateRhombusAction ();
+
+				DeactivateSaveAction ();
+				DeactivateMixAction ();
+			}
+		}
+	}
+
+	private void ActivateCircleAction() {
+		circleActionBtn.gameObject.SetActive (true);
+		circleActionTrail.gameObject.SetActive (true);
+	}
+
+	private void DeactivateCircleAction() {
+		circleActionBtn.gameObject.SetActive (false);
+		circleActionTrail.gameObject.SetActive (false);
+	}
+
+	private void ActivateSquareAction() {
+		squareActionBtn.gameObject.SetActive (true);
+		squareActionTrail.gameObject.SetActive (true);
+	}
+
+	private void DeactivateSquareAction() {
+		squareActionBtn.gameObject.SetActive (false);
+		squareActionTrail.gameObject.SetActive (false);
+	}
+
+	private void ActivateRhombusAction() {
+		rhombusActionBtn.gameObject.SetActive (true);
+		rhombusActionTrail.gameObject.SetActive (true);
+	}
+
+	private void DeactivateRhombusAction() {
+		rhombusActionBtn.gameObject.SetActive (false);
+		rhombusActionTrail.gameObject.SetActive (false);
+	}
+
+	private void ActivateSaveAction() {
+		saveActionBtn.gameObject.SetActive (true);
+		saveActionTrail.gameObject.SetActive (true);
+	}
+
+	private void DeactivateSaveAction() {
+		saveActionBtn.gameObject.SetActive (false);
+		saveActionTrail.gameObject.SetActive (false);
+	}
+
+	private void ActivateMixAction() {
+		mixActionBtn.gameObject.SetActive (true);
+		mixActionTrail.gameObject.SetActive (true);
+	}
+
+	private void DeactivateMixAction() {
+		mixActionBtn.gameObject.SetActive (false);
+		mixActionTrail.gameObject.SetActive (false);
+	}
+
+	private class ActionConditionProcessor {
+		private CardActionContainer actionContainer;
+		private Dictionary<CardElement, System.Action> containerActonsPerElement;
+
+		public ActionConditionProcessor(CardActionContainer actionContainer) {
+			this.actionContainer = actionContainer;
+
+			containerActonsPerElement = new Dictionary<CardElement, System.Action>(10) {
+				{CardElement.Blood, ProcessConditionsForBlood},
+				{CardElement.Fire, ActivateAll},
+				{CardElement.Water, ActivateAll},
+				{CardElement.Light, ActivateAll},
+				{CardElement.Lightning, ActivateAll},
+				{CardElement.Nature, ActivateAll},
+				{CardElement.Dark, ProcessConditionsForDark},
+				{CardElement.Shadow, ActivateAll},
+				{CardElement.Ice, ActivateAll},
+				{CardElement.Earth, ActivateAll}
+			};
+		}
+
+		public void ProcessConditionsPerElement(CardElement element) {
+			containerActonsPerElement [element] ();
+		}
+
+		private void ProcessConditionsForBlood() {
+			if (actionContainer.currentPlayer.opponent.Debuffs.IsBleeding) {
+				actionContainer.ActivateSquareAction ();
+			} else {
+				actionContainer.DeactivateSquareAction ();
+			}
+			actionContainer.ActivateCircleAction ();
+			actionContainer.ActivateRhombusAction ();
+			ProcessSaveActionConditions ();
+		}
+
+		/*private void ProcessConditionsForIceAndEarth() {
+			if (actionContainer.currentPlayer.goesFirst) {
+				actionContainer.ActivateSquareAction ();
+				actionContainer.DeactivateRhombusAction ();
+			} else {
+				actionContainer.DeactivateSquareAction ();
+				actionContainer.ActivateRhombusAction ();
+			}
+
+			actionContainer.ActivateCircleAction ();
+			ProcessSaveActionConditions ();
+		}*/
+
+		private void ProcessConditionsForDark() {
+			if (actionContainer.currentPlayer.lastSpellCasted != null &&
+			   (actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Chaos) ||
+			   actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Magma) ||
+			   actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Zombie))) {
+				actionContainer.DeactivateSquareAction ();
+			} else {
+				actionContainer.ActivateSquareAction ();
+			}
+
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateRhombusAction ();
+			} else {
+				actionContainer.ActivateRhombusAction ();
+			}
+
+			actionContainer.ActivateCircleAction ();
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessSaveActionConditions() {
+			if (actionContainer.currentPlayer.Debuffs.IsFrozen) {
+				actionContainer.DeactivateSaveAction ();
+			} else {
+				actionContainer.ActivateSaveAction ();
+			}
+		}
+
+		private void ActivateAll() {
+			actionContainer.ActivateCircleAction ();
+			actionContainer.ActivateSquareAction ();
+			actionContainer.ActivateRhombusAction ();
+			ProcessSaveActionConditions ();
 		}
 	}
 }

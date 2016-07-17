@@ -47,7 +47,7 @@ public class GUIController : MonoBehaviour {
 	}
 
 	public void ShowEndTurnButton() {
-		if(endTurnButton != null) {
+		if(endTurnButton != null && !endTurnButton.enabled) {
 			endTurnButton.gameObject.SetActive (true);
 			endTurnButton.enabled = true;
 			endTurnButtonImage.enabled = true;
@@ -102,22 +102,19 @@ public class GUIController : MonoBehaviour {
 	}
 
 	public Vector3 GetDiscardBaseTransformedPosition() {
-		return RectToTransformedPosition (discardBaseRect);
+		return RectToTransformedPosition (discardedCardButton.GetComponent<RectTransform>());
 	}
 
 	public Vector3 GetDeckButtonTransformedPosition() {
 		return RectToTransformedPosition (deckButtonRect);
 	}
 
-	private Vector3 RectToTransformedPosition (RectTransform rectTransform) {
+	public Vector3 RectToTransformedPosition (RectTransform rectTransform) {
 		return rectTransform.transform.TransformPoint(rectTransform.rect.center.x, rectTransform.rect.center.x, 0);
 	}
 
 	public void ShowCardActionButtons() {
-		cardActionContainer.ShowActions (
-			GamePlayController.instance.localPlayer.currentCard.element,
-			GamePlayController.instance.localPlayer.currentCard.state
-		);
+		cardActionContainer.ShowActions (GamePlayController.instance.localPlayer);
 	}
 
 	public void HideCardActionButtons() {

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class SpellBase {
+	protected int damage;
+
 	protected int extraDamage;
 	public int ExtraDamage {
 		get { return extraDamage; }
@@ -18,14 +20,22 @@ public abstract class SpellBase {
 		get { return extraDamageInDice; }
 	}
 
+	protected SpellResponse response = new SpellResponse();
+
 	protected Dictionary<SpellSelection, SpellEffect> spellEffectBySelection;
 
-	public delegate void SpellEffect(Player target, Player source);
+	public delegate SpellResponse SpellEffect(Player target, Player source);
 
-	public void CastSpell (SpellSelection selection, Player target, Player source) {
+	public SpellResponse CastSpell (SpellSelection selection, Player target, Player source) {
+		extraDamage = 0;
+		alwaysGoesFirst = false;
+		extraDamageInDice = false;
+
 		if (spellEffectBySelection != null) {
-			spellEffectBySelection [selection] (target, source);
+			response = spellEffectBySelection [selection] (target, source);
 		}
+
+		return response;
 	}
 
 	protected void CauseDamage(int amount, Player target) {

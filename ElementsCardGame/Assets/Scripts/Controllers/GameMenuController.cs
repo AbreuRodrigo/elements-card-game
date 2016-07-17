@@ -53,6 +53,10 @@ public class GameMenuController : MonoBehaviour {
 		StartCoroutine (PrepareAndShowCardLibrary());
 	}
 
+	public void CreditsButtonPress() {
+		StartCoroutine (PrepareAndShowCredits());
+	}
+
 	IEnumerator PrepareAndShowCardLibrary() {
 		SoundManager.instance.PlayClickSound ();
 
@@ -69,6 +73,15 @@ public class GameMenuController : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 
 		SceneManager.LoadScene ("DeckBuilder");
+	}
+
+	IEnumerator PrepareAndShowCredits() {
+		SoundManager.instance.PlayClickSound ();
+
+		yield return new WaitForSeconds (0.5f);
+
+		GUIMenuController.instance.HideUI ();
+		GUIMenuController.instance.ShowCredits ();
 	}
 
 	IEnumerator WaitAndStartParticles() {

@@ -5,5 +5,6 @@
 	InHand,
 	InGame,
 	Saved,
-	Discarded
+	Discarded,
+	Mixing
 }

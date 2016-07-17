@@ -12,15 +12,45 @@ public class LightiningSpell : SpellBase {
 		};
 	}
 
-	private void LightiningBolt(Player target, Player source) {
-		Debug.Log ("LightningBolt");
+	private SpellResponse LightiningBolt(Player target, Player source) {
+		damage = 5;
+
+		if(target.Debuffs.IsWet) {
+			damage += 3;
+		}
+
+		if(!source.goesFirst) {
+			GamePlayController.instance.invertGoesFirstOnTurnEnd = true;
+			source.goesFirst = true;
+			target.goesFirst = false;
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Lightning Bolt", SpellType.Special);
 	}
 
-	private void Thunder(Player target, Player source) {
-		Debug.Log ("Thunder");
+	private SpellResponse Thunder(Player target, Player source) {
+		damage = 5;
+
+		if(target.Debuffs.IsWet) {
+			damage += 3;
+		}
+
+		if (GamePlayController.instance.TakeAChanceUnder (50)) {
+			damage += 3;
+		} else {
+			CauseDamage (3, source);
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Thunder", SpellType.Special);
 	}
 
-	private void Static(Player target, Player source) {
-		Debug.Log ("Static");
+	private SpellResponse Static(Player target, Player source) {
+		source.Debuffs.AddStatics (5);
+
+		return response.ResetResponse ("Static", SpellType.Buff);
 	}
 }

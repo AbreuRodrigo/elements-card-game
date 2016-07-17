@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7f4a362c999377c4485056641f9560f0
-timeCreated: 1465278005
+timeCreated: 1468731067
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -54,6 +54,7 @@ TextureImporter:
     21300094: magmaOrb
     21300096: wildOrb
     21300098: arrowPager
+    21300100: creditsIcon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -389,25 +390,6 @@ TextureImporter:
         - {x: 20.5, y: -14.5}
         - {x: 20.5, y: 18.5}
         - {x: 16.5, y: 20.5}
-    - name: lightOrb
-      rect:
-        serializedVersion: 2
-        x: 1018
-        y: 1170
-        width: 41
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 20.5}
-        - {x: -20.5, y: 17.5}
-        - {x: -20.5, y: -17.5}
-        - {x: -19.5, y: -20.5}
-        - {x: 18.5, y: -20.5}
-        - {x: 20.5, y: -14.5}
-        - {x: 20.5, y: 17.5}
-        - {x: 18.5, y: 20.5}
     - name: natureOrb
       rect:
         serializedVersion: 2
@@ -1052,6 +1034,44 @@ TextureImporter:
         - {x: 18, y: -14}
         - {x: 18, y: 16}
         - {x: 9, y: 20}
+    - name: creditsIcon
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 986
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 37.5}
+        - {x: -37, y: 19.5}
+        - {x: -37, y: -3.5}
+        - {x: -24, y: -37.5}
+        - {x: 33, y: -37.5}
+        - {x: 37, y: -22.5}
+        - {x: 37, y: 25.5}
+        - {x: 11, y: 37.5}
+    - name: lightOrb
+      rect:
+        serializedVersion: 2
+        x: 1018
+        y: 1170
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.5, y: 20}
+        - {x: -20.5, y: 13}
+        - {x: -20.5, y: -12}
+        - {x: -16.5, y: -20}
+        - {x: 16.5, y: -20}
+        - {x: 20.5, y: -15}
+        - {x: 20.5, y: 14}
+        - {x: 10.5, y: 20}
     outline: []
   spritePackingTag: 
   userData: 

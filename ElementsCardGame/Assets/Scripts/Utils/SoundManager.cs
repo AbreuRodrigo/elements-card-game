@@ -21,6 +21,11 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip cardMark;
 	public AudioClip magicDust;
 
+	public AudioClip fireImpact;
+	public AudioClip earthImpact;
+	public AudioClip shadowImpact;
+	public AudioClip bloodImpact;
+
 	public AudioClip menuMusic;
 	public AudioClip battleMusic;
 
@@ -87,6 +92,23 @@ public class SoundManager : MonoBehaviour {
 		PlaySound (magicDust);
 	}
 
+	//IMPACTS
+	public void PlayFireImpact() {
+		PlaySound (fireImpact);
+	}
+
+	public void PlayEarthImpact() {
+		PlaySound (earthImpact);
+	}
+
+	public void PlayShadowImpact() {
+		PlaySound (shadowImpact);
+	}
+
+	public void PlayBloodImpact() {
+		PlaySound (bloodImpact);
+	}
+
 	public void ChangeToMenuMusic() {
 		StartCoroutine(FadeMusicOutAndPlayAnother(menuMusic));
 	}
@@ -96,7 +118,7 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	private void PlaySound (AudioClip clip) {
-		if (clip) {
+		if (clip != null && instance != null) {
 			AudioSource.PlayClipAtPoint (clip, Vector3.zero);
 		}
 	}

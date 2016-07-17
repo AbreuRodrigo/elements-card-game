@@ -12,15 +12,33 @@ public class LightSpell : SpellBase {
 		};
 	}
 
-	private void BlindingLight(Player target, Player source) {
-		Debug.Log ("BlindingLight");
+	private SpellResponse BlindingLight(Player target, Player source) {
+		damage = 5;		
+
+		if(target.Debuffs.IsCursed) {
+			damage += 3;
+		}
+
+		if (GamePlayController.instance.TakeAChanceUnder (50)) {
+			target.Debuffs.AddBlind ();
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Blinding Light", SpellType.Special);
 	}
 
-	private void Purge(Player target, Player source) {
-		Debug.Log ("Purge");
+	private SpellResponse Purge(Player target, Player source) {
+		if(source.Debuffs.IsCursed) {
+			source.Debuffs.RemoveCurse ();
+			HealDamage (3, source);
+		}
+
+		return response.ResetResponse ("Purge", SpellType.Cure);
 	}
 
-	private void InnerGlow(Player target, Player source) {
-		Debug.Log ("InnerGlow");
+	private SpellResponse InnerGlow(Player target, Player source) {
+		HealDamage (6, source);
+		return response.ResetResponse ("Inner Glow", SpellType.Heal);
 	}
 }

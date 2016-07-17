@@ -93,7 +93,7 @@ public class DeckManager : MonoBehaviour {
 		case CardElement.Water:
 			return ((GameObject)(Instantiate (cardWater, dotPos, Quaternion.identity))).GetComponent<Card> ();
 		case CardElement.Wild:
-			return ((GameObject)(Instantiate (cardDark, dotPos, Quaternion.identity))).GetComponent<Card> ();
+			return ((GameObject)(Instantiate (cardWild, dotPos, Quaternion.identity))).GetComponent<Card> ();
 		case CardElement.Magma:
 			return ((GameObject)(Instantiate (cardMagma, dotPos, Quaternion.identity))).GetComponent<Card> ();
 		case CardElement.Chaos:

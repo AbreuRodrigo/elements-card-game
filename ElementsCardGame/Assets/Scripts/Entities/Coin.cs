@@ -19,32 +19,6 @@ public class Coin : MonoBehaviour {
 		get { return fadedOut; }
 	}
 
-	void Update() {
-		/*if(!hasFlipped) {
-			if (!Application.isMobilePlatform) {
-				if (Input.GetMouseButtonDown(0)) {
-					FlipCoinByClick (Input.mousePosition);
-				}
-			} else {
-				if (Input.touches != null && Input.touches.Length > 0) {
-					Touch t = Input.touches [0];
-
-					if (t.phase.Equals (TouchPhase.Began)) {
-						FlipCoinByClick (Input.mousePosition);
-					}
-				}
-			}
-		}*/
-	}
-
-	private void FlipCoinByClick(Vector3 point) {
-		RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (point), Vector2.zero);
-
-		if (hit.collider != null && "Coin".Equals (hit.collider.gameObject.tag)) {
-			FlipCoin ();
-		}
-	}
-
 	public void FlipCoin() {
 		hasFlipped = false;
 
@@ -70,10 +44,17 @@ public class Coin : MonoBehaviour {
 		Disable ();
 	}
 
+	//This methode is called from the coin animator, just after the animation finishes
 	public void ForceCoinNotifyGameControllerTheResult() {
 		hasFlipped = true;
 
 		GamePlayController.instance.NotificationFromCoinFlip (lastResult);
+	}
+
+	public void Idle() {
+		if (myAnimator != null) {
+			myAnimator.Play ("Idle");
+		}
 	}
 
 	private void FlipCoinForSword() {

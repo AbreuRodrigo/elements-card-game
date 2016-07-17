@@ -12,15 +12,43 @@ public class EarthSpell : SpellBase {
 		};
 	}
 
-	private void RockPunch(Player target, Player source) {
-		Debug.Log ("RockPunch");
+	private SpellResponse RockPunch(Player target, Player source) {
+		damage = 5;
+
+		if(target.Debuffs.IsFrozen) {
+			damage += 3;
+		}
+
+		response.ResetResponse ("Rock Punch", SpellType.Melee);
+
+		CauseDamage (damage, target);
+
+		if(GamePlayController.instance.TakeAChanceUnder(50)) {
+			target.Debuffs.AddKnockDown ();
+		}
+
+		return response;
 	}
 
-	private void BoulderWall(Player target, Player source) {
-		Debug.Log ("BoulderWall");
+	private SpellResponse BoulderWall(Player target, Player source) {
+		source.protectionType = SpellType.Melee;
+		return response.ResetResponse ("Boulder Wall", SpellType.Shield);
 	}
 
-	private void QuakeStomp(Player target, Player source) {
-		Debug.Log ("QuakeStomp");
+	private SpellResponse QuakeStomp(Player target, Player source) {
+		damage = 3;
+
+		if (target.Debuffs.IsFrozen) {
+			damage += 3;
+		}
+
+		if(!source.goesFirst && target.goesFirst && target.WasLastSpellMelee()) {
+			damage += (source.lastDamageReceived * 2);
+			target.Debuffs.AddKnockDown ();
+		}
+
+		CauseDamage(damage, target);
+
+		return response.ResetResponse ("Quake Stomp", SpellType.Melee);
 	}
 }

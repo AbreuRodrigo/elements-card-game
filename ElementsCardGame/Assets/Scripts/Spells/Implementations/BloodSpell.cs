@@ -12,40 +12,46 @@ public class BloodSpell : SpellBase {
 		};
 	}
 
-	private void HeavyStrike(Player target, Player source) {
-		Debug.Log ("HeavyStrike");
-
-		CauseDamage (5, target);
+	private SpellResponse HeavyStrike(Player target, Player source) {
+		damage = 5;
 
 		if (target.Debuffs.IsBleeding) {
-			CauseDamage (3, target);
+			damage += 3;
 			target.Debuffs.RemoveBleed ();
 		} else {
 			target.Debuffs.AddBleed ();
 		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Heavy Strike", SpellType.Melee);
 	}
 
-	private void VampiricStrike(Player target, Player source) {
-		Debug.Log ("VampiricStrike");
-
-		if(target.Debuffs.IsBleeding) {
+	private SpellResponse VampiricStrike(Player target, Player source) {
+		if (target.Debuffs.IsBleeding) {
 			extraDamage = target.Debuffs.Bleed.ElapsedTurns;
 
 			CauseDamage (1 + extraDamage, target);
 			HealDamage (3 + extraDamage, source);
 
-			target.Debuffs.RemoveBleed();
+			target.Debuffs.RemoveBleed ();
 		}
+
+		return response.ResetResponse ("Vampiric Strike", SpellType.Melee);
 	}
 
-	private void Impale(Player target, Player source) {
-		Debug.Log ("Impale");
-
-		CauseDamage (5, target);
+	private SpellResponse Impale(Player target, Player source) {
+		damage = 5;
 
 		if(target.Debuffs.IsBleeding) {
-			extraDamageInDice = true;
-			extraDamage = 1;
+			GamePlayController.instance.Roll1Die ();
+			damage += GamePlayController.instance.Dice1Result;
 		}
+
+		response.ResetResponse ("Impale", SpellType.Melee);
+
+		CauseDamage (damage, target);
+
+		return response;
 	}
 }

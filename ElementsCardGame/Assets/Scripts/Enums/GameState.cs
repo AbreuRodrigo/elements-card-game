@@ -2,5 +2,6 @@
 	HeadsAndTailsState,
 	MixedCardSetupState,
 	GamePlayState,
-	GameOverState
+	GameOverState,
+	ChangingSavedCardStated
 }

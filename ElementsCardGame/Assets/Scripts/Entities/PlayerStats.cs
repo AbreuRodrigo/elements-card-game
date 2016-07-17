@@ -9,8 +9,18 @@ public class PlayerStats : MonoBehaviour {
 	public Animator myAnimator;
 	public Animator goFirstTokenAnimator;
 	public Animator sunBurstGoFirstAnimator;
+	public int nextHPAlteration;
+	public Player player;
+	public DebuffManager debuffManager;
 
 	public Sprite brokenShieldSprite;
+
+	void OnCollisionEnter (Collision obj) {
+		if (obj != null) {
+			ShakePlayerStats ();
+			UpdateHP ();
+		}
+	}
 
 	public void UpdateName(string name) {
 		if(playerNameUI != null && name != null) {
@@ -18,11 +28,11 @@ public class PlayerStats : MonoBehaviour {
 		}
 	}
 
-	public void UpdateHP(int hp) {
+	public void UpdateHP() {
 		if(playerHPUI != null) {
-			playerHPUI.text = hp + "/80";
+			playerHPUI.text = player.HP + "/80";
 
-			if(hp <= 0 && shield != null && brokenShieldSprite != null) {
+			if(player.HP <= 0 && shield != null && brokenShieldSprite != null) {
 				playerHPUI.enabled = false;
 				shield.sprite = brokenShieldSprite;
 			}
@@ -38,6 +48,12 @@ public class PlayerStats : MonoBehaviour {
 	public void HidePlayerStats() {
 		if(myAnimator != null) {
 			myAnimator.Play ("Hide");
+		}
+	}
+
+	public void ShakePlayerStats() {
+		if(myAnimator != null) {
+			myAnimator.Play ("Shake");
 		}
 	}
 

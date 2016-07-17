@@ -27,9 +27,27 @@ public class GamePlayController : MonoBehaviour {
 	public ArcaneCircle bluePlayerArcaneCircle;//LocalPlayer
 	public ArcaneCircle redPlayerArcaneCircle;//AI or Opponent when in multiplayer mode
 	public MessageManager messageManager;
+	public SpellTypeEffectManager spellTypeEffectManager;
+	public int currentTurn = 1;
+	public bool invertGoesFirstOnTurnEnd;
 
 	private bool endedTurn;
 	private Card previousCardPlayed;
+
+	private int dice1Result = 0;
+	private int dice2Result = 0;
+	private int dice3Result = 0;
+	private int diceIndex = 0;
+
+	public int Dice1Result {
+		get { return dice1Result; }
+	}
+	public int Dice2Result {
+		get { return dice2Result; }
+	}
+	public int Dice3Result {
+		get { return dice3Result; }
+	}
 
 	void Awake() {
 		if(instance == null) {
@@ -53,6 +71,9 @@ public class GamePlayController : MonoBehaviour {
 
 		GUIController.instance.interactionBlocker.Enable ();
 		GUIController.instance.interactionBlocker.FadeIn ();
+
+		localPlayer.opponent = opponentPlayer;
+		opponentPlayer.opponent = localPlayer;
 	}
 
 	public void PressEndTurnButton() {
@@ -107,17 +128,36 @@ public class GamePlayController : MonoBehaviour {
 
 		if (localPlayer.currentCard != null && localPlayer.currentCard.IsCardStateInHand()) {
 			GUIController.instance.HideCardActionButtons ();
-			localPlayer.savedCard = localPlayer.currentCard;
-			localPlayer.currentCard.PutToSavedState ();
+
+			Card tempCard = localPlayer.currentCard;
+
+			if(localPlayer.savedCard != null &&  localPlayer.savedCard.IsCardStateSaved()) {
+				ChangeToChangingSavedCardState ();
+
+				localPlayer.savedCard.gameObject.SetActive (true);
+				localPlayer.savedCard.MoveMeToCenter ();
+				localPlayer.savedCard.ChangeToInHandState ();
+				localPlayer.currentCard = localPlayer.savedCard;
+
+				GUIController.instance.HideSavedCardButton ();
+			}
+
+			localPlayer.savedCard = tempCard;
+			localPlayer.savedCard.PutToSavedState ();
 		}
 	}
 
 	public void PressPutToMixActionButton() {
 		SoundManager.instance.PlayClickSound ();
 
-		if (localPlayer.currentCard != null && localPlayer.currentCard.IsCardStateMixedSelection ()) {
+		if (localPlayer.currentCard != null) {
 			GUIController.instance.HideCardActionButtons ();
-			localPlayer.currentCard.PutIntoWaitingToMixState ();
+
+			if (localPlayer.currentCard.IsCardStateMixedSelection ()) {				
+				localPlayer.currentCard.PutIntoWaitingToMixState ();
+			}else if(localPlayer.currentCard.IsCardStateInHand()) {
+				StartCoroutine (StartCardMixingProcess());
+			}
 		}
 	}
 
@@ -148,20 +188,36 @@ public class GamePlayController : MonoBehaviour {
 		}		
 	}
 
+	public void ViewMixedCard() {
+		if(localPlayer != null && !IsMixedCardSetupState()) {
+			GUIController.instance.HideMixedCardButton ();
+
+			if(localPlayer.currentCard != null) {
+				localPlayer.hiddenCard = localPlayer.currentCard;
+				localPlayer.hiddenCard.gameObject.SetActive (false);
+			}
+
+			if(localPlayer.mixedCard != null) {
+				localPlayer.currentCard = localPlayer.mixedCard;
+				localPlayer.mixedCard = null;
+				localPlayer.currentCard.gameObject.SetActive (true);
+				localPlayer.currentCard.ChangeToMixedSelectionState ();
+				localPlayer.currentCard.MoveMeToCenter ();
+			}
+		}
+	}
+
+	public void ViewSavedCard() {
+	
+	}
+
 	//Notificated by coin when whenever it's flipped
 	public void NotificationFromCoinFlip(CoinResult result) {
 		if(IsHeadsAndTailsState()) {
-			if(localPlayer != null && localPlayer.stats != null) {
-				localPlayer.stats.ShowPlayerStats ();
-			}
-
-			if(opponentPlayer != null && opponentPlayer.stats != null) {
-				opponentPlayer.stats.ShowPlayerStats ();
-			}
-
-			ChangeGameStateByFirstCoinFlippingResult (result);
-			
-			GUIController.instance.ShowCardBases ();
+			CoinNotificationForHeadsAndTailState (result);
+		}
+		if(IsGamePlayState()) {
+			Debug.Log (result);
 		}
 
 		if(result.Equals(CoinResult.Sword)) {
@@ -171,8 +227,36 @@ public class GamePlayController : MonoBehaviour {
 		}
 	}
 
-	public void NotificationFromDiceRoll(int diceFace) {
-		
+	private void CoinNotificationForHeadsAndTailState(CoinResult result) {
+		if(localPlayer != null && localPlayer.stats != null) {
+			localPlayer.stats.ShowPlayerStats ();
+		}
+
+		if(opponentPlayer != null && opponentPlayer.stats != null) {
+			opponentPlayer.stats.ShowPlayerStats ();
+		}
+
+		ChangeGameStateByFirstCoinFlippingResult (result);
+
+		GUIController.instance.ShowCardBases ();
+	}
+
+	public void NotificationFromDiceRoll1(int diceFace) {
+		dice1Result = diceFace;
+	}
+
+	public void NotificationFromDiceRoll2(int diceFace) {
+		dice2Result = diceFace;
+	}
+
+	public void NotificationFromDiceRoll3(int diceFace) {
+		dice3Result = diceFace;
+	}
+
+	public void ResetDice() {
+		dice1Result = 0;
+		dice2Result = 0;
+		dice3Result = 0;
 	}
 
 	//PROCESS CARD SPELLS IN GAME
@@ -201,7 +285,28 @@ public class GamePlayController : MonoBehaviour {
 		}
 	}
 
-	public void RollDice() {
+	public bool TakeAChanceUnder(int chance) {
+		return Random.Range (0, 100) < chance;
+	}
+
+	public void Roll1Die() {
+		dice1Result = diceManager.AdvancedDieResult ();
+		diceManager.Roll1Die (dice1Result);
+	}
+
+	public void Roll2Dice() {
+		dice1Result = diceManager.AdvancedDieResult ();
+		dice2Result = diceManager.AdvancedDieResult ();
+
+		diceManager.Roll2Dice (dice1Result, dice2Result);
+	}
+
+	public void Roll3Dice() {
+		dice1Result = diceManager.AdvancedDieResult ();
+		dice2Result = diceManager.AdvancedDieResult ();
+		dice3Result = diceManager.AdvancedDieResult ();
+
+		diceManager.Roll3Dice (dice1Result, dice2Result, dice3Result);
 	}
 
 	public void CastSpell(Card selectedCard, bool hideCards, Player target, Player source) {
@@ -255,7 +360,7 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	private void SetDefaultDeckToLocalPlayer() {
-		DeckPatternManager.instance.BuildDefaultDeck1 (localPlayer);
+		DeckPatternManager.instance.BuildDeckInUse (localPlayer);
 	}
 
 	private void InitializeLocalPlayersDeck() {
@@ -316,6 +421,10 @@ public class GamePlayController : MonoBehaviour {
 		return gameState.Equals (GameState.GameOverState);
 	}
 
+	private bool IsChangingSavedCardState() {
+		return gameState.Equals (GameState.ChangingSavedCardStated);
+	}
+
 	//State Transitions
 	private void ChangeGameStateByFirstCoinFlippingResult(CoinResult result) {
 		if (result.Equals (CoinResult.Shield)) {
@@ -351,29 +460,49 @@ public class GamePlayController : MonoBehaviour {
 		gameState = GameState.GamePlayState;
 	}
 
+	private void ChangeToChangingSavedCardState() {
+		gameState = GameState.ChangingSavedCardStated;
+	}
+
 	public void EndPutToMixedCardPile() {
 		ChangeGameToGamePlayState ();
 		messageManager.ShowDrawACardMessage ();
 
+		if(localPlayer.mixedCard == null && localPlayer.currentCard != null) {
+			localPlayer.mixedCard = localPlayer.currentCard;
+		}
+
 		localPlayer.mixedCard.gameObject.SetActive (false);
 		localPlayer.currentCard = null;
+
+		if(localPlayer.hiddenCard != null) {
+			localPlayer.currentCard = localPlayer.hiddenCard;
+			localPlayer.hiddenCard = null;
+			localPlayer.currentCard.gameObject.SetActive (true);
+			localPlayer.currentCard.Float ();
+		}
 
 		GUIController.instance.ShowMixedCardButton ();
 	}
 
 	public void EndPutToDiscardedCardPile() {
-		
+		localPlayer.attackProtection = null;
+		opponentPlayer.attackProtection = null;
+
+		GUIController.instance.ShowEndTurnButton ();
 	}
 
 	public void EndPutToSavedCardPile() {
+		localPlayer.savedCard.gameObject.SetActive (false);
+
+		if (!IsChangingSavedCardState ()) {
+			localPlayer.currentCard = null;
+			DrawTopCardFromDeck ();
+		}
+
 		ChangeGameToGamePlayState ();
 
-		localPlayer.savedCard.gameObject.SetActive (false);
-		localPlayer.currentCard = null;
-
 		GUIController.instance.ShowSavedCardButton ();
-
-		DrawTopCardFromDeck ();
 	}
 
 	private void ResetPlayersPosition() {
@@ -383,12 +512,50 @@ public class GamePlayController : MonoBehaviour {
 
 	private void RevealOpponentFirst() {
 		opponentPlayer.currentCard.EnemyReveal ();
-		redPlayerArcaneCircle.HideArcaneCircle ();	
+		redPlayerArcaneCircle.HideArcaneCircle ();
 	}
 
 	private void RevealLocalPlayerFirst() {
 		localPlayer.currentCard.LocalPlayerReveal ();
 		bluePlayerArcaneCircle.HideArcaneCircle ();	
+	}
+
+	IEnumerator StartCardMixingProcess() {
+		localPlayer.currentCard.DeselectCard ();
+
+		localPlayer.currentCard.MoveFromInHandToRightAndStartMixing ();
+
+		localPlayer.savedCard.gameObject.SetActive (true);
+
+		GUIController.instance.HideSavedCardButton ();
+
+		localPlayer.savedCard.MoveFromSavedToLeftAndStartMixing ();
+
+		yield return new WaitForSeconds (1.5f);
+
+		localPlayer.currentCard.MoveMeToCenter ();
+		localPlayer.savedCard.MoveMeToCenter ();
+
+		yield return new WaitForSeconds (1);
+
+		ElementEffectManager.instance.InvokeMixedEffectByRequirements (localPlayer.currentCard.element, localPlayer.savedCard.element);
+
+		localPlayer.currentCard.ChangeToDiscardedState ();
+		localPlayer.currentCard.gameObject.SetActive (false);
+
+		localPlayer.savedCard.ChangeToDiscardedState ();
+		localPlayer.savedCard.gameObject.SetActive (false);
+
+		localPlayer.mixedCard.gameObject.SetActive (true);
+		localPlayer.mixedCard.FadeIn ();
+
+		localPlayer.currentCard = localPlayer.mixedCard;
+		localPlayer.currentCard.ChangeToInHandState ();
+
+		localPlayer.savedCard = null;
+		localPlayer.mixedCard = null;
+
+		GUIController.instance.HideMixedCardButton ();
 	}
 
 	IEnumerator ChangeGameToHeadsAndTailsStateRoutine() {
@@ -415,8 +582,51 @@ public class GamePlayController : MonoBehaviour {
 
 	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard, bool hideCards, Player target, Player source) {
 		if(spellManager != null && selectedCard != null) {
-			spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+			SpellResponse response = spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+			bool mockedEffect = source.lastSpellCasted != null && response.mockEffect;
+
+			if (mockedEffect) {//For spell copy
+				SpellResponse mockedResponse = spellManager.CastSpell (
+					source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell, target, source
+				);
+
+				if (spellTypeEffectManager != null) {
+					spellTypeEffectManager.ShowSpellType (mockedResponse.spellType, mockedResponse.spellName, source.currentCard.transform.position);
+				}	
+			} else {//Normal spell flow
+				if (spellTypeEffectManager != null) {
+					spellTypeEffectManager.ShowSpellType (response.spellType, response.spellName, source.currentCard.transform.position);
+				}
+			}
+
+			ElementEffectManager.instance.ThrowElementEffect (
+				mockedEffect ? source.lastSpellCasted.Element : selectedCard.element, 
+				mockedEffect ? source.lastSpellCasted.SelectedSpell : selectedCard.selectedSpell,
+				source, selectedCard.gameObject.transform.position, 
+				GUIController.instance.RectToTransformedPosition(target.shieldRectTransform)
+			);
+
+			if (target.attackProtection != null) {
+				if (!response.spellType.Equals (target.protectionType)) {
+					target.attackProtection.GetComponent<Collider> ().enabled = false;
+				} else {
+					if(target.lastSpellCasted.Element.Equals(CardElement.Earth)) {
+						source.Debuffs.AddKnockDown ();
+					}
+					if(target.lastSpellCasted.Element.Equals(CardElement.Ice)) {
+						source.Debuffs.AddFreeze ();
+					}
+				}
+			}
+
+			if (source.lastSpellCasted == null) {
+				source.lastSpellCasted = new SpellHistoryData (selectedCard.element, selectedCard.selectedSpell);
+			} else {
+				source.lastSpellCasted.Reset (selectedCard.element, selectedCard.selectedSpell);
+			}
 		}
+
+		yield return new WaitForSeconds (1f);
 
 		if(!hideCards) {
 			yield return null;	
@@ -444,8 +654,6 @@ public class GamePlayController : MonoBehaviour {
 		PassTurnPhase ();
 
 		yield return new WaitForSeconds (1);
-
-		GUIController.instance.ShowEndTurnButton ();
 	}
 
 	IEnumerator LocalPlayerGoesFirst() {
@@ -464,8 +672,6 @@ public class GamePlayController : MonoBehaviour {
 		PassTurnPhase ();
 
 		yield return new WaitForSeconds (1);
-
-		GUIController.instance.ShowEndTurnButton ();
 	}
 
 	IEnumerator EndTurnRoutine() {
@@ -480,6 +686,8 @@ public class GamePlayController : MonoBehaviour {
 			PassTurnPhase ();
 			endedTurn = false;
 
+			diceManager.ResetDice ();
+
 			previousCardPlayed = null;
 
 			yield return new WaitForSeconds (0.5f);
@@ -488,6 +696,17 @@ public class GamePlayController : MonoBehaviour {
 
 			localPlayer.currentCard = null;
 			opponentPlayer.currentCard = null;
+
+			currentTurn++;
+
+			localPlayer.EndPlayerTurn ();
+			opponentPlayer.EndPlayerTurn ();
+
+			if(invertGoesFirstOnTurnEnd) {
+				localPlayer.goesFirst = !localPlayer.goesFirst;
+				opponentPlayer.goesFirst = !opponentPlayer.goesFirst;
+				invertGoesFirstOnTurnEnd = false;
+			}
 
 			DrawTopCardFromDeck ();
 		}

@@ -2,5 +2,7 @@
 	Melee,
 	Special,
 	Buff,
-	Cure
+	Cure,
+	Heal,
+	Shield
 }

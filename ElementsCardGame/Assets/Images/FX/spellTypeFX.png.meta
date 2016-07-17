@@ -1,0 +1,229 @@
+fileFormatVersion: 2
+guid: 9bb4af8b4244bbd45a7a72796872f20b
+timeCreated: 1466944631
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: healType
+    21300002: buffType
+    21300004: shieldType
+    21300006: meleeType
+    21300008: cureType
+    21300010: specialType
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: healType
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 745
+        width: 232
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 28, y: 105.5}
+        - {x: 14, y: 93.5}
+        - {x: -15, y: 99.5}
+        - {x: -33, y: 105.5}
+        - {x: -88, y: 105.5}
+        - {x: -114, y: 82.5}
+        - {x: -116, y: 76.5}
+        - {x: -116, y: 3.5}
+        - {x: -100, y: -20.5}
+        - {x: -11, y: -105.5}
+        - {x: 3, y: -105.5}
+        - {x: 78, y: -47.5}
+        - {x: 116, y: -3.5}
+        - {x: 116, y: 79.5}
+        - {x: 90, y: 105.5}
+    - name: buffType
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 722
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3, y: 128}
+        - {x: -3, y: 128}
+        - {x: -128, y: 3}
+        - {x: -128, y: -3}
+        - {x: -66, y: -3}
+        - {x: -66, y: -128}
+        - {x: 67, y: -128}
+        - {x: 67, y: -3}
+        - {x: 128, y: -3}
+        - {x: 128, y: 3}
+    - name: shieldType
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 412
+        width: 221
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 103.5, y: 3}
+        - {x: 110.5, y: 39}
+        - {x: 110.5, y: 104}
+        - {x: 44.5, y: 119}
+        - {x: 18.5, y: 128}
+        - {x: -13.5, y: 128}
+        - {x: -110.5, y: 104}
+        - {x: -110.5, y: 21}
+        - {x: -108.5, y: -2}
+        - {x: -60.5, y: -94}
+        - {x: -22.5, y: -124}
+        - {x: -10.5, y: -128}
+        - {x: 12.5, y: -128}
+        - {x: 35.5, y: -117}
+        - {x: 73.5, y: -71}
+        - {x: 86.5, y: -42}
+    - name: meleeType
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 393
+        width: 220
+        height: 295
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 110, y: 42.5}
+        - {x: 92, y: 71.5}
+        - {x: 52, y: 109.5}
+        - {x: 4, y: 140.5}
+        - {x: -12, y: 147.5}
+        - {x: -28, y: 147.5}
+        - {x: -70, y: 97.5}
+        - {x: -110, y: 39.5}
+        - {x: -110, y: 18.5}
+        - {x: -108, y: 11.5}
+        - {x: -45, y: -74.5}
+        - {x: -57, y: -143.5}
+        - {x: -56, y: -147.5}
+        - {x: 64, y: -147.5}
+        - {x: 70, y: -78.5}
+        - {x: 88, y: -55.5}
+        - {x: 110, y: 24.5}
+    - name: cureType
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 68
+        width: 248
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40, y: 119}
+        - {x: 38, y: 124}
+        - {x: -40, y: 124}
+        - {x: -121, y: 42}
+        - {x: -124, y: 38}
+        - {x: -124, y: -37}
+        - {x: -40, y: -119}
+        - {x: -38, y: -124}
+        - {x: 37, y: -124}
+        - {x: 119, y: -40}
+        - {x: 124, y: -38}
+        - {x: 124, y: 37}
+    - name: specialType
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 21
+        width: 257
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 110.5, y: 3.5}
+        - {x: 61.5, y: 70.5}
+        - {x: -11.5, y: 149.5}
+        - {x: -28.5, y: 149.5}
+        - {x: -42.5, y: 104.5}
+        - {x: -39.5, y: 81.5}
+        - {x: -35.5, y: 74.5}
+        - {x: -76.5, y: 71.5}
+        - {x: -113.5, y: 27.5}
+        - {x: -128.5, y: -27.5}
+        - {x: -128.5, y: -125.5}
+        - {x: -91.5, y: -172.5}
+        - {x: 38.5, y: -172.5}
+        - {x: 42.5, y: -171.5}
+        - {x: 88.5, y: -113.5}
+        - {x: 128.5, y: -19.5}
+        - {x: 128.5, y: -5.5}
+      - - {x: 35.5, y: 170.5}
+        - {x: 14.5, y: 170.5}
+        - {x: 9.5, y: 156.5}
+        - {x: 9.5, y: 104.5}
+        - {x: 27.5, y: 92.5}
+        - {x: 38.5, y: 92.5}
+        - {x: 45.5, y: 104.5}
+        - {x: 45.5, y: 123.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

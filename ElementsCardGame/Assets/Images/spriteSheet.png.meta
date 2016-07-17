@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9121ace6f2e92e740a87134d6ed41695
-timeCreated: 1463657858
+timeCreated: 1468732955
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -98,10 +98,12 @@ TextureImporter:
     21300182: enemyGoesFirstMessage
     21300184: cardMixAction
     21300186: cardSaveAction
+    21300188: lightningBuff
+    21300190: waterBuff
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -144,7 +146,7 @@ TextureImporter:
   buildTargetSettings:
   - buildTarget: Android
     maxTextureSize: 2048
-    textureFormat: -3
+    textureFormat: -1
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:
@@ -1023,13 +1025,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -22, y: 31.5}
-        - {x: -31, y: 20.5}
-        - {x: -31, y: -20.5}
-        - {x: -14, y: -31.5}
-        - {x: 31, y: -31.5}
-        - {x: 31, y: 27.5}
-        - {x: 21, y: 31.5}
+      - - {x: -27, y: 31.5}
+        - {x: -31, y: 25.5}
+        - {x: -31, y: -28.5}
+        - {x: -22, y: -31.5}
+        - {x: 27, y: -31.5}
+        - {x: 31, y: -26.5}
+        - {x: 31, y: 31.5}
     - name: natureOrb
       rect:
         serializedVersion: 2
@@ -1531,17 +1533,44 @@ TextureImporter:
         - {x: 64, y: -93.5}
         - {x: 64, y: 100.5}
         - {x: 32, y: 117.5}
-    - name: logo
+    - name: lightningBuff
       rect:
         serializedVersion: 2
-        x: 1642
-        y: 689
-        width: 261
-        height: 136
+        x: 1554
+        y: 691
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -4, y: 64}
+        - {x: -64, y: 21}
+        - {x: -64, y: -31}
+        - {x: -50, y: -64}
+        - {x: 38, y: -64}
+        - {x: 64, y: -4}
+        - {x: 64, y: 7}
+        - {x: 3, y: 64}
+    - name: waterBuff
+      rect:
+        serializedVersion: 2
+        x: 1704
+        y: 691
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 64}
+        - {x: -64, y: 21}
+        - {x: -64, y: -31}
+        - {x: -50, y: -64}
+        - {x: 38, y: -64}
+        - {x: 64, y: -4}
+        - {x: 64, y: 7}
+        - {x: 3, y: 64}
     outline: []
   spritePackingTag: 
   userData: 

@@ -20,6 +20,11 @@ public class MenuButtonBehaviour : MonoBehaviour {
 		GameMenuController.instance.LibraryButtonPress ();
 	}
 
+	public void CreditsButtonPress() {
+		PressingAnimation ();
+		GameMenuController.instance.CreditsButtonPress ();
+	}
+
 	public void SinglePlayerButtonPress() {
 		PressingAnimation ();
 		GameMenuController.instance.SinglePlayerButtonPress ();

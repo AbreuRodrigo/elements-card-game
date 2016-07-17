@@ -12,15 +12,50 @@ public class NatureSpell : SpellBase {
 		};
 	}
 
-	private void RoseWhip(Player target, Player source) {
-		Debug.Log ("RoseWhip");
+	private SpellResponse RoseWhip(Player target, Player source) {
+		damage = 5;
+
+		if(target.Debuffs.IsBleeding) {
+			damage += 3;
+		}
+		if (GamePlayController.instance.TakeAChanceUnder (50)) {
+			HealDamage (3, source);
+		} else {
+			target.Debuffs.AddBleed ();
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Rose Whip", SpellType.Melee);
 	}
 
-	private void PoisonIvy(Player target, Player source) {
-		Debug.Log ("PoisonIvy");
+	private SpellResponse PoisonIvy(Player target, Player source) {
+		damage = 5;
+
+		if(target.Debuffs.IsBleeding) {
+			damage += 3;
+		}
+
+		if (target.Debuffs.IsPoisoned) {
+			target.Debuffs.RemovePoison ();
+		} else {
+			target.Debuffs.AddPoison ();
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Poison Ivy", SpellType.Special);
 	}
 
-	private void HerbalMedicine(Player target, Player source) {
-		Debug.Log ("HerbalMedicine");
+	private SpellResponse HerbalMedicine(Player target, Player source) {
+		if(source.Debuffs.IsPoisoned || source.Debuffs.IsBleeding) {
+
+			source.Debuffs.RemovePoison ();
+			source.Debuffs.RemoveBleed ();
+
+			HealDamage (3, source);
+		}
+
+		return response.ResetResponse ("Herbal Medicine", SpellType.Cure);
 	}
 }

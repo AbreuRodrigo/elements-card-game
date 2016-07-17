@@ -11,11 +11,46 @@ public class MagmaSpell : SpellBase {
 		};
 	}
 
-	private void LavaBlast(Player target, Player source) {
-		Debug.Log ("LavaBlast");
+	private SpellResponse LavaBlast(Player target, Player source) {
+		damage = 10;
+
+		if (target.Debuffs.IsBurned) {
+			damage += 5;
+		} else {
+			target.Debuffs.AddBurn (5);
+		}
+
+		if(GamePlayController.instance.TakeAChanceUnder(50)) {
+			target.Debuffs.AddKnockDown ();
+		}
+
+		target.Debuffs.RemoveWet ();
+		target.Debuffs.RemoveFreeze ();
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Lava Blast", SpellType.Special);
 	}
 
-	private void MagmaPunch(Player target, Player source) {
-		Debug.Log ("MagmaPunch");
+	private SpellResponse MagmaPunch(Player target, Player source) {
+		damage = 10;
+
+		if(target.Debuffs.IsBurned) {
+			damage += 5;
+		}
+
+		target.Debuffs.AddKnockDown ();
+
+		if(GamePlayController.instance.TakeAChanceUnder(50)) {
+			if (target.Debuffs.IsBurned) {
+				target.Debuffs.RemoveBurn ();
+			} else {
+				target.Debuffs.AddBurn (0);
+			}
+		}
+
+		CauseDamage (damage, target);
+
+		return response.ResetResponse ("Magma Punch", SpellType.Melee);
 	}
 }

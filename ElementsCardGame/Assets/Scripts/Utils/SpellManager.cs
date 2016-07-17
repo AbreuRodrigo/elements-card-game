@@ -17,7 +17,7 @@ public class SpellManager : MonoBehaviour {
 	private ChaosSpell chaosSpell;
 	private ZombieSpell zombieSpell;
 
-	Dictionary<CardElement, SpellBase> spellByElement;
+	private Dictionary<CardElement, SpellBase> spellByElement;
 
 	void Awake() {
 		bloodSpell = new BloodSpell ();
@@ -51,7 +51,7 @@ public class SpellManager : MonoBehaviour {
 		};
 	}
 
-	public void CastSpell(CardElement element, SpellSelection selection, Player target, Player source) {
-		spellByElement [element].CastSpell (selection, target, source);
+	public SpellResponse CastSpell(CardElement element, SpellSelection selection, Player target, Player source) {
+		return spellByElement [element].CastSpell (selection, target, source);
 	}
 }

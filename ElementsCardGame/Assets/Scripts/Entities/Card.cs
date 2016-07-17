@@ -11,6 +11,10 @@ public class Card : MonoBehaviour {
 	public CardState state = CardState.OnDeck;
 	public SpellSelection selectedSpell;
 
+	[Header("Mixed Requirements")]
+	public CardElement elementA;
+	public CardElement elementB;
+
 	private bool underMovement;
 
 	[Header("Conditions")]
@@ -118,6 +122,14 @@ public class Card : MonoBehaviour {
 		return state.Equals (CardState.Discarded);
 	}
 
+	public bool IsRequirementA(CardElement element) {
+		return elementA != null && element.Equals(elementA);
+	}
+
+	public bool IsRequirementB(CardElement element) {
+		return elementB != null && element.Equals(elementB);
+	}
+
 	public void SelectCard() {
 		if(!selected) {
 			selected = true;
@@ -196,15 +208,45 @@ public class Card : MonoBehaviour {
 		SoundManager.instance.PlayCardMoveSound ();
 	}
 
-	private void EndPutToMixedCardPile() { 
+	public void PutToCenter() {
+		state = CardState.InHand;
+		Float ();
+	}
+
+	public void MoveFromInHandToRightAndStartMixing() {
+		if(state.Equals(CardState.InHand)) {
+			myAnimator.enabled = false;
+			state = CardState.Mixing;
+
+			MoveCardToTargetPositionWithITween ("easeInQuint", new Vector3(2.7f, 0, 0), 0.8f, 0, true, "");
+			ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 0, true, "");
+
+			SoundManager.instance.PlayCardMoveSound ();
+		}
+	}
+
+	public void MoveFromSavedToLeftAndStartMixing() {
+		if(state.Equals(CardState.Saved)) {
+			myAnimator.enabled = false;
+			state = CardState.Mixing;
+
+			MoveCardToTargetPositionWithITween ("easeInQuint", new Vector3(-2.7f, 0, 0), 1f, 0, true, "");
+			ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 0, true, "");
+			RotateCardToTargetAngleWithITween ("easeInQuint", new Vector3(0, 180, 0), 0.8f, 0, true, "");
+
+			SoundManager.instance.PlayCardMoveSound ();
+		}
+	}
+
+	private void EndPutToMixedCardPile() {
 		GamePlayController.instance.EndPutToMixedCardPile ();
 	}
 
 	private void EndPutToDiscardedCardPile() {
-		GamePlayController.instance.EndPutToDiscardedCardPile ();
 		GUIController.instance.ShowDiscardedCardButton ();
 
 		ChangeToDiscardedState ();
+		GamePlayController.instance.EndPutToDiscardedCardPile ();
 
 		gameObject.SetActive (false);
 	}
@@ -217,7 +259,6 @@ public class Card : MonoBehaviour {
 		if(myAnimator != null) {
 			myAnimator.enabled = true;
 			myAnimator.Play ("Floating");
-			SoundManager.instance.PlayCardMoveSound ();
 		}
 	}
 
@@ -234,6 +275,13 @@ public class Card : MonoBehaviour {
 			myAnimator.enabled = true;
 			myAnimator.Play ("LocalPlayerReveal");
 			SoundManager.instance.PlayCardMoveSound ();
+		}
+	}
+
+	public void FadeIn() {
+		if(myAnimator != null) {
+			myAnimator.enabled = true;
+			myAnimator.Play ("FadeIn");
 		}
 	}
 

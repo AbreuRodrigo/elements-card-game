@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class MessageManager : MonoBehaviour {
-	private const string DRAW_A_CARD_MESSAGE = "Draw a card by clicking the deck button in the right.";
+	private const string DRAW_A_CARD_MESSAGE = "Draw a card by clicking the deck button on the right.";
 	private const string THIS_IS_YOUR_MIXED_CARD = "This is your mixed card, put it aside to the mixed pile.";
 	private const string KICKSTARTER = "Please, consider donating to our Kickstarter campaign to make this option possible!";
 
