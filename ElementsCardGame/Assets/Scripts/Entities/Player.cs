@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	public Player opponent;
 	public int lastDamageReceived;
 	public bool skipNextTurn;
+	public bool skipThisTurn;
 
 	[SerializeField]
 	[Header("Debuffs")]
@@ -46,6 +47,18 @@ public class Player : MonoBehaviour {
 			if (deck != null) {
 				cards = deck.Cards;
 			}
+		}
+	}
+
+	public bool HasBuff {
+		get {
+			return Debuffs.IsStatic || Debuffs.IsRefreshing;
+		}
+	}
+
+	public bool HasAttackProtection {
+		get {
+			return attackProtection != null;
 		}
 	}
 
@@ -124,6 +137,36 @@ public class Player : MonoBehaviour {
 
 	public bool IsStatic() {
 		return debuffs != null && debuffs.IsStatic;
+	}
+
+	public void DecreaseBurnDebuff() {
+		stats.debuffManager.burnDebuff.DecreaseCounter ();
+	}
+
+	public void DecreaseCurseDebuff() {
+		stats.debuffManager.curseDebuff.DecreaseCounter ();
+	}
+
+	public void DecreaseStaticBuff() {
+		stats.debuffManager.staticBuff.DecreaseCounter ();
+	}
+
+	public void HideBurnDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.burnDebuff.Hide ();
+		}
+	}
+
+	public void HideCurseDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.curseDebuff.Hide ();
+		}
+	}
+
+	public void HideStaticDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.staticBuff.Hide ();
+		}
 	}
 
 	private void InitializePlayerStats() {

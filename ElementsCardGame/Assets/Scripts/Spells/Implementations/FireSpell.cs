@@ -10,9 +10,15 @@ public class FireSpell : SpellBase {
 			{ SpellSelection.Square, Scorch },
 			{ SpellSelection.Rhombus, Overheat }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Fire Ball", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Scorch", SpellType.Special) },
+			{ SpellSelection.Rhombus, new SpellResponse("Overheat", SpellType.Cure) }
+		};
 	}
 
-	private SpellResponse FireBall(Player target, Player source) {
+	private void FireBall(Player target, Player source) {
 		damage = 5;
 
 		if (target.Debuffs.IsBurned) {
@@ -24,11 +30,9 @@ public class FireSpell : SpellBase {
 
 		CauseDamage (damage, target);
 		RemoveFreezeAndWetFromTarget (target);
-
-		return response.ResetResponse ("Fire Ball", SpellType.Special);
 	}
 
-	private SpellResponse Scorch(Player target, Player source) {
+	private void Scorch(Player target, Player source) {
 		damage = 8;
 
 		if (target.Debuffs.IsBurned) {
@@ -40,17 +44,13 @@ public class FireSpell : SpellBase {
 
 		CauseDamage (damage, target);
 		RemoveFreezeAndWetFromTarget (target);
-
-		return response.ResetResponse ("Scorch", SpellType.Special);
 	}
 
-	private SpellResponse Overheat(Player target, Player source) {
+	private void Overheat(Player target, Player source) {
 		if(source.Debuffs.IsFrozen || source.Debuffs.IsWet) {
 			RemoveFreezeAndWetFromTarget (source);
 			HealDamage (3, source);
 		}
-
-		return response.ResetResponse ("Overheat", SpellType.Cure);
 	}
 
 	private void RemoveFreezeAndWetFromTarget(Player target) {

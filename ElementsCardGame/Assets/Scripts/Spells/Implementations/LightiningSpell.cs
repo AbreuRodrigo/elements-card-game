@@ -10,9 +10,15 @@ public class LightiningSpell : SpellBase {
 			{ SpellSelection.Square, Thunder },
 			{ SpellSelection.Rhombus, Static }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Lightning Bolt", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Thunder", SpellType.Special) },
+			{ SpellSelection.Rhombus, new SpellResponse("Static", SpellType.Buff) }
+		};
 	}
 
-	private SpellResponse LightiningBolt(Player target, Player source) {
+	private void LightiningBolt(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsWet) {
@@ -26,11 +32,9 @@ public class LightiningSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Lightning Bolt", SpellType.Special);
 	}
 
-	private SpellResponse Thunder(Player target, Player source) {
+	private void Thunder(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsWet) {
@@ -44,13 +48,9 @@ public class LightiningSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Thunder", SpellType.Special);
 	}
 
-	private SpellResponse Static(Player target, Player source) {
+	private void Static(Player target, Player source) {
 		source.Debuffs.AddStatics (5);
-
-		return response.ResetResponse ("Static", SpellType.Buff);
 	}
 }

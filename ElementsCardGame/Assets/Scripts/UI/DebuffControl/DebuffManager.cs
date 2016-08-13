@@ -63,14 +63,14 @@ public class DebuffManager : MonoBehaviour {
 		};
 	}
 
-	public void AddDebuffMarker(CardElement element) {
+	public void AddDebuffMarker(CardElement element, int duration) {
 		currentMarker = debuffMarkerByElement [element];
-		AddElementMark (element);
+		AddElementMark (element, duration);
 	}
 
-	public void AddBuffMarker(CardElement element) {
+	public void AddBuffMarker(CardElement element, int duration) {
 		currentMarker = buffMarkerByElement [element];
-		AddElementMark (element);
+		AddElementMark (element, duration);
 	}
 
 	public void RemoveDebuffMarker(CardElement element) {
@@ -83,12 +83,12 @@ public class DebuffManager : MonoBehaviour {
 		RemoveElementMark (element);
 	}
 
-	private void AddElementMark(CardElement element) {
+	private void AddElementMark(CardElement element, int duration) {
 		Vector2 p = currentMarker.rect.anchoredPosition;
 		p.x = markerPositions [nextMarkerIndex];
 
 		currentMarker.rect.anchoredPosition = p;
-		currentMarker.Show ();
+		currentMarker.Show (duration);
 		currentMarker.index = nextMarkerIndex;
 
 		activeMarkers.Add(currentMarker);

@@ -8,6 +8,11 @@ public class CurseDebuff : BuffDebuff {
 	}
 
 	public override void ExecuteBuffDebuff(Player host) {
-
+		if(IsActive && host != null) {
+			DecreaseRemainingTurn ();
+			host.DecreaseCurseDebuff ();
+			ElapsedTurns++;
+			host.HideCurseDebuffOnZeroTurnCounters (RemainingTurns);
+		}
 	}
 }

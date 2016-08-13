@@ -10,9 +10,15 @@ public class BloodSpell : SpellBase {
 			{ SpellSelection.Square, VampiricStrike },
 			{ SpellSelection.Rhombus, Impale }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Heavy Strike", SpellType.Melee)},
+			{ SpellSelection.Square, new SpellResponse("Vampiric Strike", SpellType.Melee)},
+			{ SpellSelection.Rhombus, new SpellResponse("Impale", SpellType.Melee, false, true)}
+		};
 	}
 
-	private SpellResponse HeavyStrike(Player target, Player source) {
+	private void HeavyStrike(Player target, Player source) {
 		damage = 5;
 
 		if (target.Debuffs.IsBleeding) {
@@ -23,11 +29,9 @@ public class BloodSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Heavy Strike", SpellType.Melee);
 	}
 
-	private SpellResponse VampiricStrike(Player target, Player source) {
+	private void VampiricStrike(Player target, Player source) {
 		if (target.Debuffs.IsBleeding) {
 			extraDamage = target.Debuffs.Bleed.ElapsedTurns;
 
@@ -36,11 +40,9 @@ public class BloodSpell : SpellBase {
 
 			target.Debuffs.RemoveBleed ();
 		}
-
-		return response.ResetResponse ("Vampiric Strike", SpellType.Melee);
 	}
 
-	private SpellResponse Impale(Player target, Player source) {
+	private void Impale(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsBleeding) {
@@ -48,10 +50,6 @@ public class BloodSpell : SpellBase {
 			damage += GamePlayController.instance.Dice1Result;
 		}
 
-		response.ResetResponse ("Impale", SpellType.Melee);
-
 		CauseDamage (damage, target);
-
-		return response;
 	}
 }

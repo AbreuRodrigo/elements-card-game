@@ -19,7 +19,7 @@ public class DebuffMarker : MonoBehaviour {
 	}
 
 	public void DecreaseCounter() {
-		if(counterUI != null && active) {
+		if(counterUI != null && counterUI.enabled && active) {
 			int value = int.Parse (counterUI.text);
 
 			if(value > 0) {
@@ -28,8 +28,18 @@ public class DebuffMarker : MonoBehaviour {
 		}
 	}
 
-	public void Show() {
+	public void Show(int duration) {
 		active = true;
+
+		if (counterUI != null) {
+			if (duration > 0) {
+				counterUI.enabled = true;
+				counterUI.text = "" + duration;
+			} else {
+				counterUI.enabled = false;
+			}
+		}
+
 		rect.localScale = new Vector3 (1, 1, 1);
 	}
 

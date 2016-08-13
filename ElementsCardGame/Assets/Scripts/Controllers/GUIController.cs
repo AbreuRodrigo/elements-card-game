@@ -31,6 +31,7 @@ public class GUIController : MonoBehaviour {
 	public InteractionBlocker interactionBlocker;
 	public TurnOrderRibbon turnOrderRibbon;
 	public CardActionContainer cardActionContainer;
+	public WildCardActionContainer wildcardActionContainer;
 
 	[Header("Animators")]
 	public Animator savedCardBase;
@@ -119,6 +120,14 @@ public class GUIController : MonoBehaviour {
 
 	public void HideCardActionButtons() {
 		cardActionContainer.HideActions ();
+	}
+
+	public void ShowWildCardActionButtons() {
+		wildcardActionContainer.ShowActions ();
+	}
+
+	public void HideWildCardActionButtons() {
+		wildcardActionContainer.HideActions ();
 	}
 
 	public void FadeOutInteractionBlocker() {

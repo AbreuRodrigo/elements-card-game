@@ -9,9 +9,14 @@ public class MagmaSpell : SpellBase {
 			{ SpellSelection.Circle, LavaBlast },
 			{ SpellSelection.Square, MagmaPunch }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (2) {
+			{ SpellSelection.Circle, new SpellResponse ("Lava Blast", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse ("Magma Punch", SpellType.Melee) }
+		};
 	}
 
-	private SpellResponse LavaBlast(Player target, Player source) {
+	private void LavaBlast(Player target, Player source) {
 		damage = 10;
 
 		if (target.Debuffs.IsBurned) {
@@ -28,11 +33,9 @@ public class MagmaSpell : SpellBase {
 		target.Debuffs.RemoveFreeze ();
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Lava Blast", SpellType.Special);
 	}
 
-	private SpellResponse MagmaPunch(Player target, Player source) {
+	private void MagmaPunch(Player target, Player source) {
 		damage = 10;
 
 		if(target.Debuffs.IsBurned) {
@@ -50,7 +53,5 @@ public class MagmaSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Magma Punch", SpellType.Melee);
 	}
 }

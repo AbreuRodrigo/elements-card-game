@@ -7,6 +7,11 @@ public class StaticBuff : BuffDebuff {
 	}
 
 	public override void ExecuteBuffDebuff(Player host) {
-
+		if(IsActive && host != null) {
+			DecreaseRemainingTurn ();
+			host.DecreaseStaticBuff ();
+			ElapsedTurns++;
+			host.HideStaticDebuffOnZeroTurnCounters (RemainingTurns);
+		}
 	}
 }

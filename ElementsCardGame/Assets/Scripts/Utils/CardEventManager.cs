@@ -35,12 +35,22 @@ public class CardEventManager : MonoBehaviour {
 					if (!game.localPlayer.currentCard.Selected) {
 						game.localPlayer.currentCard.SelectCard ();
 
-						GUIController.instance.ShowCardActionButtons ();
+						if (!game.localPlayer.currentCard.type.Equals (CardType.Wild)) {
+							GUIController.instance.ShowCardActionButtons ();
+						} else {
+							GUIController.instance.ShowWildCardActionButtons ();
+						}
+
 						GUIController.instance.ShowInteractionBlockerHalfFaded ();
 					} else {
 						game.localPlayer.currentCard.DeselectCard ();
 
-						GUIController.instance.HideCardActionButtons ();
+						if (!game.localPlayer.currentCard.type.Equals (CardType.Wild)) {
+							GUIController.instance.HideCardActionButtons ();
+						} else {
+							GUIController.instance.HideWildCardActionButtons ();
+						}
+
 						GUIController.instance.HideInteractionBlocker ();
 					}
 				}

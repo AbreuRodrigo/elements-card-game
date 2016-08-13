@@ -9,9 +9,14 @@ public class ZombieSpell : SpellBase {
 			{ SpellSelection.Circle, InfectedBite },
 			{ SpellSelection.Square, Canibalize }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (2) {
+			{ SpellSelection.Circle, new SpellResponse ("Infected Bite", SpellType.Melee) },
+			{ SpellSelection.Square, new SpellResponse ("Canibalize", SpellType.Melee) }
+		};
 	}
 
-	private SpellResponse InfectedBite(Player target, Player source) {
+	private void InfectedBite(Player target, Player source) {
 		damage = 10;
 
 		if(target.Debuffs.IsBleeding) {
@@ -21,11 +26,9 @@ public class ZombieSpell : SpellBase {
 		target.Debuffs.AddCurse (5);
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Infected Bite", SpellType.Melee);
 	}
 
-	private SpellResponse Canibalize(Player target, Player source) {
+	private void Canibalize(Player target, Player source) {
 		damage = 5;
 		int heal = 5;
 
@@ -38,7 +41,5 @@ public class ZombieSpell : SpellBase {
 
 		CauseDamage (damage, target);
 		HealDamage (heal, source);
-
-		return response.ResetResponse ("Canibalize", SpellType.Melee);
 	}
 }

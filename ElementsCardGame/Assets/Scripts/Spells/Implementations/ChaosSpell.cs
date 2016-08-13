@@ -9,9 +9,14 @@ public class ChaosSpell : SpellBase {
 			{ SpellSelection.Circle, Hellfire },
 			{ SpellSelection.Square, SoulDestroyer }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (2) {
+			{ SpellSelection.Circle, new SpellResponse("HellFire", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Soul Destroyer", SpellType.Special) }
+		};
 	}
 
-	private SpellResponse Hellfire(Player target, Player source) {
+	private void Hellfire(Player target, Player source) {
 		int damage = 10;
 
 		if(target.Debuffs.IsBurned || target.Debuffs.IsCursed) {
@@ -24,11 +29,9 @@ public class ChaosSpell : SpellBase {
 
 		target.Debuffs.RemoveWet ();
 		target.Debuffs.RemoveFreeze ();
-
-		return response.ResetResponse("HellFire", SpellType.Special);
 	}
 
-	private SpellResponse SoulDestroyer(Player target, Player source) {
+	private void SoulDestroyer(Player target, Player source) {
 		int damage = 10;
 
 		if(target.Debuffs.IsCursed) {
@@ -41,6 +44,6 @@ public class ChaosSpell : SpellBase {
 
 		target.Debuffs.AddCurse (5);
 
-		return response.ResetResponse("Soul Destroyer", SpellType.Special);
+		CauseDamage (damage, target);
 	}
 }

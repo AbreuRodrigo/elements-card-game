@@ -21,6 +21,7 @@ public class Card : MonoBehaviour {
 	public bool zoomed;
 	public bool selected;
 	public bool wildCard;
+	public bool elementTransition;
 
 	public bool Zoomed {
 		get { return zoomed; }
@@ -154,7 +155,7 @@ public class Card : MonoBehaviour {
 		ChangeToInGameState ();
 		this.selectedSpell = selectedSpell;
 
-		GamePlayController.instance.PutCardIntoGame ();
+		GamePlayController.instance.PutAiOpponentCardIntoGame ();
 	}
 
 	public void PutIntoWaitingToMixState() {
@@ -295,6 +296,14 @@ public class Card : MonoBehaviour {
 
 	public void ScaleOut() {
 		ScaleCardToTargetSizeWithITween ("linear", new Vector3 (0, 0, 1), 0.5f, 0, IsCardStateInGame (), "");
+	}
+
+	public void DoWildCardElementTransition(CardElement element, Sprite newFrontSprite) {
+		if(myAnimator != null) {
+			myAnimator.enabled = true;
+			myAnimator.Play ("DoElementTransition");
+			SoundManager.instance.PlayCardMoveSound ();
+		}
 	}
 
 	private void PutCardIntoGameAsLocalPlayer() {

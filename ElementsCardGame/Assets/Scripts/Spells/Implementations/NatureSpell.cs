@@ -10,9 +10,15 @@ public class NatureSpell : SpellBase {
 			{ SpellSelection.Square, PoisonIvy },
 			{ SpellSelection.Rhombus, HerbalMedicine }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse ("Rose Whip", SpellType.Melee) },
+			{ SpellSelection.Square, new SpellResponse ("Poison Ivy", SpellType.Special) },
+			{ SpellSelection.Rhombus, new SpellResponse ("Herbal Medicine", SpellType.Cure) }
+		};
 	}
 
-	private SpellResponse RoseWhip(Player target, Player source) {
+	private void RoseWhip(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsBleeding) {
@@ -25,11 +31,9 @@ public class NatureSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Rose Whip", SpellType.Melee);
 	}
 
-	private SpellResponse PoisonIvy(Player target, Player source) {
+	private void PoisonIvy(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsBleeding) {
@@ -43,11 +47,9 @@ public class NatureSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Poison Ivy", SpellType.Special);
 	}
 
-	private SpellResponse HerbalMedicine(Player target, Player source) {
+	private void HerbalMedicine(Player target, Player source) {
 		if(source.Debuffs.IsPoisoned || source.Debuffs.IsBleeding) {
 
 			source.Debuffs.RemovePoison ();
@@ -55,7 +57,5 @@ public class NatureSpell : SpellBase {
 
 			HealDamage (3, source);
 		}
-
-		return response.ResetResponse ("Herbal Medicine", SpellType.Cure);
 	}
 }

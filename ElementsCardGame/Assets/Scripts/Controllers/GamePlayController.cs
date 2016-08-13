@@ -83,7 +83,7 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	public void PressDeckButtonLogics() {
-		if(IsGamePlayState() && localPlayer.currentCard == null) {
+		if(IsGamePlayState() && localPlayer.currentCard == null && !localPlayer.skipThisTurn) {
 			if(turnManager != null && turnManager.IsBeginningPhase()) {
 				SoundManager.instance.PlayClickSound ();
 
@@ -310,14 +310,18 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	public void CastSpell(Card selectedCard, bool hideCards, Player target, Player source) {
-		if(!selectedCard.element.Equals(CardElement.Wild)) {
-			StartCoroutine (CallSpellCastingBySpellSelection (selectedCard, hideCards, target, source));
+		if(selectedCard != null && !source.skipThisTurn) {
+			if(!selectedCard.element.Equals(CardElement.Wild)) {
+				StartCoroutine (CallSpellCastingBySpellSelection (selectedCard, hideCards, target, source));
+			}
 		}
 	}
 
-	public void PutCardIntoGame() {
+	public void PutAiOpponentCardIntoGame() {
 		if(IsHumanVSMachineGameMode()) {
-			aiAgent.AIDrawTopCardFromDeck ();
+			if (!opponentPlayer.skipThisTurn) {
+				aiAgent.AIDrawTopCardFromDeck ();
+			}
 		}
 	}
 
@@ -360,6 +364,7 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	private void SetDefaultDeckToLocalPlayer() {
+		//DeckPatternManager.instance.BuildWaterDeck (localPlayer);
 		DeckPatternManager.instance.BuildDeckInUse (localPlayer);
 	}
 
@@ -374,6 +379,7 @@ public class GamePlayController : MonoBehaviour {
 	private void InitializeAIDeckOnHumanVSMachineGameMode() {
 		if(IsHumanVSMachineGameMode() && opponentPlayer != null) {
 			DeckPatternManager.instance.BuildDefaultDeck1 (opponentPlayer);
+			//DeckPatternManager.instance.BuildWaterDeck (opponentPlayer);
 
 			if (opponentPlayer.Deck != null) {
 				DeckManager.instance.ShufflePlayersCurrentDeck (opponentPlayer.Deck);
@@ -511,12 +517,16 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	private void RevealOpponentFirst() {
-		opponentPlayer.currentCard.EnemyReveal ();
+		if (opponentPlayer.currentCard != null) {
+			opponentPlayer.currentCard.EnemyReveal ();
+		}
 		redPlayerArcaneCircle.HideArcaneCircle ();
 	}
 
 	private void RevealLocalPlayerFirst() {
-		localPlayer.currentCard.LocalPlayerReveal ();
+		if (localPlayer.currentCard != null) {
+			localPlayer.currentCard.LocalPlayerReveal ();
+		}
 		bluePlayerArcaneCircle.HideArcaneCircle ();	
 	}
 
@@ -582,12 +592,12 @@ public class GamePlayController : MonoBehaviour {
 
 	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard, bool hideCards, Player target, Player source) {
 		if(spellManager != null && selectedCard != null) {
-			SpellResponse response = spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+			SpellResponse response = spellManager.PreviewSpell (selectedCard.element, selectedCard.selectedSpell);
 			bool mockedEffect = source.lastSpellCasted != null && response.mockEffect;
 
 			if (mockedEffect) {//For spell copy
-				SpellResponse mockedResponse = spellManager.CastSpell (
-					source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell, target, source
+				SpellResponse mockedResponse = spellManager.PreviewSpell (
+					source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell
 				);
 
 				if (spellTypeEffectManager != null) {
@@ -606,23 +616,39 @@ public class GamePlayController : MonoBehaviour {
 				GUIController.instance.RectToTransformedPosition(target.shieldRectTransform)
 			);
 
-			if (target.attackProtection != null) {
-				if (!response.spellType.Equals (target.protectionType)) {
-					target.attackProtection.GetComponent<Collider> ().enabled = false;
-				} else {
-					if(target.lastSpellCasted.Element.Equals(CardElement.Earth)) {
-						source.Debuffs.AddKnockDown ();
-					}
-					if(target.lastSpellCasted.Element.Equals(CardElement.Ice)) {
-						source.Debuffs.AddFreeze ();
-					}
-				}
-			}
-
 			if (source.lastSpellCasted == null) {
 				source.lastSpellCasted = new SpellHistoryData (selectedCard.element, selectedCard.selectedSpell);
 			} else {
 				source.lastSpellCasted.Reset (selectedCard.element, selectedCard.selectedSpell);
+			}
+
+			if (target.HasAttackProtection && !response.bypass) {
+				if (response.spellType.Equals (target.protectionType)) {
+					target.attackProtection.GetComponent<Collider> ().enabled = true;
+
+					if (target.lastSpellCasted.Element.Equals (CardElement.Earth)) {
+						source.Debuffs.AddKnockDown ();
+					}
+					if (target.lastSpellCasted.Element.Equals (CardElement.Ice)) {
+						source.Debuffs.AddFreeze ();
+					}
+				} else {
+					target.attackProtection.GetComponent<Collider> ().enabled = false;
+					spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+
+					if(response.spellType.Equals(SpellType.Melee) && target.IsStatic()) {
+						source.DecreaseHP (2);
+					}
+				}
+			} else {
+				if(mockedEffect) {
+					spellManager.CastSpell (source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell, target, source);
+				}else {
+					spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+				}
+				if(response.spellType.Equals(SpellType.Melee) && target.IsStatic()) {
+					source.DecreaseHP (2);
+				}
 			}
 		}
 
@@ -633,23 +659,31 @@ public class GamePlayController : MonoBehaviour {
 		}else {
 			yield return new WaitForSeconds (1f);
 
-			localPlayer.currentCard.PutIntoDiscardedState ();
-			opponentPlayer.currentCard.ScaleOut ();
+			if (localPlayer.currentCard != null) {
+				localPlayer.currentCard.PutIntoDiscardedState ();
+			}
+			if (opponentPlayer.currentCard != null) {
+				opponentPlayer.currentCard.ScaleOut ();
+			}
 		}
 	}
 
 	IEnumerator OpponentGoesFirst() {
 		yield return new WaitForSeconds (2);
 
-		RevealOpponentFirst ();
-		yield return new WaitForSeconds (1);
-		CastSpell (opponentPlayer.currentCard, false, localPlayer, opponentPlayer);
+		if (!opponentPlayer.skipThisTurn) {
+			RevealOpponentFirst ();
+			yield return new WaitForSeconds (1);
+			CastSpell (opponentPlayer.currentCard, localPlayer.skipThisTurn, localPlayer, opponentPlayer);
+		}
 
 		yield return new WaitForSeconds (0.5f);
 
-		RevealLocalPlayerFirst ();
-		yield return new WaitForSeconds (1);
-		CastSpell(localPlayer.currentCard, true, opponentPlayer, localPlayer);
+		if(!localPlayer.skipThisTurn) {
+			RevealLocalPlayerFirst ();
+			yield return new WaitForSeconds (1);
+			CastSpell(localPlayer.currentCard, true, opponentPlayer, localPlayer);
+		}
 
 		PassTurnPhase ();
 
@@ -659,15 +693,19 @@ public class GamePlayController : MonoBehaviour {
 	IEnumerator LocalPlayerGoesFirst() {
 		yield return new WaitForSeconds (2);
 
-		RevealLocalPlayerFirst ();
-		yield return new WaitForSeconds (1);
-		CastSpell (localPlayer.currentCard, false, opponentPlayer, localPlayer);
+		if (!localPlayer.skipThisTurn) {
+			RevealLocalPlayerFirst ();
+			yield return new WaitForSeconds (1);
+			CastSpell (localPlayer.currentCard, opponentPlayer.skipThisTurn, opponentPlayer, localPlayer);
+		}
 
 		yield return new WaitForSeconds (0.5f);
 
-		RevealOpponentFirst ();
-		yield return new WaitForSeconds (1);
-		CastSpell (opponentPlayer.currentCard, true, localPlayer, opponentPlayer);
+		if (!opponentPlayer.skipThisTurn) {
+			RevealOpponentFirst ();
+			yield return new WaitForSeconds (1);
+			CastSpell (opponentPlayer.currentCard, true, localPlayer, opponentPlayer);
+		}
 
 		PassTurnPhase ();
 
@@ -697,6 +735,13 @@ public class GamePlayController : MonoBehaviour {
 			localPlayer.currentCard = null;
 			opponentPlayer.currentCard = null;
 
+			if(!localPlayer.skipNextTurn && localPlayer.skipThisTurn) {
+				localPlayer.skipThisTurn = false;
+			}
+			if(!opponentPlayer.skipNextTurn && opponentPlayer.skipThisTurn) {
+				opponentPlayer.skipThisTurn = false;
+			}
+
 			currentTurn++;
 
 			localPlayer.EndPlayerTurn ();
@@ -708,7 +753,80 @@ public class GamePlayController : MonoBehaviour {
 				invertGoesFirstOnTurnEnd = false;
 			}
 
-			DrawTopCardFromDeck ();
+			if(!localPlayer.skipNextTurn && !opponentPlayer.skipNextTurn) {
+				DrawTopCardFromDeck ();
+			} else {
+				if (localPlayer.skipNextTurn && !opponentPlayer.skipNextTurn) {
+					StartCoroutine(ApplyLogicsForLocalPlayerSkipCurrentTurn ());
+				} else if (opponentPlayer.skipNextTurn && !localPlayer.skipNextTurn) {
+					StartCoroutine(ApplyLogicsForOpponentPlayerSkipCurrentTurn ());
+				} else { //Otherwise, follows the normal flow
+					SetUpPlayerForSkippingNextTurn(localPlayer);
+					SetUpPlayerForSkippingNextTurn(opponentPlayer);
+
+					currentTurn++;
+
+					DrawTopCardFromDeck ();
+				}
+			}
+		}
+	}
+
+	IEnumerator ApplyLogicsForLocalPlayerSkipCurrentTurn() {
+		SetUpPlayerForSkippingNextTurn (localPlayer);
+
+		GUIController.instance.ShowInteractionBlockerHalfFaded ();
+
+		ProcessSpellsInGame ();
+
+		PutAiOpponentCardIntoGame ();
+
+		yield return new WaitForSeconds (6.5f);
+
+		opponentPlayer.currentCard.ScaleOut ();
+
+		yield return new WaitForSeconds (1f);
+
+		GUIController.instance.ShowEndTurnButton ();
+	}
+
+	IEnumerator ApplyLogicsForOpponentPlayerSkipCurrentTurn() {
+		SetUpPlayerForSkippingNextTurn (opponentPlayer);
+
+		DrawTopCardFromDeck ();
+
+		PassTurnPhase ();
+
+		ProcessSpellsInGame ();
+
+		while(spellsInGame <= 2) {
+			yield return null;
+		}
+
+		yield return new WaitForSeconds (5);
+
+		localPlayer.currentCard.PutIntoDiscardedState ();
+
+		yield return new WaitForSeconds (1);
+
+		GUIController.instance.ShowEndTurnButton ();
+	}
+
+	private void SetUpPlayerForSkippingNextTurn(Player player) {
+		if (player.skipNextTurn) {
+			player.skipThisTurn = true;
+			player.skipNextTurn = false;
+			if (player.IsKnockedDown ()) {
+				player.Debuffs.RemoveKnockDown ();
+			}
+		}
+	}
+
+	private void ClearPlayerTurnSkipping(Player player) {
+		player.skipThisTurn = false;
+		player.skipNextTurn = false;
+		if (player.IsKnockedDown ()) {
+			player.Debuffs.RemoveKnockDown ();
 		}
 	}
 }

@@ -10,9 +10,15 @@ public class LightSpell : SpellBase {
 			{ SpellSelection.Square, Purge },
 			{ SpellSelection.Rhombus, InnerGlow }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse ("Blinding Light", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse ("Purge", SpellType.Cure) },
+			{ SpellSelection.Rhombus, new SpellResponse ("Inner Glow", SpellType.Heal) }
+		};
 	}
 
-	private SpellResponse BlindingLight(Player target, Player source) {
+	private void BlindingLight(Player target, Player source) {
 		damage = 5;		
 
 		if(target.Debuffs.IsCursed) {
@@ -24,21 +30,16 @@ public class LightSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Blinding Light", SpellType.Special);
 	}
 
-	private SpellResponse Purge(Player target, Player source) {
+	private void Purge(Player target, Player source) {
 		if(source.Debuffs.IsCursed) {
 			source.Debuffs.RemoveCurse ();
 			HealDamage (3, source);
 		}
-
-		return response.ResetResponse ("Purge", SpellType.Cure);
 	}
 
-	private SpellResponse InnerGlow(Player target, Player source) {
+	private void InnerGlow(Player target, Player source) {
 		HealDamage (6, source);
-		return response.ResetResponse ("Inner Glow", SpellType.Heal);
 	}
 }

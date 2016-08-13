@@ -10,9 +10,15 @@ public class ShadowSpell : SpellBase {
 			{ SpellSelection.Square, SoulDrain },
 			{ SpellSelection.Rhombus, LifeTap }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Shadow Ball", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Soul Drain", SpellType.Special) },
+			{ SpellSelection.Rhombus, new SpellResponse("Life Tap", SpellType.Special) }
+		};
 	}
 
-	private SpellResponse ShadowBall(Player target, Player source) {
+	private void ShadowBall(Player target, Player source) {
 		damage = 5;
 
 		if (target.Debuffs.IsCursed) {
@@ -24,11 +30,9 @@ public class ShadowSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Shadow Ball", SpellType.Special);
 	}
 
-	private SpellResponse SoulDrain(Player target, Player source) {
+	private void SoulDrain(Player target, Player source) {
 		damage = 3;
 
 		int heal = 3;
@@ -40,11 +44,11 @@ public class ShadowSpell : SpellBase {
 
 		CauseDamage (damage, target);
 		HealDamage (heal, source);
-
-		return response.ResetResponse ("Soul Drain", SpellType.Special);
 	}
 
-	private SpellResponse LifeTap(Player target, Player source) {
+	private void LifeTap(Player target, Player source) {
+		GamePlayController.instance.diceManager.ResetDice ();
+
 		GamePlayController.instance.Roll2Dice ();
 		int r1 = GamePlayController.instance.Dice1Result;
 		int r2 = GamePlayController.instance.Dice2Result;
@@ -59,7 +63,5 @@ public class ShadowSpell : SpellBase {
 
 		target.stats.UpdateHP ();
 		source.stats.UpdateHP ();
-
-		return response.ResetResponse ("Life Tap", SpellType.Special);
 	}
 }

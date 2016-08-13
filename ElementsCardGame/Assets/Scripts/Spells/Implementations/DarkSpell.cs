@@ -10,9 +10,15 @@ public class DarkSpell : SpellBase {
 			{ SpellSelection.Square, Copy },
 			{ SpellSelection.Rhombus, Peek }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Cheap Shot", SpellType.Melee) },
+			{ SpellSelection.Square, new SpellResponse("Copy", SpellType.Special, true) },
+			{ SpellSelection.Rhombus, new SpellResponse("Peek", SpellType.Special) }
+		};
 	}
 
-	private SpellResponse CheapShot(Player target, Player source) {
+	private void CheapShot(Player target, Player source) {
 		int damage = 5;
 
 		if(target.Debuffs.IsKnockedDown) {
@@ -26,17 +32,11 @@ public class DarkSpell : SpellBase {
 			source.goesFirst = true;
 			target.goesFirst = false;
 		}
-
-		return response.ResetResponse("Cheap Shot", SpellType.Melee);
 	}
 
-	private SpellResponse Copy(Player target, Player source) {
-		response.ResetResponse("Copy", SpellType.Special);
-		response.mockEffect = true;
-		return response;
+	private void Copy(Player target, Player source) {
 	}
 
-	private SpellResponse Peek(Player target, Player source) {
-		return response.ResetResponse("Peek", SpellType.Special);
+	private void Peek(Player target, Player source) {
 	}
 }

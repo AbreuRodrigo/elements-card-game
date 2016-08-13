@@ -10,9 +10,15 @@ public class IceSpell : SpellBase {
 			{ SpellSelection.Square, WallOfIce },
 			{ SpellSelection.Rhombus, GlacialBlast }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Ice Shards", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Wall Of Ice", SpellType.Shield) },
+			{ SpellSelection.Rhombus, new SpellResponse("Glacial Blast", SpellType.Special) }
+		};
 	}
 
-	private SpellResponse IceShards(Player target, Player source) {
+	private void IceShards(Player target, Player source) {
 		damage = 5;
 
 		int chanceForFreeze = 50;
@@ -26,15 +32,14 @@ public class IceSpell : SpellBase {
 			target.Debuffs.AddFreeze ();
 		}
 
-		return response.ResetResponse ("Ice Shards", SpellType.Special);
+		CauseDamage (damage, target);
 	}
 
-	private SpellResponse WallOfIce(Player target, Player source) {
+	private void WallOfIce(Player target, Player source) {
 		source.protectionType = SpellType.Special;
-		return response.ResetResponse ("Wall Of Ice", SpellType.Shield);
 	}
 
-	private SpellResponse GlacialBlast(Player target, Player source) {
+	private void GlacialBlast(Player target, Player source) {
 		damage = 3;
 
 		if (target.Debuffs.IsWet) {
@@ -46,7 +51,5 @@ public class IceSpell : SpellBase {
 		}
 
 		CauseDamage(damage, target);
-
-		return response.ResetResponse ("Glacial Blast", SpellType.Special);
 	}
 }

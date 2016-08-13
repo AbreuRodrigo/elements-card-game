@@ -10,9 +10,15 @@ public class WaterSpell : SpellBase {
 			{ SpellSelection.Square, Refresh },
 			{ SpellSelection.Rhombus, HighPressureBlast }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Water Ball", SpellType.Special) },
+			{ SpellSelection.Square, new SpellResponse("Refresh", SpellType.Buff) },
+			{ SpellSelection.Rhombus, new SpellResponse("High Pressure Blast", SpellType.Special) }
+		};
 	}
 
-	private SpellResponse WaterBall(Player target, Player source) {
+	private void WaterBall(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsPoisoned) {
@@ -23,19 +29,15 @@ public class WaterSpell : SpellBase {
 		target.Debuffs.RemoveBurn ();
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("Water Ball", SpellType.Special);
 	}
 
-	private SpellResponse Refresh(Player target, Player source) {
+	private void Refresh(Player target, Player source) {
 		source.Debuffs.AddRefresh ();
 
 		source.Debuffs.RemoveBurn ();
-
-		return response.ResetResponse ("Refresh", SpellType.Buff);
 	}
 
-	private SpellResponse HighPressureBlast(Player target, Player source) {
+	private void HighPressureBlast(Player target, Player source) {
 		damage = 10;
 
 		if(target.Debuffs.IsPoisoned) {
@@ -52,7 +54,5 @@ public class WaterSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-
-		return response.ResetResponse ("High Pressure Blast", SpellType.Special);
 	}
 }

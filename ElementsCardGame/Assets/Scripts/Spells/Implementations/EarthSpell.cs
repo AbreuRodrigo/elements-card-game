@@ -10,32 +10,33 @@ public class EarthSpell : SpellBase {
 			{ SpellSelection.Square, BoulderWall },
 			{ SpellSelection.Rhombus, QuakeStomp }
 		};
+
+		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
+			{ SpellSelection.Circle, new SpellResponse("Rock Punch", SpellType.Melee) },
+			{ SpellSelection.Square, new SpellResponse("Boulder Wall", SpellType.Shield) },
+			{ SpellSelection.Rhombus, new SpellResponse("Quake Stomp", SpellType.Melee) }
+		};
 	}
 
-	private SpellResponse RockPunch(Player target, Player source) {
+	private void RockPunch(Player target, Player source) {
 		damage = 5;
 
 		if(target.Debuffs.IsFrozen) {
 			damage += 3;
 		}
 
-		response.ResetResponse ("Rock Punch", SpellType.Melee);
-
 		CauseDamage (damage, target);
 
 		if(GamePlayController.instance.TakeAChanceUnder(50)) {
 			target.Debuffs.AddKnockDown ();
 		}
-
-		return response;
 	}
 
-	private SpellResponse BoulderWall(Player target, Player source) {
+	private void BoulderWall(Player target, Player source) {
 		source.protectionType = SpellType.Melee;
-		return response.ResetResponse ("Boulder Wall", SpellType.Shield);
 	}
 
-	private SpellResponse QuakeStomp(Player target, Player source) {
+	private void QuakeStomp(Player target, Player source) {
 		damage = 3;
 
 		if (target.Debuffs.IsFrozen) {
@@ -48,7 +49,5 @@ public class EarthSpell : SpellBase {
 		}
 
 		CauseDamage(damage, target);
-
-		return response.ResetResponse ("Quake Stomp", SpellType.Melee);
 	}
 }

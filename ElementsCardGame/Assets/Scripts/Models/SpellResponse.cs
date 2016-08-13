@@ -5,12 +5,12 @@ public class SpellResponse {
 	public string spellName;
 	public SpellType spellType;
 	public bool mockEffect;
+	public bool bypass;
 
-	public SpellResponse ResetResponse(string spellName, SpellType spellType) {
+	public SpellResponse(string spellName, SpellType spellType, bool mockEffect = false, bool bypass = false) {
 		this.spellName = spellName;
 		this.spellType = spellType;
-		this.mockEffect = false;
-
-		return this;
+		this.mockEffect = mockEffect;
+		this.bypass = bypass;
 	}
 }

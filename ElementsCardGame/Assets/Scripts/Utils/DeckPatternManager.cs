@@ -78,6 +78,14 @@ public class DeckPatternManager : MonoBehaviour {
 		}
 	}
 
+	public void BuildWaterDeck(Player player) {
+		if (player != null && player.deck == null) {
+			player.Deck = new Deck ("WaterDeck");
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Water, CardType.Element, 31);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Chaos, CardType.Mixed, 1);
+		}
+	}
+
 	public void BuildZombieDeck(Player player) {
 		if (player != null && player.deck == null) {
 			player.Deck = new Deck ("ZombieDeck");
