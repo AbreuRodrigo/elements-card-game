@@ -6,5 +6,6 @@
 	InGame,
 	Saved,
 	Discarded,
-	Mixing
+	Mixing,
+	Morphing
 }

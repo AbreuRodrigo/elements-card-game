@@ -17,11 +17,15 @@ public class Card : MonoBehaviour {
 
 	private bool underMovement;
 
+	[Header("Morphing Target")]
+	public CardElement targetElement; 
+	public Sprite newFrontSprite;
+	public Sprite newSpriteAura;
+
 	[Header("Conditions")]
 	public bool zoomed;
 	public bool selected;
 	public bool wildCard;
-	public bool elementTransition;
 
 	public bool Zoomed {
 		get { return zoomed; }
@@ -93,6 +97,10 @@ public class Card : MonoBehaviour {
 
 	public void ChangeToWaitingToMixState() {
 		state = CardState.WaitingToMix;
+	}
+
+	public void ChangeToMorphingState() {
+		state = CardState.Morphing;
 	}
 
 	public bool IsCardStateOnDeck() {
@@ -214,6 +222,18 @@ public class Card : MonoBehaviour {
 		Float ();
 	}
 
+	public void MoveFromInHandToMorphing() {
+		if(state.Equals(CardState.InHand) && type.Equals(CardType.Wild)) {
+			myAnimator.enabled = false;
+			state = CardState.Morphing;
+
+			RotateCardToTargetAngleWithITween ("linear", new Vector3(0, 1080, 0), 1.5f, 0, true, "FinishMorph", "none");
+			ScaleCardToTargetSizeWithITween ("linear", new Vector3(1, 1, 0.01f), 0.8f, 0.5f, true, "", "pingPong");
+
+			SoundManager.instance.PlayCardMoveSound ();
+		}
+	}
+
 	public void MoveFromInHandToRightAndStartMixing() {
 		if(state.Equals(CardState.InHand)) {
 			myAnimator.enabled = false;
@@ -237,6 +257,15 @@ public class Card : MonoBehaviour {
 
 			SoundManager.instance.PlayCardMoveSound ();
 		}
+	}
+
+	private void FinishMorph() {
+		this.mySpriteRenderer.sprite = newFrontSprite;
+		this.mySelection.sprite = newSpriteAura;
+		this.element = targetElement;
+		this.type = CardType.Element;
+		wildCard = false;
+		ChangeToInHandState ();
 	}
 
 	private void EndPutToMixedCardPile() {
@@ -298,11 +327,14 @@ public class Card : MonoBehaviour {
 		ScaleCardToTargetSizeWithITween ("linear", new Vector3 (0, 0, 1), 0.5f, 0, IsCardStateInGame (), "");
 	}
 
-	public void DoWildCardElementTransition(CardElement element, Sprite newFrontSprite) {
-		if(myAnimator != null) {
-			myAnimator.enabled = true;
-			myAnimator.Play ("DoElementTransition");
-			SoundManager.instance.PlayCardMoveSound ();
+	public void DoWildCardElementTransition(CardElement element, Sprite newFrontSprite, Sprite newSpriteAura) {
+		if(type.Equals(CardType.Wild)) {
+			this.targetElement = element;
+			this.newFrontSprite = newFrontSprite;
+			this.newSpriteAura = newSpriteAura;
+
+			DeselectCard ();
+			MoveFromInHandToMorphing ();
 		}
 	}
 
@@ -350,7 +382,7 @@ public class Card : MonoBehaviour {
 		}
 	}
 
-	private void ScaleCardToTargetSizeWithITween(string easing, Vector3 target, float timer, float delay, bool condition, string doAfter) {
+	private void ScaleCardToTargetSizeWithITween(string easing, Vector3 target, float timer, float delay, bool condition, string doAfter, string loopType = "none") {
 		if (condition) {
 			myAnimator.enabled = false;
 
@@ -359,7 +391,7 @@ public class Card : MonoBehaviour {
 					"scale", target, 
 					"easetype", easing,
 					"delay", delay,
-					"looptype", "none", 
+					"looptype", loopType, 
 					"oncomplete", doAfter,
 					"time", timer
 				);
@@ -368,16 +400,16 @@ public class Card : MonoBehaviour {
 		}
 	}
 
-	private void RotateCardToTargetAngleWithITween(string easing, Vector3 target, float timer, float delay, bool condition, string doAfter) {
+		private void RotateCardToTargetAngleWithITween(string easing, Vector3 target, float timer, float delay, bool condition, string doAfter, string loopType = "none") {
 		if (condition) {
 			myAnimator.enabled = false;
 
 			Hashtable hash = 
 				iTween.Hash (
-					"rotation", target, 
+					"rotation", target,
 					"easetype", easing,
 					"delay", delay,
-					"looptype", "none", 
+					"looptype", loopType,
 					"oncomplete", doAfter,
 					"time", timer
 				);
