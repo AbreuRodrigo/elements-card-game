@@ -56,8 +56,7 @@ public class SpellManager : MonoBehaviour {
 	}
 
 	public SpellResponse PreviewSpell(CardElement element, SpellSelection selection) {
-		SpellBase spell = spellByElement [element];
-		return spell.PreviewSpell (selection);
+		return spellByElement [element].PreviewSpell (selection);
 	}
 
 	public void CastSpell(CardElement element, SpellSelection selection, Player target, Player source) {

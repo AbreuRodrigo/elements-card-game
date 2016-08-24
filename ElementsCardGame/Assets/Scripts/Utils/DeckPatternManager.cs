@@ -15,7 +15,7 @@ public class DeckPatternManager : MonoBehaviour {
 		if (player != null && player.deck == null) {
 			player.Deck = new Deck ("DefaultDeck1");
 
-			/*DeckManager.instance.AddCardsToDeck (player, CardElement.Blood, CardType.Element, 3);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Blood, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Fire, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Lightning, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Nature, CardType.Element, 3);
@@ -23,8 +23,8 @@ public class DeckPatternManager : MonoBehaviour {
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Water, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Shadow, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Earth, CardType.Element, 3);
-			DeckManager.instance.AddCardsToDeck (player, CardElement.Light, CardType.Element, 3);*/
-			DeckManager.instance.AddCardsToDeck (player, CardElement.Dark, CardType.Element, 30);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Light, CardType.Element, 3);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Dark, CardType.Element, 3);
 
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Magma, CardType.Mixed, 1);
 			DeckManager.instance.AddCardsToDeck (player, player.localPlayer ?  CardElement.Wild : RandomizeWildCard(), CardType.Wild, 1);
