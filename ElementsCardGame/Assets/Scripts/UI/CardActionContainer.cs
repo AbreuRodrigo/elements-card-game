@@ -87,7 +87,7 @@ public class CardActionContainer : MonoBehaviour {
 				DeactivateRhombusAction ();
 				DeactivateSaveAction ();
 				ActivateMixAction ();
-			} else if(player.currentCard.type.Equals(CardType.Element)) {
+			} else if(player.currentCard.type.Equals(CardType.Element) && !player.currentCard.IsWildCard()) {
 				actionConditionProcessor.ProcessConditionsPerElement (player.currentCard.element);
 
 				if (player.savedCard != null && player.mixedCard != null) {
@@ -107,7 +107,7 @@ public class CardActionContainer : MonoBehaviour {
 				DeactivateRhombusAction ();
 				DeactivateSaveAction ();
 				DeactivateMixAction ();
-			} else if(player.currentCard.type.Equals(CardType.Wild)) {
+			} else if(player.currentCard.type.Equals(CardType.Wild) || player.currentCard.IsWildCard()) {
 				ActivateCircleAction ();
 				ActivateSquareAction ();
 				ActivateRhombusAction ();
@@ -175,17 +175,17 @@ public class CardActionContainer : MonoBehaviour {
 		public ActionConditionProcessor(CardActionContainer actionContainer) {
 			this.actionContainer = actionContainer;
 
-			containerActonsPerElement = new Dictionary<CardElement, System.Action>(10) {
+			containerActonsPerElement = new Dictionary<CardElement, System.Action>(11) {
 				{CardElement.Blood, ProcessConditionsForBlood},
-				{CardElement.Fire, ActivateAll},
+				{CardElement.Fire, ProcessConditionsForFire},
 				{CardElement.Water, ActivateAll},
-				{CardElement.Light, ActivateAll},
+				{CardElement.Light, ProcessConditionsForLight},
 				{CardElement.Lightning, ActivateAll},
-				{CardElement.Nature, ActivateAll},
+				{CardElement.Nature, ProcessConditionsForNature},
 				{CardElement.Dark, ProcessConditionsForDark},
 				{CardElement.Shadow, ActivateAll},
-				{CardElement.Ice, ActivateAll},
-				{CardElement.Earth, ActivateAll}
+				{CardElement.Ice, ProcessConditionsForIce},
+				{CardElement.Earth, ProcessConditionsForEarth}
 			};
 		}
 
@@ -204,24 +204,27 @@ public class CardActionContainer : MonoBehaviour {
 			ProcessSaveActionConditions ();
 		}
 
-		/*private void ProcessConditionsForIceAndEarth() {
-			if (actionContainer.currentPlayer.goesFirst) {
-				actionContainer.ActivateSquareAction ();
-				actionContainer.DeactivateRhombusAction ();
+		private void ProcessSaveActionConditions() {
+			if (actionContainer.currentPlayer.Debuffs.IsFrozen) {
+				actionContainer.DeactivateSaveAction ();
 			} else {
-				actionContainer.DeactivateSquareAction ();
-				actionContainer.ActivateRhombusAction ();
+				actionContainer.ActivateSaveAction ();
 			}
+		}
 
+		private void ActivateAll() {
 			actionContainer.ActivateCircleAction ();
+			actionContainer.ActivateSquareAction ();
+			actionContainer.ActivateRhombusAction ();
 			ProcessSaveActionConditions ();
-		}*/
+		}
 
+		//ELEMENTS PROCESSING CONDITIONS
 		private void ProcessConditionsForDark() {
 			if (actionContainer.currentPlayer.lastSpellCasted != null &&
-			   (actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Chaos) ||
-			   actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Magma) ||
-			   actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Zombie))) {
+				(actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Chaos) ||
+					actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Magma) ||
+					actionContainer.currentPlayer.lastSpellCasted.Element.Equals (CardElement.Zombie))) {
 				actionContainer.DeactivateSquareAction ();
 			} else {
 				actionContainer.ActivateSquareAction ();
@@ -237,18 +240,81 @@ public class CardActionContainer : MonoBehaviour {
 			ProcessSaveActionConditions ();
 		}
 
-		private void ProcessSaveActionConditions() {
-			if (actionContainer.currentPlayer.Debuffs.IsFrozen) {
-				actionContainer.DeactivateSaveAction ();
-			} else {
-				actionContainer.ActivateSaveAction ();
+		private void ProcessConditionsForEarth() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateCircleAction ();
+			} else {				
+				actionContainer.ActivateCircleAction ();
 			}
-		}
 
-		private void ActivateAll() {
-			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateRhombusAction ();
+
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessConditionsForFire() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateSquareAction ();
+			} else {				
+				actionContainer.ActivateSquareAction ();
+			}
+
+			actionContainer.ActivateCircleAction ();
+			actionContainer.ActivateRhombusAction ();
+
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessConditionsForIce() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateCircleAction ();
+			} else {				
+				actionContainer.ActivateCircleAction ();
+			}
+
+			actionContainer.ActivateSquareAction ();
+			actionContainer.ActivateRhombusAction ();
+
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessConditionsForLight() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateCircleAction ();
+			} else {				
+				actionContainer.ActivateCircleAction ();
+			}
+
+			actionContainer.ActivateSquareAction ();
+			actionContainer.ActivateRhombusAction ();
+
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessConditionsForLightning() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateSquareAction ();
+			} else {				
+				actionContainer.ActivateSquareAction ();
+			}
+
+			actionContainer.ActivateCircleAction ();
+			actionContainer.ActivateRhombusAction ();
+
+			ProcessSaveActionConditions ();
+		}
+
+		private void ProcessConditionsForNature() {	
+			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
+				actionContainer.DeactivateCircleAction ();
+			} else {				
+				actionContainer.ActivateCircleAction ();
+			}
+
+			actionContainer.ActivateSquareAction ();
+			actionContainer.ActivateRhombusAction ();
+
 			ProcessSaveActionConditions ();
 		}
 	}

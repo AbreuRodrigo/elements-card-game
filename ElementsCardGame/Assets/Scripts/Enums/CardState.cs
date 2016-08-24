@@ -7,5 +7,6 @@
 	Saved,
 	Discarded,
 	Mixing,
-	Morphing
+	Morphing,
+	Peeked
 }

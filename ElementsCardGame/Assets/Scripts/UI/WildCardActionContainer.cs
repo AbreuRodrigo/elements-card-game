@@ -5,93 +5,43 @@ using System.Collections.Generic;
 public class WildCardActionContainer : MonoBehaviour {
 	public Animator myAnimator;
 
-	[Header("Elements")]
+    [Header("Card Prefabs")]
 	[SerializeField]
-	private Sprite blood;
+	private Card blood;
 	[SerializeField]
-	private Sprite dark;
+	private Card dark;
 	[SerializeField]
-	private Sprite earth;
+	private Card earth;
 	[SerializeField]
-	private Sprite fire;
+	private Card fire;
 	[SerializeField]
-	private Sprite ice;
+	private Card ice;
 	[SerializeField]
-	private Sprite light;
+	private Card light;
 	[SerializeField]
-	private Sprite lightning;
+	private Card lightning;
 	[SerializeField]
-	private Sprite nature;
+	private Card nature;
 	[SerializeField]
-	private Sprite shadow;
+	private Card shadow;
 	[SerializeField]
-	private Sprite water;
+	private Card water;
 
-	[Header("Auras")]
-	[SerializeField]
-	private Sprite bloodAura;
-	[SerializeField]
-	private Sprite darkAura;
-	[SerializeField]
-	private Sprite earthAura;
-	[SerializeField]
-	private Sprite fireAura;
-	[SerializeField]
-	private Sprite iceAura;
-	[SerializeField]
-	private Sprite lightAura;
-	[SerializeField]
-	private Sprite lightningAura;
-	[SerializeField]
-	private Sprite natureAura;
-	[SerializeField]
-	private Sprite shadowAura;
-	[SerializeField]
-	private Sprite waterAura;
-
-	private Dictionary<string, CardElement> elementByStringName;
-	private Dictionary<string, Sprite> spriteByStringName;
-	private Dictionary<string, Sprite> auraByStringName;
+	private Dictionary<string, Card> elementByStringName;
 
 	void Start() {
-		elementByStringName = new Dictionary<string, CardElement> (10) {
-			{"Blood", CardElement.Blood},
-			{"Dark", CardElement.Dark},
-			{"Earth", CardElement.Earth},
-			{"Fire", CardElement.Fire},
-			{"Ice", CardElement.Ice},
-			{"Light", CardElement.Light},
-			{"Lightning", CardElement.Lightning},
-			{"Nature", CardElement.Nature},
-			{"Shadow", CardElement.Shadow},
-			{"Water", CardElement.Water}
-		};
-
-		spriteByStringName = new Dictionary<string, Sprite> (10) {
-			{"Blood", blood},
-			{"Dark", dark},
-			{"Earth", earth},
-			{"Fire", fire},
-			{"Ice", ice},
-			{"Light", light},
-			{"Lightning", lightning},
-			{"Nature", nature},
-			{"Shadow", shadow},
-			{"Water", water}
-		};
-
-		auraByStringName = new Dictionary<string, Sprite> (10) {
-			{"Blood", bloodAura},
-			{"Dark", darkAura},
-			{"Earth", earthAura},
-			{"Fire", fireAura},
-			{"Ice", iceAura},
-			{"Light", lightAura},
-			{"Lightning", lightningAura},
-			{"Nature", natureAura},
-			{"Shadow", shadowAura},
-			{"Water", waterAura}
-		};
+		elementByStringName = new Dictionary<string, Card>(10) {
+            {"Blood", blood},
+            {"Dark", dark},
+            {"Earth", earth},
+            {"Fire", fire},
+            {"Ice", ice},
+            {"Light", light},
+            {"Lightning", lightning},
+            {"Nature", nature},
+            {"Shadow", shadow},
+            {"Water", water}
+        };
 	}
 
 	public void ShowActions() {
@@ -107,7 +57,7 @@ public class WildCardActionContainer : MonoBehaviour {
 			HideActions ();
 
 			GamePlayController.instance.localPlayer.currentCard.DoWildCardElementTransition(
-				elementByStringName [element], spriteByStringName[element], auraByStringName[element]
+				elementByStringName [element]
 			);
 		}
 	}

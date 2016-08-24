@@ -23,10 +23,11 @@ public class DeckPatternManager : MonoBehaviour {
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Water, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Shadow, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Earth, CardType.Element, 3);
-			DeckManager.instance.AddCardsToDeck (player, CardElement.Dark, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Light, CardType.Element, 3);*/
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Dark, CardType.Element, 30);
+
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Magma, CardType.Mixed, 1);
-			DeckManager.instance.AddCardsToDeck (player, player.localPlayer ?  CardElement.Wild : RandomizeWildCard(), CardType.Wild, 31);
+			DeckManager.instance.AddCardsToDeck (player, player.localPlayer ?  CardElement.Wild : RandomizeWildCard(), CardType.Wild, 1);
 		}
 	}
 

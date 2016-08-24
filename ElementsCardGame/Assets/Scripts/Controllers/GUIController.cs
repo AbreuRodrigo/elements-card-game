@@ -14,6 +14,9 @@ public class GUIController : MonoBehaviour {
 	public Button endTurnButton;
 	public Image endTurnButtonImage;
 
+	public Button endPeekButton;
+	public Image endPeekButtonImage;
+
 	public Button deckButton;
 
 	public GameObject mixedCardButton;
@@ -61,6 +64,22 @@ public class GUIController : MonoBehaviour {
 			endTurnButton.enabled = false;
 			endTurnButton.gameObject.SetActive (false);
 		}
+	}
+
+	public void ShowPeekingModeButton() {
+		if(endPeekButton != null && !endPeekButton.enabled) {
+			endPeekButton.gameObject.SetActive (true);
+			endPeekButton.enabled = true;
+			endPeekButtonImage.enabled = true;
+		}
+	}
+
+	public void HidePeekingModeButton() {
+		if(endPeekButton != null) {
+			endPeekButtonImage.enabled = false;
+			endPeekButton.enabled = false;
+			endPeekButton.gameObject.SetActive (false);
+		}		
 	}
 
 	public void DeckButtonTurnOn() {

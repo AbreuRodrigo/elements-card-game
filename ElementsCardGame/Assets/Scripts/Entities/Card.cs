@@ -10,6 +10,7 @@ public class Card : MonoBehaviour {
 	public CardType type;
 	public CardState state = CardState.OnDeck;
 	public SpellSelection selectedSpell;
+	private Vector3 savedPosition;
 
 	[Header("Mixed Requirements")]
 	public CardElement elementA;
@@ -18,9 +19,7 @@ public class Card : MonoBehaviour {
 	private bool underMovement;
 
 	[Header("Morphing Target")]
-	public CardElement targetElement; 
-	public Sprite newFrontSprite;
-	public Sprite newSpriteAura;
+	public Card targetElement; 
 
 	[Header("Conditions")]
 	public bool zoomed;
@@ -52,7 +51,7 @@ public class Card : MonoBehaviour {
 	}
 
 	public bool IsWildCard() {
-		return type.Equals (CardType.Wild);
+		return type.Equals (CardType.Wild) || wildCard;
 	}
 
 	public void UpdatePosition(Vector3 p) {
@@ -103,6 +102,10 @@ public class Card : MonoBehaviour {
 		state = CardState.Morphing;
 	}
 
+	public void ChangeToPeekedState() {
+		state = CardState.Peeked;
+	}
+
 	public bool IsCardStateOnDeck() {
 		return state.Equals (CardState.OnDeck);
 	}
@@ -131,12 +134,16 @@ public class Card : MonoBehaviour {
 		return state.Equals (CardState.Discarded);
 	}
 
+	public bool IsCardStatePeeked() {
+		return state.Equals (CardState.Peeked);
+	}
+
 	public bool IsRequirementA(CardElement element) {
-		return elementA != null && element.Equals(elementA);
+		return element.Equals(elementA);
 	}
 
 	public bool IsRequirementB(CardElement element) {
-		return elementB != null && element.Equals(elementB);
+		return element.Equals(elementB);
 	}
 
 	public void SelectCard() {
@@ -210,9 +217,71 @@ public class Card : MonoBehaviour {
 	public void MoveMeToCenter () {
 		myAnimator.enabled = false;
 
+		if(transform.position.y < 0) {
+			transform.localScale = new Vector3 (0.28f, 0.28f, 1);
+		}
+
 		MoveCardToTargetPositionWithITween ("easeInQuint", Vector3.zero, 1f, 0, true, "Float");
 		ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 0, true, "");
 		RotateCardToTargetAngleWithITween ("easeInQuint", new Vector3(0, 180, 0), 0.8f, 0, true, "");
+
+		SoundManager.instance.PlayCardMoveSound ();
+	}
+
+	public void MoveMeToPeekPositionOne (bool flip) {
+		myAnimator.enabled = false;
+
+		SaveCurrentPosition ();
+
+		MoveCardToTargetPositionWithITween ("easeInQuint", new Vector3(-4.3f, 0, 0), 1f, 0, true, "");
+		ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 0, true, "");
+
+		if (flip) {
+			RotateCardToTargetAngleWithITween ("easeInQuint", new Vector3 (0, 180, 0), 0.8f, 0, true, "");
+		}
+
+		SoundManager.instance.PlayCardMoveSound ();
+	}
+
+	public void MoveMeToPeekPositionTwo (bool flip) {
+		myAnimator.enabled = false;
+
+		SaveCurrentPosition ();
+
+		MoveCardToTargetPositionWithITween ("easeInQuint", Vector3.zero, 1f, 0.7f, true, "");
+		ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 0.7f, true, "");
+
+		if (flip) {
+			RotateCardToTargetAngleWithITween ("easeInQuint", new Vector3 (0, 180, 0), 0.8f, 0.7f, true, "");
+		}
+
+		SoundManager.instance.PlayCardMoveSound ();
+	}
+
+	public void MoveMeToPeekPositionThree (bool flip) {
+		myAnimator.enabled = false;
+
+		SaveCurrentPosition ();
+
+		MoveCardToTargetPositionWithITween ("easeInQuint", new Vector3(4.3f, 0, 0), 1f, 1.4f, true, "");
+		ScaleCardToTargetSizeWithITween ("easeInQuint", new Vector3(1, 1, 1), 1f, 1.4f, true, "");
+
+		if (flip) {
+			RotateCardToTargetAngleWithITween ("easeInQuint", new Vector3 (0, 180, 0), 0.8f, 1.4f, true, "");
+		}
+
+		SoundManager.instance.PlayCardMoveSound ();
+	}
+
+	public void RewindToPositionBeforePeek(bool flip, float delay) {
+		myAnimator.enabled = false;
+
+		MoveCardToTargetPositionWithITween ("easeInQuint", savedPosition, 1f, delay, true, "");
+		ScaleCardToTargetSizeWithITween ("easeInQuint", Vector3.zero, 1f, delay, true, "");
+
+		if (flip) {
+			RotateCardToTargetAngleWithITween ("easeInQuint", Vector3.zero, 0.8f, delay, true, "");
+		}
 
 		SoundManager.instance.PlayCardMoveSound ();
 	}
@@ -227,10 +296,10 @@ public class Card : MonoBehaviour {
 			myAnimator.enabled = false;
 			state = CardState.Morphing;
 
-			RotateCardToTargetAngleWithITween ("linear", new Vector3(0, 1080, 0), 1.5f, 0, true, "FinishMorph", "none");
-			ScaleCardToTargetSizeWithITween ("linear", new Vector3(1, 1, 0.01f), 0.8f, 0.5f, true, "", "pingPong");
+			RotateCardToTargetAngleWithITween ("linear", new Vector3(0, 1080, 0), 1.5f, 0, true, "FinishMorph");
+            ScaleCardToTargetSizeWithITween("linear", new Vector3(1, 1, 1), 1f, 0, true, "");
 
-			SoundManager.instance.PlayCardMoveSound ();
+            SoundManager.instance.PlayCardMoveSound ();
 		}
 	}
 
@@ -259,13 +328,27 @@ public class Card : MonoBehaviour {
 		}
 	}
 
-	private void FinishMorph() {
-		this.mySpriteRenderer.sprite = newFrontSprite;
-		this.mySelection.sprite = newSpriteAura;
-		this.element = targetElement;
-		this.type = CardType.Element;
-		wildCard = false;
-		ChangeToInHandState ();
+    public void ActivateMorphedCard() {
+        myAnimator.enabled = false;
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        ChangeToInHandState();
+        wildCard = true;
+        RotateCardToTargetAngleWithITween("linear", new Vector3(0, 180, 0), 0.5f, 0, true, "Float");
+    }
+
+	public void SaveCurrentPosition() {
+		savedPosition = transform.position;
+	}
+
+    private void FinishMorph() {
+        Card morphedCard =  (Card) Instantiate(targetElement, transform.position, transform.rotation);
+        morphedCard.transform.parent = transform.parent;
+        morphedCard.gameObject.SetActive(true);
+        morphedCard.ActivateMorphedCard();
+		GamePlayController.instance.localPlayer.currentCard = morphedCard;
+
+        gameObject.SetActive(false);
 	}
 
 	private void EndPutToMixedCardPile() {
@@ -327,11 +410,9 @@ public class Card : MonoBehaviour {
 		ScaleCardToTargetSizeWithITween ("linear", new Vector3 (0, 0, 1), 0.5f, 0, IsCardStateInGame (), "");
 	}
 
-	public void DoWildCardElementTransition(CardElement element, Sprite newFrontSprite, Sprite newSpriteAura) {
+	public void DoWildCardElementTransition(Card targetElement) {
 		if(type.Equals(CardType.Wild)) {
-			this.targetElement = element;
-			this.newFrontSprite = newFrontSprite;
-			this.newSpriteAura = newSpriteAura;
+			this.targetElement = targetElement;
 
 			DeselectCard ();
 			MoveFromInHandToMorphing ();

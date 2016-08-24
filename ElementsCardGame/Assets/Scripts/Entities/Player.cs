@@ -56,9 +56,27 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public bool HasSavedCard {
+		get { 
+			return savedCard != null;
+		}
+	}
+
 	public bool HasAttackProtection {
 		get {
 			return attackProtection != null;
+		}
+	}
+
+	public void HideCurrentCard() {
+		if(currentCard != null) {
+			currentCard.gameObject.SetActive (false);
+		}
+	}
+
+	public void ShowCurrentCard() {
+		if(currentCard != null) {
+			currentCard.gameObject.SetActive (true);
 		}
 	}
 

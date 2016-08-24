@@ -51,8 +51,13 @@ public class SpellManager : MonoBehaviour {
 		};
 	}
 
+	public SpellResponse PreviewSpell(Card card) {
+		return PreviewSpell (card.element, card.selectedSpell);
+	}
+
 	public SpellResponse PreviewSpell(CardElement element, SpellSelection selection) {
-		return spellByElement [element].PreviewSpell (selection);
+		SpellBase spell = spellByElement [element];
+		return spell.PreviewSpell (selection);
 	}
 
 	public void CastSpell(CardElement element, SpellSelection selection, Player target, Player source) {

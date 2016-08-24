@@ -47,7 +47,7 @@ public class AIAgent : MonoBehaviour {
 	private SpellSelection SelectSpellRandomly() {
 		int limit = 3;
 
-		limit = VariationForDarkCard (limit);
+		//limit = VariationForDarkCard (limit);
 		limit = VariationForIceCard (limit);
 		limit = VariationForEarthCard (limit);
 
@@ -56,6 +56,8 @@ public class AIAgent : MonoBehaviour {
 		if(aiPlayer.currentCard.element.Equals(CardElement.Blood) && !aiPlayer.opponent.IsBleeding() && decision == 1) {
 			decision = 2;
 		}
+
+		decision = 2;
 
 		if(decision == 0) {
 			return SpellSelection.Circle;	
@@ -66,6 +68,7 @@ public class AIAgent : MonoBehaviour {
 		return SpellSelection.Rhombus;
 	}
 
+	//Deprecated
 	private int VariationForDarkCard(int limit) {
 		
 		if(aiPlayer.currentCard.element.Equals(CardElement.Dark)) {

@@ -11,11 +11,6 @@ public abstract class SpellBase {
 		get { return extraDamage; }
 	}
 
-	protected bool alwaysGoesFirst;
-	public bool AlwaysGoesFirst {
-		get { return alwaysGoesFirst; }
-	}
-
 	protected bool extraDamageInDice;
 	public bool ExtraDamageInDice {
 		get { return extraDamageInDice; }
@@ -28,7 +23,6 @@ public abstract class SpellBase {
 
 	public void CastSpell (SpellSelection selection, Player target, Player source) {
 		extraDamage = 0;
-		alwaysGoesFirst = false;
 		extraDamageInDice = false;
 
 		if (spellEffectBySelection != null) {

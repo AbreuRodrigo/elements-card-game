@@ -12,9 +12,9 @@ public class DarkSpell : SpellBase {
 		};
 
 		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
-			{ SpellSelection.Circle, new SpellResponse("Cheap Shot", SpellType.Melee) },
-			{ SpellSelection.Square, new SpellResponse("Copy", SpellType.Special, true) },
-			{ SpellSelection.Rhombus, new SpellResponse("Peek", SpellType.Special) }
+			{ SpellSelection.Circle, new SpellResponse("Cheap Shot", SpellType.Melee, false, false, false, true) },
+			{ SpellSelection.Square, new SpellResponse("Copy", SpellType.Special, true, false, false, false) },
+			{ SpellSelection.Rhombus, new SpellResponse("Peek", SpellType.Special, false, false, true, false) }
 		};
 	}
 
@@ -26,17 +26,12 @@ public class DarkSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
-	
-		if(!source.goesFirst) {
-			GamePlayController.instance.invertGoesFirstOnTurnEnd = true;
-			source.goesFirst = true;
-			target.goesFirst = false;
-		}
 	}
 
 	private void Copy(Player target, Player source) {
 	}
 
 	private void Peek(Player target, Player source) {
+		GamePlayController.instance.StartPeekingMode (target);
 	}
 }

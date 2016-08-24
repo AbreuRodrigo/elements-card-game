@@ -47,6 +47,18 @@ public class Deck {
 		return null;
 	}
 
+	public List<Card> PeekNextNCards(int amount) {
+		List<Card> peekedCards = new List<Card> (amount);
+
+		for (int i = 0; i < amount; i++) {
+			if(HasNext()) {
+				peekedCards.Add (cards[currentIndex + i]);
+			}
+		}
+
+		return peekedCards;
+	}
+
 	public Card GetMixedCardFromDeck() {
 		if(mixedCardIndex >= 0) {
 			Card mixed = cards [mixedCardIndex];
