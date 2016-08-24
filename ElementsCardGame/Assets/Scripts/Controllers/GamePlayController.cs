@@ -286,17 +286,25 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	private void ValidateTurnPriority() {
-		SpellResponse opponentResponse = spellManager.PreviewSpell (opponentPlayer.currentCard); 
-		SpellResponse localPlayerResponse = spellManager.PreviewSpell (localPlayer.currentCard);
+		SpellResponse opponentResponse = null;
+		SpellResponse localPlayerResponse = null;
+
+		if (opponentPlayer != null && opponentPlayer.currentCard != null) {
+			opponentResponse = spellManager.PreviewSpell (opponentPlayer.currentCard);
+		}
+
+		if(localPlayer != null && localPlayer.currentCard != null) {
+			localPlayerResponse = spellManager.PreviewSpell (localPlayer.currentCard);
+		}
 				
 		if (localPlayer.goesFirst) {
-			if(opponentResponse.alwaysGoesFirst) {
+			if(opponentResponse != null && opponentResponse.alwaysGoesFirst) {
 				invertGoesFirstOnTurnEnd = true;
 				localPlayer.goesFirst = false;
 				opponentPlayer.goesFirst = true;
 			}
 		} else {
-			if(localPlayerResponse.alwaysGoesFirst) {
+			if(localPlayerResponse != null && localPlayerResponse.alwaysGoesFirst) {
 				invertGoesFirstOnTurnEnd = true;
 				localPlayer.goesFirst = true;
 				opponentPlayer.goesFirst = false;
