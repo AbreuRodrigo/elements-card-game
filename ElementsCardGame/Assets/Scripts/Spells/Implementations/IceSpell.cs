@@ -46,7 +46,7 @@ public class IceSpell : SpellBase {
 			damage += 3;
 		}
 
-		if(!source.goesFirst && target.goesFirst && target.WasLastSpellSpecial()) {
+		if(target.goesFirst && target.WasLastSpellSpecial()) {
 			damage += (source.lastDamageReceived * 2);
 		}
 

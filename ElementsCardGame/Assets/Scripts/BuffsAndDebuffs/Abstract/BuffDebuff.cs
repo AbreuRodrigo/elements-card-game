@@ -7,6 +7,7 @@ public abstract class BuffDebuff {
 	private int remainingTurns;
 	private int elapsedTurns;
 	private bool active;
+	private bool hasCounter;
 
 	public BuffDebuff(BuffDebuffType type) {
 		this.type = type;
@@ -25,8 +26,12 @@ public abstract class BuffDebuff {
 		get { return remainingTurns; }
 	}
 
+	public bool HasCounter {
+		get { return hasCounter; }
+	}
+
 	public void DecreaseRemainingTurn() {
-		if(active && remainingTurns > 0) {
+		if(active && remainingTurns > 0 && hasCounter) {
 			remainingTurns--;
 
 			if(remainingTurns == 0) {
@@ -44,10 +49,12 @@ public abstract class BuffDebuff {
 	}
 
 	public void ActivateDebuff(int currentTurn, int duration) {
-		if(!active && remainingTurns == 0) {
+		if (!active) {
 			active = true;
-			remainingTurns = duration;
 		}
+
+		remainingTurns = duration;
+		hasCounter = duration > 0;
 	}
 
 	public void DeactivateDebuff() {

@@ -35,9 +35,8 @@ public class DeckData {
 	}
 
 	public void AddCard(CardData newCardData) {
-		totalCards += newCardData.amount;
-
 		if (newCardData.type.Equals (CardType.Element)) {
+			totalCards += newCardData.amount;
 			changedElementIndex = 0;
 			CardData card;
 
@@ -54,6 +53,7 @@ public class DeckData {
 			cards.Add (newCardData);
 		} else if (newCardData.type.Equals (CardType.Mixed)) {
 			if(mixedCardIndex == -1) {
+				totalCards += newCardData.amount;
 				cards.Add (newCardData);
 				mixedCardIndex = cards.IndexOf (newCardData);
 				changedElementIndex = mixedCardIndex;
@@ -62,6 +62,7 @@ public class DeckData {
 			}
 		} else if (newCardData.type.Equals (CardType.Wild)) {
 			if (wildCardIndex == -1) {
+				totalCards += newCardData.amount;
 				cards.Add (newCardData);
 				wildCardIndex = cards.IndexOf (newCardData);
 				changedElementIndex = wildCardIndex;
@@ -84,6 +85,13 @@ public class DeckData {
 							cd.amount--;
 							if(cd.amount == 0) {
 								indexToRemove = counter;
+
+								if(wildCardIndex > -1 && wildCardIndex > indexToRemove){
+									wildCardIndex--;
+								}
+								if(mixedCardIndex > -1 && mixedCardIndex > indexToRemove) {
+									mixedCardIndex--;
+								}
 							}
 						}
 						break;

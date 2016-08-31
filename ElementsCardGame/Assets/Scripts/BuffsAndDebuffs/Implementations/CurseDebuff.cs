@@ -9,10 +9,15 @@ public class CurseDebuff : BuffDebuff {
 
 	public override void ExecuteBuffDebuff(Player host) {
 		if(IsActive && host != null) {
-			DecreaseRemainingTurn ();
-			host.DecreaseCurseDebuff ();
+			if(HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreaseCurseDebuff ();
+			}
 			ElapsedTurns++;
-			host.HideCurseDebuffOnZeroTurnCounters (RemainingTurns);
+
+			if (HasCounter) {
+				host.HideCurseDebuffOnZeroTurnCounters (RemainingTurns);
+			}
 		}
 	}
 }

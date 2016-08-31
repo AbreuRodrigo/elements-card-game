@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9121ace6f2e92e740a87134d6ed41695
-timeCreated: 1471836666
+timeCreated: 1472106782
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -102,6 +102,8 @@ TextureImporter:
     21300190: waterBuff
     21300192: spellFailedMsg
     21300194: endPeekButton
+    21300196: victoryMessage
+    21300198: gameOverMessage
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -797,6 +799,30 @@ TextureImporter:
         x: 832
         y: 272
         width: 212
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: victoryMessage
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 764
+        width: 252
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: gameOverMessage
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 236
+        width: 336
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

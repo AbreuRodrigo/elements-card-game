@@ -46,21 +46,17 @@ public class AIAgent : MonoBehaviour {
 
 	private SpellSelection SelectSpellRandomly() {
 		int limit = 3;
-
-		//limit = VariationForDarkCard (limit);
-		limit = VariationForIceCard (limit);
-		limit = VariationForEarthCard (limit);
-
 		int decision = Random.Range (0, limit);
+
+		decision = VariationForIceCard (decision);
+		decision = VariationForEarthCard (decision);
 
 		if(aiPlayer.currentCard.element.Equals(CardElement.Blood) && !aiPlayer.opponent.IsBleeding() && decision == 1) {
 			decision = 2;
 		}
 
-		decision = 2;
-
 		if(decision == 0) {
-			return SpellSelection.Circle;	
+			return SpellSelection.Circle;
 		}else if(decision == 1) {
 			return SpellSelection.Square;
 		}
@@ -68,34 +64,28 @@ public class AIAgent : MonoBehaviour {
 		return SpellSelection.Rhombus;
 	}
 
-	//Deprecated
-	private int VariationForDarkCard(int limit) {
-		
-		if(aiPlayer.currentCard.element.Equals(CardElement.Dark)) {
-			limit = 2;
-
-			if(aiPlayer.lastSpellCasted == null) {
-				limit = 1;
+	private int VariationForIceCard(int decision) {
+		if(aiPlayer.currentCard.element.Equals(CardElement.Ice) && decision != 0) {
+			if (!aiPlayer.goesFirst) {
+				decision = 2;
+			} else {
+				decision = 1;
 			}
 		}
 
-		return limit;
+		return decision;
 	}
 
-	private int VariationForIceCard(int limit) {
-		if(aiPlayer.currentCard.element.Equals(CardElement.Ice) && !aiPlayer.goesFirst) {
-			limit = 1;
+	private int VariationForEarthCard(int  decision) {
+		if(aiPlayer.currentCard.element.Equals(CardElement.Earth) && decision != 0) {
+			if (!aiPlayer.goesFirst) {
+				decision = 2;
+			} else {
+				decision = 1;
+			}
 		}
 
-		return limit;
-	}
-
-	private int VariationForEarthCard(int  limit) {
-		if(aiPlayer.currentCard.element.Equals(CardElement.Earth) && !aiPlayer.goesFirst) {
-			limit = 1;
-		}
-
-		return limit;
+		return decision;
 	}
 
 	IEnumerator MoveCardToGamePlayPosition(Card card) {

@@ -201,6 +201,24 @@ public class GUIController : MonoBehaviour {
 		}
 	}
 
+	public void ShowVictoryRibbon() {
+		ShowInteractionBlockerHalfFaded ();
+
+		if(turnOrderRibbon != null) {
+			turnOrderRibbon.Enable ();
+			turnOrderRibbon.ShowVictoryMessage ();
+		}
+	}
+
+	public void ShowGameOverRibbon() {
+		ShowInteractionBlockerHalfFaded ();
+
+		if(turnOrderRibbon != null) {
+			turnOrderRibbon.Enable ();
+			turnOrderRibbon.ShowGameOverMessage ();
+		}
+	}
+
 	public void ShowCardBases() {
 		CallAnimationWhenNoNull (savedCardBase, SHOW_ANIMATION_LABEL);
 		CallAnimationWhenNoNull (mixedCardBase, SHOW_ANIMATION_LABEL);

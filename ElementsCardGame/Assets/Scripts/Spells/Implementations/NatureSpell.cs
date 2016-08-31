@@ -31,6 +31,7 @@ public class NatureSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
+		//TestReverseDamageForStaticTarget (target, source, 2);
 	}
 
 	private void PoisonIvy(Player target, Player source) {

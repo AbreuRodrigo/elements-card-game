@@ -38,8 +38,6 @@ public class FireSpell : SpellBase {
 		if (target.Debuffs.IsBurned) {
 			damage += 3;
 			target.Debuffs.RemoveBurn ();
-		} else if(GamePlayController.instance.TakeAChanceUnder(50)) {			
-			target.Debuffs.AddBurn (0);
 		}
 
 		CauseDamage (damage, target);

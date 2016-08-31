@@ -7,6 +7,8 @@ public class TurnOrderRibbon : MonoBehaviour {
 	public Image myImage;
 	public Image youGoFirst;
 	public Image enemyGoesFirst;
+	public Image victory;
+	public Image gameOver;
 
 	public void Enable() {
 		gameObject.SetActive (true);
@@ -53,6 +55,26 @@ public class TurnOrderRibbon : MonoBehaviour {
 			}
 
 			myAnimator.Play ("Show");
+		}
+	}
+
+	public void ShowVictoryMessage() {
+		if(myAnimator != null) {
+			if(victory != null) {
+				victory.enabled = true;
+			}
+
+			myAnimator.Play ("StaticShow");
+		}
+	}
+
+	public void ShowGameOverMessage() {
+		if(myAnimator != null) {
+			if(gameOver != null) {
+				gameOver.enabled = true;
+			}
+
+			myAnimator.Play ("StaticShow");
 		}
 	}
 }

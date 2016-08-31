@@ -53,5 +53,6 @@ public class MagmaSpell : SpellBase {
 		}
 
 		CauseDamage (damage, target);
+		//TestReverseDamageForStaticTarget (target, source, 2);
 	}
 }

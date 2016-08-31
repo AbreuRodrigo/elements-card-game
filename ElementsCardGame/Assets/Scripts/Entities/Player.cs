@@ -110,11 +110,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public bool WasLastSpellMelee() {
-		return lastSpellCasted != null && lastSpellCasted.GetType().Equals (SpellType.Melee);
+		return lastSpellCasted != null && lastSpellCasted.SpellType.Equals (SpellType.Melee);
 	}
 
 	public bool WasLastSpellSpecial() {
-		return lastSpellCasted != null && lastSpellCasted.GetType().Equals (SpellType.Special);
+		return lastSpellCasted != null && lastSpellCasted.SpellType.Equals (SpellType.Special);
 	}
 
 	public bool IsBleeding() {
@@ -172,18 +172,22 @@ public class Player : MonoBehaviour {
 	public void HideBurnDebuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.burnDebuff.Hide ();
+			stats.debuffManager.RemoveDebuffMarker (CardElement.Fire);
 		}
 	}
 
 	public void HideCurseDebuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.curseDebuff.Hide ();
+			stats.debuffManager.RemoveDebuffMarker (CardElement.Shadow);
 		}
 	}
 
 	public void HideStaticDebuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.staticBuff.Hide ();
+			stats.debuffManager.RemoveBuffMarker (CardElement.Lightning);
+			debuffs.RemoveStatics ();
 		}
 	}
 

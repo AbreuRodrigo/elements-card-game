@@ -172,11 +172,15 @@ public class DeckBuilder : MonoBehaviour {
 	}
 
 	public void RemoveCardMarkFromDeck(string element, int cardMarkIndex) {
-		DeckStructure deck = decks [currentDeckIndex];
+		DeckStructure deckStructure = decks [currentDeckIndex];
+		DeckData deckData = GetDeckDataByIndex (currentDeckIndex);
 
-		if(deck.amountOfCards > 0) {
-			GetDeckDataByIndex (currentDeckIndex).RemoveCard (cardMarkIndex);
-			deck.RemoveCard (cardElementByTextName [element]);
+		deckStructure.hasMixed = deckData.mixedCardIndex > -1;
+		deckStructure.hasWild = deckData.wildCardIndex > -1;
+
+		if(deckStructure.amountOfCards > 0) {
+			deckData.RemoveCard (cardMarkIndex);
+			deckStructure.RemoveCard (cardElementByTextName [element]);
 			ResetCardMarksPerSelectedDeckAfterRemoving (currentDeckIndex);
 		}
 	}

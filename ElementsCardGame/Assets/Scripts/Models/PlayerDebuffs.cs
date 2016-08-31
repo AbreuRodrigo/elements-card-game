@@ -202,7 +202,7 @@ public class PlayerDebuffs {
 	}
 
 	public void AddFreeze() {		
-		if(!player.Debuffs.IsBleeding) {
+		if(!player.Debuffs.IsFrozen) {
 			frozen = true;
 			Freeze.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
 			player.stats.debuffManager.AddDebuffMarker (CardElement.Ice, 0);
@@ -272,6 +272,11 @@ public class PlayerDebuffs {
 			staticDuration = duration;
 			Static.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
 			player.stats.debuffManager.AddBuffMarker (CardElement.Lightning, duration);
+		} else {
+			statics = true;
+			staticDuration = duration;
+			Static.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
+			player.stats.debuffManager.ResetBuffMarker (CardElement.Lightning, duration);
 		}
 	}
 
@@ -279,7 +284,6 @@ public class PlayerDebuffs {
 		if(player.Debuffs.IsStatic) {
 			statics = false;
 			Static.DeactivateDebuff ();
-			player.stats.debuffManager.RemoveBuffMarker (CardElement.Lightning);
 		}
 	}
 

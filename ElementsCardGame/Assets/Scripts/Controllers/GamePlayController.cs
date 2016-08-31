@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Api;
 
 public class GamePlayController : MonoBehaviour {
 	public static GamePlayController instance;
@@ -36,6 +38,8 @@ public class GamePlayController : MonoBehaviour {
 	public int currentTurn = 1;
 	public bool invertGoesFirstOnTurnEnd;
 
+	private InterstitialAd interstitial;
+
 	private bool endedTurn;
 	private Card previousCardPlayed;
 
@@ -60,6 +64,8 @@ public class GamePlayController : MonoBehaviour {
 		}
 
 		iTween.Count ();
+
+		RequestInterstitial ();
 	}
 
 	void Start() {
@@ -79,12 +85,20 @@ public class GamePlayController : MonoBehaviour {
 
 		localPlayer.opponent = opponentPlayer;
 		opponentPlayer.opponent = localPlayer;
+
+		interstitial.Show ();
 	}
 
 	public void PressEndTurnButton() {
 		SoundManager.instance.PlayClickSound ();
 
 		StartCoroutine (EndTurnRoutine());
+	}
+
+	public void PressEndPeekButton() {
+		SoundManager.instance.PlayClickSound ();
+
+		EndPeekingMode ();
 	}
 
 	public void PressDeckButtonLogics() {
@@ -232,6 +246,25 @@ public class GamePlayController : MonoBehaviour {
 		}
 	}
 
+	public void NotificationFromPlayerDestroyed(Player player) {
+		if (player.localPlayer) {//Local player lost the game
+			GUIController.instance.ShowGameOverRibbon();
+		} else {
+			GUIController.instance.ShowVictoryRibbon();
+		}
+
+		localPlayer.HideCurrentCard ();
+		opponentPlayer.HideCurrentCard ();
+
+		ChangeToGameOverState ();
+
+		if (interstitial != null && interstitial.IsLoaded()) {
+			interstitial.Show();
+		}
+
+		StartCoroutine (WaitEndGoBackToMenu ());
+	}
+
 	private void CoinNotificationForHeadsAndTailState(CoinResult result) {
 		if(localPlayer != null && localPlayer.stats != null) {
 			localPlayer.stats.ShowPlayerStats ();
@@ -296,24 +329,26 @@ public class GamePlayController : MonoBehaviour {
 		if(localPlayer != null && localPlayer.currentCard != null) {
 			localPlayerResponse = spellManager.PreviewSpell (localPlayer.currentCard);
 		}
-				
-		if (localPlayer.goesFirst) {
-			if(opponentResponse != null && opponentResponse.alwaysGoesFirst) {
-				invertGoesFirstOnTurnEnd = true;
-				localPlayer.goesFirst = false;
-				opponentPlayer.goesFirst = true;
-			}
-		} else {
-			if(localPlayerResponse != null && localPlayerResponse.alwaysGoesFirst) {
-				invertGoesFirstOnTurnEnd = true;
-				localPlayer.goesFirst = true;
-				opponentPlayer.goesFirst = false;
+
+		if (!invertGoesFirstOnTurnEnd) {//NEW
+			if (localPlayer.goesFirst) {
+				if (opponentResponse != null && opponentResponse.alwaysGoesFirst) {
+					invertGoesFirstOnTurnEnd = true;
+					localPlayer.goesFirst = false;
+					opponentPlayer.goesFirst = true;
+				}
+			} else {
+				if (localPlayerResponse != null && localPlayerResponse.alwaysGoesFirst) {
+					invertGoesFirstOnTurnEnd = true;
+					localPlayer.goesFirst = true;
+					opponentPlayer.goesFirst = false;
+				}
 			}
 		}
 	}
 
 	public void PassTurnPhase() {
-		if (turnManager != null) {
+		if (turnManager != null && !IsGameOverState()) {
 			turnManager.NextPhase ();
 		}
 	}
@@ -438,6 +473,19 @@ public class GamePlayController : MonoBehaviour {
 
 			StartCoroutine (FinishPeekingMode ());
 		}
+	}
+
+	private void RequestInterstitial() {
+		#if UNITY_ANDROID
+		string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+		#endif
+
+		// Initialize an InterstitialAd.
+		interstitial = new InterstitialAd(adUnitId);
+		// Create an empty ad request.
+		AdRequest request = new AdRequest.Builder().Build();
+		// Load the interstitial with the request.
+		interstitial.LoadAd(request);
 	}
 
 	private void GenericPeekCard(Player target, Card card, bool validateHasNextCard) {
@@ -592,6 +640,10 @@ public class GamePlayController : MonoBehaviour {
 		gameState = GameState.ChangingSavedCardStated;
 	}
 
+	private void ChangeToGameOverState() {
+		gameState = GameState.GameOverState;
+	}
+
 	public void EndPutToMixedCardPile() {
 		ChangeGameToGamePlayState ();
 		messageManager.ShowDrawACardMessage ();
@@ -639,17 +691,31 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	private void RevealOpponent() {
-		if (opponentPlayer.currentCard != null) {
+		if (opponentPlayer.currentCard != null && !IsGameOverState()) {
 			opponentPlayer.currentCard.EnemyReveal ();
 		}
 		redPlayerArcaneCircle.HideArcaneCircle ();
 	}
 
 	private void RevealLocalPlayer() {
-		if (localPlayer.currentCard != null) {
+		if (localPlayer.currentCard != null && !IsGameOverState()) {
 			localPlayer.currentCard.LocalPlayerReveal ();
 		}
 		bluePlayerArcaneCircle.HideArcaneCircle ();	
+	}
+
+	IEnumerator WaitEndGoBackToMenu() {
+		yield return new WaitForSeconds (4);
+
+		GUIMenuController.instance.FadeScreenOut ();
+
+		yield return new WaitForSeconds (3);
+
+		SoundManager.instance.ChangeToBattleMusic ();
+
+		yield return new WaitForSeconds (2);
+
+		SceneManager.LoadScene ("Menu");
 	}
 
 	IEnumerator WaitToEndOpponentPeeking() {
@@ -735,101 +801,128 @@ public class GamePlayController : MonoBehaviour {
 	}
 
 	IEnumerator CallSpellCastingBySpellSelection(Card selectedCard, bool hideCards, Player target, Player source) {
-		if(spellManager != null && selectedCard != null) {
-			SpellResponse response = spellManager.PreviewSpell (selectedCard.element, selectedCard.selectedSpell);
-			bool mockedEffect = source.lastSpellCasted != null && response.mockEffect;
+		if (!IsGameOverState ()) {
+			if (spellManager != null && selectedCard != null) {
+				SpellResponse response = spellManager.PreviewSpell (selectedCard.element, selectedCard.selectedSpell);
+				bool mockedEffect = target.lastSpellCasted != null && response.mockEffect;
 
-            int chance = Random.Range(0, 100);
+				bool failed = false;
 
-			if(!flowIsOnHold && spellsInGame < 2) {
-				flowIsOnHold = response.flowIsOnHold;
+				if("Scorch".Equals(response.spellName) && selectedCard.element.Equals(CardElement.Fire)) {
+					failed = !TakeAChanceUnder (50);
+				}
+				if("Copy".Equals(response.spellName) && selectedCard.element.Equals(CardElement.Dark) &&
+					target.lastSpellCasted == null) {
+					failed = true;
+				}
+
+				if (source.lastSpellCasted == null) {
+					source.lastSpellCasted = new SpellHistoryData (selectedCard.element, selectedCard.selectedSpell, response.spellType);
+				} else {
+					source.lastSpellCasted.Reset (selectedCard.element, selectedCard.selectedSpell, response.spellType);
+				}
+
+				if ("Copy".Equals (response.spellName) || source.currentCard.type.Equals(CardType.Mixed)) {
+					source.lastSpellCasted = null;
+				}
+
+				if (!flowIsOnHold && spellsInGame < 2) {
+					flowIsOnHold = response.flowIsOnHold;
+				}
+
+				int chance = Random.Range (0, 100);
+
+				if ((source.Debuffs.IsBlind && (response.IsMeleeSpell || response.IsSpecialSpell) && chance <= 50) || failed) {
+					spellFailedMsg.transform.position = source.currentCard.transform.position;
+					spellFailedMsg.Show ();
+					flowIsOnHold = false;
+					source.lastSpellCasted = null;
+				} else {
+					if (mockedEffect) {//For spell copy
+						SpellResponse mockedResponse = 
+							spellManager.PreviewSpell (target.lastSpellCasted.Element, target.lastSpellCasted.SelectedSpell);
+
+						flowIsOnHold = mockedResponse.flowIsOnHold;
+
+						if (spellTypeEffectManager != null) {
+							spellTypeEffectManager.ShowSpellType (mockedResponse.spellType, mockedResponse.spellName, source.currentCard.transform.position);
+						}
+					} else {//Normal spell flow
+						if (spellTypeEffectManager != null) {
+							spellTypeEffectManager.ShowSpellType (response.spellType, response.spellName, source.currentCard.transform.position);
+						}
+					}
+
+					CardElement element;
+					SpellSelection selectedSpell;
+
+					if(mockedEffect && target.lastSpellCasted != null) {
+						element = target.lastSpellCasted.Element;
+						selectedSpell = target.lastSpellCasted.SelectedSpell;
+					}else {
+						element = selectedCard.element;
+						selectedSpell = selectedCard.selectedSpell;
+					}
+
+					ElementEffectManager.instance.ThrowElementEffect (element, selectedSpell, source, 
+						selectedCard.gameObject.transform.position, 
+						GUIController.instance.RectToTransformedPosition (target.shieldRectTransform)
+					);
+
+					if (target.HasAttackProtection && !response.bypass) {
+						if (response.spellType.Equals (target.protectionType)) {
+							target.attackProtection.GetComponent<Collider> ().enabled = true;
+
+							if (target.lastSpellCasted.Element.Equals (CardElement.Earth)) {
+								source.Debuffs.AddKnockDown ();
+							}
+							if (target.lastSpellCasted.Element.Equals (CardElement.Ice)) {
+								source.Debuffs.AddFreeze ();
+								flowIsOnHold = false;
+							}
+						} else {
+							target.attackProtection.GetComponent<Collider> ().enabled = false;
+							spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+						}
+					} else {
+						if (mockedEffect) {
+							spellManager.CastSpell (target.lastSpellCasted.Element, target.lastSpellCasted.SelectedSpell, target, source);
+						} else {
+							spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+						}
+					}
+
+					if(source.lastSpellCasted != null && 
+						source.lastSpellCasted.SpellType.Equals(SpellType.Melee) && target.IsStatic() && target.lastDamageReceived > 0) {
+						source.DecreaseHP (2);
+					}
+				}
 			}
 
-            if (source.Debuffs.IsBlind && (response.IsMeleeSpell || response.IsSpecialSpell) && chance <= 50) {//Player is Blind, the spell will fail
-                spellFailedMsg.transform.position = source.currentCard.transform.position;
-                spellFailedMsg.Show();
-            } else {//Player not blind, then casts the spell properly
-                if (mockedEffect) {//For spell copy
-                    SpellResponse mockedResponse = spellManager.PreviewSpell(
-                        source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell
-                    );
+			float mod = 1;
 
-                    if (spellTypeEffectManager != null) {
-                        spellTypeEffectManager.ShowSpellType(mockedResponse.spellType, mockedResponse.spellName, source.currentCard.transform.position);
-                    }
-                } else {//Normal spell flow
-                    if (spellTypeEffectManager != null) {
-                        spellTypeEffectManager.ShowSpellType(response.spellType, response.spellName, source.currentCard.transform.position);
-                    }
-                }
+			if (flowIsOnHold) {
+				mod = 0.5f;
 
-                ElementEffectManager.instance.ThrowElementEffect(
-                    mockedEffect ? source.lastSpellCasted.Element : selectedCard.element,
-                    mockedEffect ? source.lastSpellCasted.SelectedSpell : selectedCard.selectedSpell,
-                    source, selectedCard.gameObject.transform.position,
-                    GUIController.instance.RectToTransformedPosition(target.shieldRectTransform)
-                );
-
-                if (source.lastSpellCasted == null) {
-                    source.lastSpellCasted = new SpellHistoryData(selectedCard.element, selectedCard.selectedSpell);
-                } else {
-                    source.lastSpellCasted.Reset(selectedCard.element, selectedCard.selectedSpell);
-                }
-
-                if (target.HasAttackProtection && !response.bypass) {
-                    if (response.spellType.Equals(target.protectionType)) {
-                        target.attackProtection.GetComponent<Collider>().enabled = true;
-
-                        if (target.lastSpellCasted.Element.Equals(CardElement.Earth)) {
-                            source.Debuffs.AddKnockDown();
-                        }
-                        if (target.lastSpellCasted.Element.Equals(CardElement.Ice)) {
-                            source.Debuffs.AddFreeze();
-                        }
-                    } else {
-                        target.attackProtection.GetComponent<Collider>().enabled = false;
-                        spellManager.CastSpell(selectedCard.element, selectedCard.selectedSpell, target, source);
-
-                        if (response.spellType.Equals(SpellType.Melee) && target.IsStatic()) {
-                            source.DecreaseHP(2);
-                        }
-                    }
-                } else {
-                    if (mockedEffect) {
-                        spellManager.CastSpell(source.lastSpellCasted.Element, source.lastSpellCasted.SelectedSpell, target, source);
-                    } else {
-                        spellManager.CastSpell(selectedCard.element, selectedCard.selectedSpell, target, source);
-                    }
-                    if (response.spellType.Equals(SpellType.Melee) && target.IsStatic()) {
-                        source.DecreaseHP(2);
-                    }
-                }
-            }
-		}
-
-		float mod = 1;
-
-		if (flowIsOnHold) {
-			mod = 0;
-
-			while (flowIsOnHold) {
-				yield return null;
+				while (flowIsOnHold) {
+					yield return null;
+				}
 			}
-		}
 
-		yield return new WaitForSeconds (mod);
-
-		if(!hideCards) {
-			yield return null;	
-		}else {
 			yield return new WaitForSeconds (mod);
 
-			if (localPlayer.currentCard != null) {
-				localPlayer.currentCard.PutIntoDiscardedState ();
+			if (hideCards) {
+				yield return new WaitForSeconds (mod);
+
+				if (localPlayer.currentCard != null) {
+					localPlayer.currentCard.PutIntoDiscardedState ();
+				}
+				if (opponentPlayer.currentCard != null) {
+					opponentPlayer.currentCard.ScaleOut ();
+				}
 			}
-			if (opponentPlayer.currentCard != null) {
-				opponentPlayer.currentCard.ScaleOut ();
-			}
+		} else {
+			yield return null;
 		}
 	}
 
@@ -848,13 +941,15 @@ public class GamePlayController : MonoBehaviour {
 			yield return null;
 		}
 
-		if (!localPlayer.skipThisTurn) {
-			RevealLocalPlayer ();
-			yield return new WaitForSeconds (1);
-			CastSpell (localPlayer.currentCard, true, opponentPlayer, localPlayer);
-		}
+		if (!IsGameOverState ()) {
+			if (!localPlayer.skipThisTurn) {
+				RevealLocalPlayer ();
+				yield return new WaitForSeconds (1);
+				CastSpell (localPlayer.currentCard, true, opponentPlayer, localPlayer);
+			}
 
-		PassTurnPhase ();
+			PassTurnPhase ();
+		}
 
 		yield return new WaitForSeconds (1);
 	}
@@ -874,13 +969,15 @@ public class GamePlayController : MonoBehaviour {
 			yield return null;
 		}
 
-		if (!opponentPlayer.skipThisTurn) {
-			RevealOpponent ();
-			yield return new WaitForSeconds (1);
-			CastSpell (opponentPlayer.currentCard, true, localPlayer, opponentPlayer);
-		}
+		if (!IsGameOverState ()) {
+			if (!opponentPlayer.skipThisTurn) {
+				RevealOpponent ();
+				yield return new WaitForSeconds (1);
+				CastSpell (opponentPlayer.currentCard, true, localPlayer, opponentPlayer);
+			}
 
-		PassTurnPhase ();
+			PassTurnPhase ();
+		}
 
 		yield return new WaitForSeconds (1);
 	}
@@ -901,6 +998,9 @@ public class GamePlayController : MonoBehaviour {
 			diceManager.ResetDice ();
 
 			previousCardPlayed = null;
+
+			localPlayer.lastDamageReceived = 0;
+			opponentPlayer.lastDamageReceived = 0;
 
 			yield return new WaitForSeconds (0.5f);
 

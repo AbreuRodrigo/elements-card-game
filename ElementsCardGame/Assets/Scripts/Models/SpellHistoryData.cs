@@ -11,12 +11,18 @@ public class SpellHistoryData {
 		get { return selectedSpell; }
 	}
 
-	public SpellHistoryData(CardElement element, SpellSelection selectedSpell) {
-		Reset (element, selectedSpell);
+	private SpellType spellType;
+	public SpellType SpellType {
+		get { return spellType; }
+	} 
+
+	public SpellHistoryData(CardElement element, SpellSelection selectedSpell, SpellType spellType) {
+		Reset (element, selectedSpell, spellType);
 	}
 
-	public void Reset(CardElement element, SpellSelection selectedSpell) {
+	public void Reset(CardElement element, SpellSelection selectedSpell, SpellType spellType) {
 		this.element = element;
 		this.selectedSpell = selectedSpell;
+		this.spellType = spellType;
 	}
 }

@@ -12,7 +12,7 @@ public class LightiningSpell : SpellBase {
 		};
 
 		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
-			{ SpellSelection.Circle, new SpellResponse("Lightning Bolt", SpellType.Special) },
+			{ SpellSelection.Circle, new SpellResponse("Lightning Bolt", SpellType.Special, false, false, false, true) },
 			{ SpellSelection.Square, new SpellResponse("Thunder", SpellType.Special) },
 			{ SpellSelection.Rhombus, new SpellResponse("Static", SpellType.Buff) }
 		};

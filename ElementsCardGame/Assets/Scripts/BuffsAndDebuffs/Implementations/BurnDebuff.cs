@@ -9,11 +9,17 @@ public class BurnDebuff : BuffDebuff {
 
 	public override void ExecuteBuffDebuff(Player host) {
 		if(IsActive && host != null) {
-			DecreaseRemainingTurn ();
-			host.DecreaseBurnDebuff ();
+			if (HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreaseBurnDebuff ();
+			}
+
 			host.DecreaseHP (2);
 			ElapsedTurns++;
-			host.HideBurnDebuffOnZeroTurnCounters (RemainingTurns);
+
+			if (HasCounter) {
+				host.HideBurnDebuffOnZeroTurnCounters (RemainingTurns);
+			}
 		}
 	}
 }

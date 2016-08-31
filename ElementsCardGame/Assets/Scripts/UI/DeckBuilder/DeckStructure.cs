@@ -34,7 +34,7 @@ public class DeckStructure : MonoBehaviour {
 	Dictionary<CardElement, System.Action> removeCardExecution;
 
 	void Awake() {
-		addCardExecution = new Dictionary<CardElement, System.Action> (12) {
+		addCardExecution = new Dictionary<CardElement, System.Action> (14) {
 			{CardElement.Blood, AddBloodCard},
 			{CardElement.Dark, AddDarkCard},
 			{CardElement.Earth, AddEarthCard},
@@ -50,7 +50,7 @@ public class DeckStructure : MonoBehaviour {
 			{CardElement.Zombie, AddMixedCard},
 			{CardElement.Wild, AddWildCard}
 		};
-		removeCardExecution = new Dictionary<CardElement, System.Action> (12) {
+		removeCardExecution = new Dictionary<CardElement, System.Action> (14) {
 			{CardElement.Blood, RemoveBloodCard},
 			{CardElement.Dark, RemoveDarkCard},
 			{CardElement.Earth, RemoveEarthCard},

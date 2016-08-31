@@ -63,8 +63,6 @@ public class DeckBuilderController : MonoBehaviour {
 	}
 
 	private void ValidateAndSaveDeck(DeckData deck, string defaultName, string filePath) {
-		if(!deck.deckName.Equals(defaultName) || deck.totalCards > 0) {
-			PersistenceManager.Instance.SaveData (filePath, deck);
-		}
+		PersistenceManager.Instance.SaveData (filePath, deck);
 	}
 }

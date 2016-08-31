@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour {
 		if (obj != null) {
 			ShakePlayerStats ();
 			UpdateHP ();
+			player.opponent.stats.UpdateHP ();
 		}
 	}
 
@@ -29,12 +30,14 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	public void UpdateHP() {
-		if(playerHPUI != null) {
+		if(player != null && playerHPUI != null) {
 			playerHPUI.text = player.HP + "/80";
 
 			if(player.HP <= 0 && shield != null && brokenShieldSprite != null) {
 				playerHPUI.enabled = false;
 				shield.sprite = brokenShieldSprite;
+
+				GamePlayController.instance.NotificationFromPlayerDestroyed (player);
 			}
 		}
 	}

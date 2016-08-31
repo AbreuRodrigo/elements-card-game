@@ -73,6 +73,11 @@ public class DebuffManager : MonoBehaviour {
 		AddElementMark (element, duration);
 	}
 
+	public void ResetBuffMarker(CardElement element, int duration) {
+		currentMarker = buffMarkerByElement [element];
+		currentMarker.Show (duration);
+	}
+
 	public void RemoveDebuffMarker(CardElement element) {
 		currentMarker = debuffMarkerByElement [element];
 		RemoveElementMark (element);

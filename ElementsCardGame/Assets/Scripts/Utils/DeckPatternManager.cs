@@ -17,9 +17,9 @@ public class DeckPatternManager : MonoBehaviour {
 
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Blood, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Fire, CardType.Element, 3);
+			DeckManager.instance.AddCardsToDeck (player, CardElement.Ice, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Lightning, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Nature, CardType.Element, 3);
-			DeckManager.instance.AddCardsToDeck (player, CardElement.Ice, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Water, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Shadow, CardType.Element, 3);
 			DeckManager.instance.AddCardsToDeck (player, CardElement.Earth, CardType.Element, 3);
