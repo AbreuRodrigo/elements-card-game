@@ -13,7 +13,7 @@ public class PlayerDebuffs {
 	[SerializeField]
 	private bool cursed;
 	[SerializeField]
-	private bool frozen;
+	private bool freeze;
 	[SerializeField]
 	private bool knockedDown;
 	[SerializeField]
@@ -26,11 +26,6 @@ public class PlayerDebuffs {
 	private bool refresh;
 
 	private Player player;
-
-	[Header("Debuff Durations")]
-	public int burnedDuration;
-	public int cursedDuration;
-	public int staticDuration;
 
 	private Dictionary<BuffDebuffType, BuffDebuff> debuffByType;
 	private Dictionary<BuffDebuffType, BuffDebuff> buffByType;
@@ -112,7 +107,7 @@ public class PlayerDebuffs {
 	}
 
 	public bool IsFrozen {
-		get { return frozen; }
+		get { return freeze; }
 	}
 
 	public bool IsKnockedDown {
@@ -135,32 +130,38 @@ public class PlayerDebuffs {
 		get { return refresh; }
 	}
 
-	public void AddBleed() {
-		if(!player.Debuffs.IsBleeding) {
+	public void AddBleed(int duration) {
+		Bleed.ActivateDebuff (duration);
+
+		if (!bleeding) {
 			bleeding = true;
-			Bleed.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddDebuffMarker (CardElement.Blood, 0);
+			player.stats.debuffManager.AddDebuffMarker (CardElement.Blood, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Blood, duration);
 		}
 	}
 
 	public void RemoveBleed() {
-		if (player.Debuffs.IsBleeding) {
+		if (bleeding) {
 			bleeding = false;
 			Bleed.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Blood);
 		}
 	}
 
-	public void AddBlind() {
-		if (!player.Debuffs.IsBlind) {
+	public void AddBlind(int duration) {
+		Blind.ActivateDebuff (duration);
+
+		if (!blinded) {
 			blinded = true;
-			Blind.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddDebuffMarker (CardElement.Light, 0);
+			player.stats.debuffManager.AddDebuffMarker (CardElement.Light, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Light, duration);
 		}
 	}
 
 	public void RemoveBlind() {
-		if (player.Debuffs.IsBlind) {
+		if (blinded) {
 			blinded = false;
 			Blind.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Light);
@@ -168,16 +169,18 @@ public class PlayerDebuffs {
 	}
 
 	public void AddBurn(int duration) {
-		if (!player.Debuffs.IsBurned) {
+		Burn.ActivateDebuff (duration);
+
+		if (!burned) {
 			burned = true;
-			burnedDuration = duration;
-			Burn.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
 			player.stats.debuffManager.AddDebuffMarker (CardElement.Fire, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Fire, duration);
 		}
 	}
 
 	public void RemoveBurn() {
-		if (player.Debuffs.IsBurned) {
+		if (burned) {
 			burned = false;
 			Burn.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Fire);
@@ -185,81 +188,92 @@ public class PlayerDebuffs {
 	}
 
 	public void AddCurse(int duration) {
-		if(!player.Debuffs.IsBleeding) {
+		Curse.ActivateDebuff (duration);
+
+		if (!cursed) {
 			cursed = true;
-			cursedDuration = duration;
-			Curse.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
 			player.stats.debuffManager.AddDebuffMarker (CardElement.Shadow, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Shadow, duration);
 		}
 	}
 
 	public void RemoveCurse() {
-		if (player.Debuffs.IsCursed) {
+		if (cursed) {
 			cursed = false;
 			Curse.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Shadow);
 		}
 	}
 
-	public void AddFreeze() {		
-		if(!player.Debuffs.IsFrozen) {
-			frozen = true;
-			Freeze.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddDebuffMarker (CardElement.Ice, 0);
+	public void AddFreeze(int duration) {
+		Freeze.ActivateDebuff (duration);
+
+		if(!freeze) {
+			freeze = true;
+			player.stats.debuffManager.AddDebuffMarker (CardElement.Ice, duration);
+		}else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Ice, duration);
 		}
 	}
 
 	public void RemoveFreeze() {
-		if(player.Debuffs.IsFrozen) {
-			frozen = false;
+		if (freeze) {
+			freeze = false;
 			Freeze.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Ice);
 		}
 	}
 
 	public void AddKnockDown() {
-		if (!player.Debuffs.IsKnockedDown) {
+		if (!knockedDown) {
 			knockedDown = true;
-			KnockedDown.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
+			KnockedDown.ActivateDebuff (0);
 			player.stats.debuffManager.AddDebuffMarker (CardElement.Earth, 0);
 			player.skipNextTurn = true;
 		}
 	}
 
 	public void RemoveKnockDown() {
-		if(player.Debuffs.IsKnockedDown) {
+		if(knockedDown) {
 			knockedDown = false;
 			KnockedDown.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Earth);
 		}
 	}
 
-	public void AddPoison() {
-		if (!player.Debuffs.IsPoisoned) {
+	public void AddPoison(int duration) {
+		Poison.ActivateDebuff (duration);
+
+		if (!poisoned) {
 			poisoned = true;
-			Poison.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddDebuffMarker (CardElement.Nature, 0);
+			player.stats.debuffManager.AddDebuffMarker (CardElement.Nature, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Nature, duration);
 		}
 	}
 
 	public void RemovePoison() {
-		if(player.Debuffs.IsPoisoned) {
+		if (poisoned) {
 			poisoned = false;
 			Poison.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Nature);
 		}
 	}
 
-	public void AddWet() {
-		if (!player.Debuffs.IsWet) {
+	public void AddWet(int duration) {
+		Wet.ActivateDebuff (duration);
+
+		if (!wet) {
 			wet = true;
-			Wet.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddDebuffMarker (CardElement.Water, 0);
+			player.stats.debuffManager.AddDebuffMarker (CardElement.Water, duration);
+		} else {
+			player.stats.debuffManager.ResetDebuffMarker (CardElement.Water, duration);
 		}
 	}
 
 	public void RemoveWet() {
-		if(player.Debuffs.IsWet) {
+		if (wet) {
 			wet = false;
 			Wet.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveDebuffMarker (CardElement.Water);
@@ -267,36 +281,37 @@ public class PlayerDebuffs {
 	}
 
 	public void AddStatics(int duration) {
-		if (!player.Debuffs.IsStatic) {
+		Static.ActivateDebuff (duration);
+
+		if (!statics) {
 			statics = true;
-			staticDuration = duration;
-			Static.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
 			player.stats.debuffManager.AddBuffMarker (CardElement.Lightning, duration);
 		} else {
-			statics = true;
-			staticDuration = duration;
-			Static.ActivateDebuff (GamePlayController.instance.currentTurn, duration);
 			player.stats.debuffManager.ResetBuffMarker (CardElement.Lightning, duration);
 		}
 	}
 
 	public void RemoveStatics() {
-		if(player.Debuffs.IsStatic) {
+		if (statics) {
 			statics = false;
 			Static.DeactivateDebuff ();
+			player.stats.debuffManager.RemoveBuffMarker (CardElement.Lightning);
 		}
 	}
 
-	public void AddRefresh() {
-		if (!player.Debuffs.IsRefreshing) {
+	public void AddRefresh(int duration) {
+		Refresh.ActivateDebuff (duration);
+
+		if (!refresh) {
 			refresh = true;
-			Refresh.ActivateDebuff (GamePlayController.instance.currentTurn, 0);
-			player.stats.debuffManager.AddBuffMarker (CardElement.Water, 0);
+			player.stats.debuffManager.AddBuffMarker (CardElement.Water, duration);
+		} else {
+			player.stats.debuffManager.ResetBuffMarker (CardElement.Water, duration);
 		}
 	}
 
 	public void RemoveRefresh() {
-		if(player.Debuffs.IsRefreshing) {
+		if (refresh) {
 			refresh = false;
 			Refresh.DeactivateDebuff ();
 			player.stats.debuffManager.RemoveBuffMarker (CardElement.Water);

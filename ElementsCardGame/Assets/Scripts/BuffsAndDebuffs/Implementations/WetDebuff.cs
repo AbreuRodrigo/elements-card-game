@@ -7,6 +7,12 @@ public class WetDebuff : BuffDebuff {
 	}
 
 	public override void ExecuteBuffDebuff(Player host) {
-
+		if(IsActive && host != null) {
+			if (HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreaseWetBuff ();
+				host.HideWetDebuffOnZeroTurnCounters (RemainingTurns);
+			}
+		}
 	}
 }

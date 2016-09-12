@@ -11,12 +11,7 @@ public class StaticBuff : BuffDebuff {
 			if (HasCounter) {
 				DecreaseRemainingTurn ();
 				host.DecreaseStaticBuff ();
-			}
-
-			ElapsedTurns++;
-
-			if (HasCounter) {
-				host.HideStaticDebuffOnZeroTurnCounters (RemainingTurns);
+				host.HideStaticBuffOnZeroTurnCounters (RemainingTurns);
 			}
 		}
 	}

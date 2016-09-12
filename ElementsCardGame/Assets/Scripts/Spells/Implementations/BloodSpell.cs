@@ -14,7 +14,7 @@ public class BloodSpell : SpellBase {
 		spellResponseBySelection = new Dictionary<SpellSelection, SpellResponse> (3) {
 			{ SpellSelection.Circle, new SpellResponse("Heavy Strike", SpellType.Melee)},
 			{ SpellSelection.Square, new SpellResponse("Vampiric Strike", SpellType.Melee)},
-			{ SpellSelection.Rhombus, new SpellResponse("Impale", SpellType.Melee, false, true)}
+			{ SpellSelection.Rhombus, new SpellResponse("Impale", SpellType.Melee, false, true, false, false)}
 		};
 	}
 
@@ -23,10 +23,9 @@ public class BloodSpell : SpellBase {
 
 		if (target.Debuffs.IsBleeding) {
 			damage += 3;
-			target.Debuffs.RemoveBleed ();
-		} else {
-			target.Debuffs.AddBleed ();
 		}
+
+		target.Debuffs.AddBleed (5);
 
 		CauseDamage (damage, target);
 	}

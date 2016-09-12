@@ -53,6 +53,10 @@ public class DeckBuilder : MonoBehaviour {
 
 	private Dictionary<string, CardElement> cardElementByTextName;
 
+	public CardView[] cardViews;
+	private Dictionary<CardElement, int> cardViewIndexByElement;
+	private Dictionary<CardElement, int> cardLimitPerDeck;
+
 	void Awake() {
 		if (Instance == null) {
 			Instance = this;
@@ -74,9 +78,44 @@ public class DeckBuilder : MonoBehaviour {
 			{"Zombie", CardElement.Zombie},
 			{"Wild", CardElement.Wild}
 		};
+
+		cardViewIndexByElement = new Dictionary<CardElement, int> (14) {
+			{CardElement.Blood, 0},
+			{CardElement.Fire, 1},
+			{CardElement.Dark, 2},
+			{CardElement.Earth, 3},
+			{CardElement.Ice, 4},
+			{CardElement.Light, 5},
+			{CardElement.Lightning, 6},
+			{CardElement.Nature, 7},
+			{CardElement.Shadow, 8},
+			{CardElement.Water, 9},
+			{CardElement.Magma, 10},
+			{CardElement.Chaos, 11},
+			{CardElement.Zombie, 12},
+			{CardElement.Wild, 13}
+		};
+
+		cardLimitPerDeck = new Dictionary<CardElement, int> (14) {
+			{CardElement.Blood, 5},
+			{CardElement.Fire, 5},
+			{CardElement.Dark, 3},
+			{CardElement.Earth, 3},
+			{CardElement.Ice, 3},
+			{CardElement.Light, 3},
+			{CardElement.Lightning, 5},
+			{CardElement.Nature, 5},
+			{CardElement.Shadow, 5},
+			{CardElement.Water, 5},
+			{CardElement.Magma, 1},
+			{CardElement.Chaos, 1},
+			{CardElement.Zombie, 1},
+			{CardElement.Wild, 1}
+		};
 	}
 
 	void Start() {
+		ValidateDeckDatas ();
 		StartCoroutine (WaitXSecondsAndStart(1.5f));
 	}
 
@@ -166,8 +205,12 @@ public class DeckBuilder : MonoBehaviour {
 	public void AddDraggingCardToCurrentDeck() {
 		if(draggingCard != null) {
 			GetDeckDataByIndex(currentDeckIndex).AddCard (new CardData(draggingCard.Element, 1, draggingCard.Type));
+
 			decks [currentDeckIndex].AddCard (draggingCard.Element, draggingCard.Type);
+
 			PulseCardMarkerOnAddingNewCard(currentDeckIndex);
+
+			HandleCardViewVisibility (draggingCard.Element);
 		}
 	}
 
@@ -183,14 +226,53 @@ public class DeckBuilder : MonoBehaviour {
 			deckStructure.RemoveCard (cardElementByTextName [element]);
 			ResetCardMarksPerSelectedDeckAfterRemoving (currentDeckIndex);
 		}
+
+		HandleCardViewVisibility (cardElementByTextName [element]);
 	}
 
 	public DeckData GetDefaultDeck() {
 		if(deck1 == null) {
-			InitializeDefaultDeck (); 
+			InitializeDefaultDeck ();
 		}
 
 		return deck1;
+	}
+		
+	private void HandleCardViewVisibility(CardElement element) {
+		if(currentDeckIndex < 0) {
+			currentDeckIndex = 0;
+		}
+
+		DeckData deck = GetDeckDataByIndex (currentDeckIndex);
+
+		if(deck.CountElements(element) == cardLimitPerDeck[element]) {
+			HideCardView (element);
+		}
+		if(deck.CountElements(element) < cardLimitPerDeck[element]) {
+			ShowCardView (element);
+		}
+	}
+
+	private void CleanupCardViewStates() {
+		foreach (CardElement element in System.Enum.GetValues(typeof(CardElement))) {
+			ShowCardView (element);
+		}
+	}
+
+	private bool TestElementIsWild(CardElement element) {
+		return CardElement.Wild.Equals (element);
+	}
+
+	private bool TestElementIsMixed(CardElement element) {
+		return CardElement.Magma.Equals (element) || CardElement.Chaos.Equals (element) || CardElement.Zombie.Equals (element);
+	}
+
+	private void ShowCardView(CardElement element) {
+		cardViews[cardViewIndexByElement [element]].gameObject.SetActive (true);
+	}
+
+	private void HideCardView(CardElement element) {
+		cardViews [cardViewIndexByElement [element]].gameObject.SetActive (false);
 	}
 
 	private void SetupUIDistances() {
@@ -229,6 +311,7 @@ public class DeckBuilder : MonoBehaviour {
 
 	private void ValidateDeckDatas() {
 		InitializeDefaultDeck ();//Just to be clear that it's setting up the deck1Structure
+
 		deck2 = new DeckData ("Deck 2");
 		deck3 = new DeckData ("Deck 3");
 
@@ -265,6 +348,14 @@ public class DeckBuilder : MonoBehaviour {
 				marker.orb.sprite = spritesByElement [spritesByElementIndex [deck.Cards [i].cardElement]].sprite;
 				marker.cardName.text = deck.Cards [i].cardElement.ToString ();
 				marker.amount.text = "" + deck.Cards [i].amount;
+			}
+
+			foreach(CardElement element in System.Enum.GetValues(typeof(CardElement))) {
+				ShowCardView(element);
+			}
+
+			foreach(CardData cd in deck.Cards) {
+				HandleCardViewVisibility (cd.cardElement);
 			}
 		}
 	}
@@ -383,8 +474,6 @@ public class DeckBuilder : MonoBehaviour {
 	}
 
 	IEnumerator WaitXSecondsAndStart(float time) {
-		ValidateDeckDatas ();
-
 		SetupUIDistances ();
 
 		for(int i = 0; i < spritesByElement.Length; i++) {

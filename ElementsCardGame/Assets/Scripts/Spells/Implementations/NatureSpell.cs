@@ -27,11 +27,10 @@ public class NatureSpell : SpellBase {
 		if (GamePlayController.instance.TakeAChanceUnder (50)) {
 			HealDamage (3, source);
 		} else {
-			target.Debuffs.AddBleed ();
+			target.Debuffs.AddBleed (5);
 		}
 
 		CauseDamage (damage, target);
-		//TestReverseDamageForStaticTarget (target, source, 2);
 	}
 
 	private void PoisonIvy(Player target, Player source) {
@@ -41,11 +40,7 @@ public class NatureSpell : SpellBase {
 			damage += 3;
 		}
 
-		if (target.Debuffs.IsPoisoned) {
-			target.Debuffs.RemovePoison ();
-		} else {
-			target.Debuffs.AddPoison ();
-		}
+		target.Debuffs.AddPoison (3);
 
 		CauseDamage (damage, target);
 	}

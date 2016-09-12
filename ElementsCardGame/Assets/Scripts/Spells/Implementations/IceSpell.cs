@@ -29,7 +29,7 @@ public class IceSpell : SpellBase {
 		}
 
 		if(GamePlayController.instance.TakeAChanceUnder(chanceForFreeze)) {
-			target.Debuffs.AddFreeze ();
+			target.Debuffs.AddFreeze (5);
 		}
 
 		CauseDamage (damage, target);

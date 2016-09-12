@@ -47,30 +47,42 @@ public class DebuffManager : MonoBehaviour {
 		markerPositions [9] = refreshBuff.rect.anchoredPosition.x;
 
 		debuffMarkerByElement = new Dictionary<CardElement, DebuffMarker> (8) {
-			{CardElement.Blood, bleedDebuff},
-			{CardElement.Light, blindDebuff},
-			{CardElement.Fire, burnDebuff},
-			{CardElement.Shadow, curseDebuff},
-			{CardElement.Ice, freezeDebuff},
-			{CardElement.Earth, knockDownDebuff},
-			{CardElement.Nature, poisonDebuff},
-			{CardElement.Water, wetDebuff}
+			{ CardElement.Blood, bleedDebuff },
+			{ CardElement.Light, blindDebuff },
+			{ CardElement.Fire, burnDebuff },
+			{ CardElement.Shadow, curseDebuff },
+			{ CardElement.Ice, freezeDebuff },
+			{ CardElement.Earth, knockDownDebuff },
+			{ CardElement.Nature, poisonDebuff },
+			{ CardElement.Water, wetDebuff }
 		};
 
 		buffMarkerByElement = new Dictionary<CardElement, DebuffMarker> (2) {
-			{CardElement.Lightning, staticBuff},
-			{CardElement.Water, refreshBuff}
+			{ CardElement.Lightning, staticBuff },
+			{ CardElement.Water, refreshBuff }
 		};
 	}
 
+	/*HANDLE DEBUFF MARKERS*/
 	public void AddDebuffMarker(CardElement element, int duration) {
 		currentMarker = debuffMarkerByElement [element];
-		AddElementMark (element, duration);
+		AddElementMark (duration);
 	}
 
+	public void ResetDebuffMarker(CardElement element, int duration) {
+		currentMarker = debuffMarkerByElement [element];
+		currentMarker.Show (duration);
+	}
+
+	public void RemoveDebuffMarker(CardElement element) {
+		currentMarker = debuffMarkerByElement [element];
+		RemoveElementMark ();
+	}
+
+	/*HANDLE BUFF MARKERS*/
 	public void AddBuffMarker(CardElement element, int duration) {
 		currentMarker = buffMarkerByElement [element];
-		AddElementMark (element, duration);
+		AddElementMark (duration);
 	}
 
 	public void ResetBuffMarker(CardElement element, int duration) {
@@ -78,30 +90,28 @@ public class DebuffManager : MonoBehaviour {
 		currentMarker.Show (duration);
 	}
 
-	public void RemoveDebuffMarker(CardElement element) {
-		currentMarker = debuffMarkerByElement [element];
-		RemoveElementMark (element);
-	}
-
 	public void RemoveBuffMarker(CardElement element) {
 		currentMarker = buffMarkerByElement [element];
-		RemoveElementMark (element);
+		RemoveElementMark ();
 	}
 
-	private void AddElementMark(CardElement element, int duration) {
+	private void AddElementMark(int duration) {
 		Vector2 p = currentMarker.rect.anchoredPosition;
-		p.x = markerPositions [nextMarkerIndex];
 
-		currentMarker.rect.anchoredPosition = p;
-		currentMarker.Show (duration);
-		currentMarker.index = nextMarkerIndex;
+		if(nextMarkerIndex >= 0) {
+			p.x = markerPositions [nextMarkerIndex];
 
-		activeMarkers.Add(currentMarker);
+			currentMarker.rect.anchoredPosition = p;
+			currentMarker.Show (duration);
+			currentMarker.index = nextMarkerIndex;
 
-		nextMarkerIndex++;
+			activeMarkers.Add(currentMarker);
+
+			nextMarkerIndex++;
+		}
 	}
 
-	private void RemoveElementMark(CardElement element) {
+	private void RemoveElementMark() {
 		int removedIndex = currentMarker.index;
 		currentMarker.Hide ();
 
@@ -118,6 +128,8 @@ public class DebuffManager : MonoBehaviour {
 			}
 		}
 
-		nextMarkerIndex--;
+		if (nextMarkerIndex > 0) {
+			nextMarkerIndex--;
+		}
 	}
 }

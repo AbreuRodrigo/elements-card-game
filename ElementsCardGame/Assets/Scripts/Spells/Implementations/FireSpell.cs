@@ -23,10 +23,9 @@ public class FireSpell : SpellBase {
 
 		if (target.Debuffs.IsBurned) {
 			damage += 3;
-			target.Debuffs.RemoveBurn ();
-		} else {
-			target.Debuffs.AddBurn (0);
 		}
+
+		target.Debuffs.AddBurn (4);
 
 		CauseDamage (damage, target);
 		RemoveFreezeAndWetFromTarget (target);
@@ -37,8 +36,9 @@ public class FireSpell : SpellBase {
 
 		if (target.Debuffs.IsBurned) {
 			damage += 3;
-			target.Debuffs.RemoveBurn ();
 		}
+
+		target.Debuffs.AddBurn (4);
 
 		CauseDamage (damage, target);
 		RemoveFreezeAndWetFromTarget (target);

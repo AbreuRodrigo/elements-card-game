@@ -26,7 +26,7 @@ public class LightSpell : SpellBase {
 		}
 
 		if (GamePlayController.instance.TakeAChanceUnder (50)) {
-			target.Debuffs.AddBlind ();
+			target.Debuffs.AddBlind (3);
 		}
 
 		CauseDamage (damage, target);

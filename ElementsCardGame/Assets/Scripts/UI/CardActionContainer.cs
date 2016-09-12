@@ -241,12 +241,7 @@ public class CardActionContainer : MonoBehaviour {
 		}
 
 		private void ProcessConditionsForEarth() {	
-			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
-				actionContainer.DeactivateCircleAction ();
-			} else {				
-				actionContainer.ActivateCircleAction ();
-			}
-
+			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateRhombusAction ();
 
@@ -267,12 +262,7 @@ public class CardActionContainer : MonoBehaviour {
 		}
 
 		private void ProcessConditionsForIce() {	
-			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
-				actionContainer.DeactivateCircleAction ();
-			} else {				
-				actionContainer.ActivateCircleAction ();
-			}
-
+			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateRhombusAction ();
 
@@ -280,12 +270,7 @@ public class CardActionContainer : MonoBehaviour {
 		}
 
 		private void ProcessConditionsForLight() {	
-			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
-				actionContainer.DeactivateCircleAction ();
-			} else {				
-				actionContainer.ActivateCircleAction ();
-			}
-
+			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateRhombusAction ();
 
@@ -293,12 +278,7 @@ public class CardActionContainer : MonoBehaviour {
 		}
 
 		private void ProcessConditionsForLightning() {	
-			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
-				actionContainer.DeactivateSquareAction ();
-			} else {				
-				actionContainer.ActivateSquareAction ();
-			}
-
+			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateRhombusAction ();
 
@@ -306,12 +286,7 @@ public class CardActionContainer : MonoBehaviour {
 		}
 
 		private void ProcessConditionsForNature() {	
-			if (actionContainer.currentPlayer.Debuffs.IsBlind) {
-				actionContainer.DeactivateCircleAction ();
-			} else {				
-				actionContainer.ActivateCircleAction ();
-			}
-
+			actionContainer.ActivateCircleAction ();
 			actionContainer.ActivateSquareAction ();
 			actionContainer.ActivateRhombusAction ();
 

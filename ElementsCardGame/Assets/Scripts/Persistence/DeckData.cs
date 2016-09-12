@@ -125,4 +125,17 @@ public class DeckData {
 
 		totalCards--;
 	}
+
+	public int CountElements(CardElement element) {
+		int amountByElement = 0;
+
+		foreach (CardData cd in Cards) {
+			if(cd.cardElement.Equals(element)) {
+				amountByElement = cd.amount;
+				break;
+			}
+		}
+
+		return amountByElement;
+	}
 }

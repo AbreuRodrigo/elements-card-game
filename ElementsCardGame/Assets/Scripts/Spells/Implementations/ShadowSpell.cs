@@ -24,10 +24,9 @@ public class ShadowSpell : SpellBase {
 		if (target.Debuffs.IsCursed) {
 			GamePlayController.instance.Roll1Die ();
 			damage += GamePlayController.instance.Dice1Result;
-			target.Debuffs.RemoveCurse ();
-		} else {
-			target.Debuffs.AddCurse (0);
 		}
+
+		target.Debuffs.AddCurse (5);
 
 		CauseDamage (damage, target);
 	}

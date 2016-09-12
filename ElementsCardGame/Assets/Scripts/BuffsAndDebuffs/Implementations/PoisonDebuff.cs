@@ -9,7 +9,12 @@ public class PoisonDebuff : BuffDebuff {
 	public override void ExecuteBuffDebuff(Player host) {
 		if(IsActive && host != null) {
 			host.DecreaseHP (3);
-			ElapsedTurns++;
+
+			if (HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreasePoisonDebuff ();
+				host.HidePoisonDebuffOnZeroTurnCounters(RemainingTurns);
+			}
 		}
 	}
 }

@@ -7,6 +7,12 @@ public class FreezeDebuff : BuffDebuff {
 	}
 
 	public override void ExecuteBuffDebuff(Player host) {
-
+		if(IsActive && host != null) {
+			if (HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreaseFreezeBuff ();
+				host.HideFreezeDebuffOnZeroTurnCounters (RemainingTurns);
+			}
+		}
 	}
 }

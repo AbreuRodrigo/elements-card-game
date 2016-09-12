@@ -18,20 +18,67 @@ public class DeckStructure : MonoBehaviour {
 		get { return deckName.text; }
 	}
 
-	int bloodCards;
-	int waterCards;
-	int natureCards;
-	int fireCards;
-	int shadowCards;
-	int darkCards;
-	int lightCards;
-	int lightningCards;
-	int iceCards;
-	int earthCards;
-	CardElement mixedCard;
+	private int bloodCards;
+	private int fireCards;
+	private int darkCards;
+	private int earthCards;
+	private int iceCards;
+	private int lightCards;
+	private int lightningCards;
+	private int natureCards;
+	private int shadowCards;
+	private int waterCards;
+
+	private CardElement mixedCard;
+
+	public int GetBloodCards() { 
+		return bloodCards;
+	}
+	public int GetFireCards() {
+		return fireCards;
+	}
+	public int GetDarkCards() { 
+		return darkCards;
+	}
+	public int GetEarthCards() { 
+		return earthCards;
+	}
+	public int GetIceCards() { 
+		return iceCards;
+	}
+	public int GetLightCards() { 
+		return lightCards;
+	}
+	public int GetLightningCards() { 
+		return lightningCards;
+	}
+	public int GetNatureCards() { 
+		return natureCards;
+	}
+	public int GetShadowCards() { 
+		return shadowCards;
+	}
+	public int GetWaterCards() { 
+		return waterCards;
+	}
+	public int GetMagmaCards() {
+		return (hasMixed && (mixedCard.Equals(CardElement.Magma)) ? 1 : 0); 
+	}
+	public int GetChaosCards() {
+		return (hasMixed && (mixedCard.Equals(CardElement.Chaos)) ? 1 : 0); 
+	}
+	public int GetZombieCards() {
+		return (hasMixed && (mixedCard.Equals(CardElement.Zombie)) ? 1 : 0); 
+	}
+	public int GetWildCards() {
+		return hasWild ? 1 : 0;
+	}
+
+	public delegate int CardAmount();
 
 	Dictionary<CardElement, System.Action> addCardExecution;
 	Dictionary<CardElement, System.Action> removeCardExecution;
+	Dictionary<CardElement, CardAmount> cardAmountByElement;
 
 	void Awake() {
 		addCardExecution = new Dictionary<CardElement, System.Action> (14) {
@@ -66,6 +113,26 @@ public class DeckStructure : MonoBehaviour {
 			{CardElement.Zombie, RemoveMixedCard},
 			{CardElement.Wild, RemoveWildCard}
 		};
+		cardAmountByElement = new Dictionary<CardElement, CardAmount> (14) {
+			{CardElement.Blood, GetBloodCards},
+			{CardElement.Fire, GetFireCards},
+			{CardElement.Dark, GetDarkCards},
+			{CardElement.Earth, GetEarthCards},
+			{CardElement.Ice, GetIceCards},
+			{CardElement.Light, GetLightCards},
+			{CardElement.Lightning, GetLightningCards},
+			{CardElement.Nature, GetNatureCards},
+			{CardElement.Shadow, GetShadowCards},
+			{CardElement.Water, GetWaterCards},
+			{CardElement.Magma, GetMagmaCards},
+			{CardElement.Chaos, GetChaosCards},
+			{CardElement.Zombie, GetZombieCards},
+			{CardElement.Wild, GetWildCards}
+		};
+	}
+
+	public int AmountOfCardsByElement(CardElement element) {
+		return cardAmountByElement [element].Invoke();
 	}
 
 	public void AddCard(CardElement element, CardType type) {

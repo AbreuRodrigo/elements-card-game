@@ -28,6 +28,8 @@ public class SoundManager : MonoBehaviour {
 
 	public AudioClip menuMusic;
 	public AudioClip battleMusic;
+	public AudioClip gameoverMusic;
+	public AudioClip victoryMusic;
 
 	void Awake() {
 		if (instance == null) {
@@ -115,6 +117,14 @@ public class SoundManager : MonoBehaviour {
 
 	public void ChangeToBattleMusic() {
 		StartCoroutine(FadeMusicOutAndPlayAnother(battleMusic));
+	}
+
+	public void ChangeToGameOverMusic() {
+		StartCoroutine(FadeMusicOutAndPlayAnother(gameoverMusic));
+	}
+
+	public void ChangeToVictoryMusic() {
+		StartCoroutine(FadeMusicOutAndPlayAnother(victoryMusic));
 	}
 
 	private void PlaySound (AudioClip clip) {

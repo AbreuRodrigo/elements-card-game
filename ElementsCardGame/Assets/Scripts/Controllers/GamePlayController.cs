@@ -3,12 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using GoogleMobileAds.Api;
+using UnityEngine.Advertisements;
 
 public class GamePlayController : MonoBehaviour {
 	public static GamePlayController instance;
 
 	[Header("Configurations")]
+	public string gameID = "1131394";
 	public GameMode gameMode;
 	public GameState gameState;
 	public bool useDefaultDeck = true;
@@ -38,8 +39,6 @@ public class GamePlayController : MonoBehaviour {
 	public int currentTurn = 1;
 	public bool invertGoesFirstOnTurnEnd;
 
-	private InterstitialAd interstitial;
-
 	private bool endedTurn;
 	private Card previousCardPlayed;
 
@@ -64,11 +63,11 @@ public class GamePlayController : MonoBehaviour {
 		}
 
 		iTween.Count ();
-
-		RequestInterstitial ();
 	}
 
 	void Start() {
+		InitializeAdvertisements ();
+
 		ValidateGameMode ();
 
 		ChangeGameToHeadsAndTailsState ();
@@ -80,13 +79,12 @@ public class GamePlayController : MonoBehaviour {
 		InitializeLocalPlayersDeck ();
 		InitializeAIDeckOnHumanVSMachineGameMode ();
 
+
 		GUIController.instance.interactionBlocker.Enable ();
 		GUIController.instance.interactionBlocker.FadeIn ();
 
 		localPlayer.opponent = opponentPlayer;
 		opponentPlayer.opponent = localPlayer;
-
-		interstitial.Show ();
 	}
 
 	public void PressEndTurnButton() {
@@ -249,8 +247,10 @@ public class GamePlayController : MonoBehaviour {
 	public void NotificationFromPlayerDestroyed(Player player) {
 		if (player.localPlayer) {//Local player lost the game
 			GUIController.instance.ShowGameOverRibbon();
+			SoundManager.instance.ChangeToGameOverMusic ();
 		} else {
 			GUIController.instance.ShowVictoryRibbon();
+			SoundManager.instance.ChangeToVictoryMusic ();
 		}
 
 		localPlayer.HideCurrentCard ();
@@ -258,11 +258,7 @@ public class GamePlayController : MonoBehaviour {
 
 		ChangeToGameOverState ();
 
-		if (interstitial != null && interstitial.IsLoaded()) {
-			interstitial.Show();
-		}
-
-		StartCoroutine (WaitEndGoBackToMenu ());
+		StartCoroutine (WaitAndGoBackToMenu ());
 	}
 
 	private void CoinNotificationForHeadsAndTailState(CoinResult result) {
@@ -475,17 +471,8 @@ public class GamePlayController : MonoBehaviour {
 		}
 	}
 
-	private void RequestInterstitial() {
-		#if UNITY_ANDROID
-		string adUnitId = "ca-app-pub-3940256099942544/1033173712";
-		#endif
-
-		// Initialize an InterstitialAd.
-		interstitial = new InterstitialAd(adUnitId);
-		// Create an empty ad request.
-		AdRequest request = new AdRequest.Builder().Build();
-		// Load the interstitial with the request.
-		interstitial.LoadAd(request);
+	private void InitializeAdvertisements() {
+		Advertisement.Initialize (gameID, true);
 	}
 
 	private void GenericPeekCard(Player target, Card card, bool validateHasNextCard) {
@@ -521,13 +508,16 @@ public class GamePlayController : MonoBehaviour {
 			localPlayer.mixedCard = localPlayer.Deck.GetMixedCardFromDeck ();
 			localPlayer.currentCard = localPlayer.mixedCard;
 
-			if(localPlayer.mixedCard != null) {
+			if (localPlayer.mixedCard != null) {
 				localPlayer.mixedCard.gameObject.SetActive (true);
 				localPlayer.mixedCard.MoveMeToCenter ();
 				localPlayer.mixedCard.ChangeToMixedSelectionState ();
 
 				GUIController.instance.DecreaseRemainingCards ();
 				messageManager.ShowMixedCardMessage ();
+			} else {
+				ChangeGameToGamePlayState ();
+				messageManager.ShowDrawACardMessage ();
 			}
 		}
 		if(IsHumanVSMachineGameMode()) {
@@ -549,7 +539,9 @@ public class GamePlayController : MonoBehaviour {
 
 	private void InitializeAIDeckOnHumanVSMachineGameMode() {
 		if(IsHumanVSMachineGameMode() && opponentPlayer != null) {
-			DeckPatternManager.instance.BuildDefaultDeck1 (opponentPlayer);
+			//DeckPatternManager.instance.BuildDefaultDeck1 (opponentPlayer);
+
+			DeckPatternManager.instance.BuildWaterDeck (opponentPlayer);
 
 			if (opponentPlayer.Deck != null) {
 				DeckManager.instance.ShufflePlayersCurrentDeck (opponentPlayer.Deck);
@@ -704,7 +696,16 @@ public class GamePlayController : MonoBehaviour {
 		bluePlayerArcaneCircle.HideArcaneCircle ();	
 	}
 
-	IEnumerator WaitEndGoBackToMenu() {
+	private void ValidatePlayersStillHaveCardToDraw() {
+		if(!localPlayer.Deck.HasNext()) {
+			NotificationFromPlayerDestroyed (localPlayer);
+		}
+		if(!opponentPlayer.Deck.HasNext()) {
+			NotificationFromPlayerDestroyed (opponentPlayer);			
+		}
+	}
+
+	IEnumerator WaitAndGoBackToMenu() {
 		yield return new WaitForSeconds (4);
 
 		GUIMenuController.instance.FadeScreenOut ();
@@ -714,6 +715,8 @@ public class GamePlayController : MonoBehaviour {
 		SoundManager.instance.ChangeToBattleMusic ();
 
 		yield return new WaitForSeconds (2);
+
+		ShowAdeverstisementWhenReady ();
 
 		SceneManager.LoadScene ("Menu");
 	}
@@ -869,21 +872,21 @@ public class GamePlayController : MonoBehaviour {
 						GUIController.instance.RectToTransformedPosition (target.shieldRectTransform)
 					);
 
-					if (target.HasAttackProtection && !response.bypass) {
-						if (response.spellType.Equals (target.protectionType)) {
+					if (target.HasAttackProtection) {
+						if (response.bypass) {
+							target.attackProtection.GetComponent<Collider> ().enabled = false;
+							spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
+						} else if (response.spellType.Equals (target.protectionType)) {
 							target.attackProtection.GetComponent<Collider> ().enabled = true;
 
 							if (target.lastSpellCasted.Element.Equals (CardElement.Earth)) {
 								source.Debuffs.AddKnockDown ();
 							}
 							if (target.lastSpellCasted.Element.Equals (CardElement.Ice)) {
-								source.Debuffs.AddFreeze ();
+								source.Debuffs.AddFreeze (5);
 								flowIsOnHold = false;
 							}
-						} else {
-							target.attackProtection.GetComponent<Collider> ().enabled = false;
-							spellManager.CastSpell (selectedCard.element, selectedCard.selectedSpell, target, source);
-						}
+						} 
 					} else {
 						if (mockedEffect) {
 							spellManager.CastSpell (target.lastSpellCasted.Element, target.lastSpellCasted.SelectedSpell, target, source);
@@ -985,6 +988,9 @@ public class GamePlayController : MonoBehaviour {
 	IEnumerator EndTurnRoutine() {
 		if (!endedTurn) {
 			endedTurn = true;
+
+			ValidatePlayersStillHaveCardToDraw ();
+
 			yield return new WaitForSeconds (0.5f);
 
 			GUIController.instance.HideEndTurnButton ();
@@ -1008,6 +1014,13 @@ public class GamePlayController : MonoBehaviour {
 
 			localPlayer.currentCard = null;
 			opponentPlayer.currentCard = null;
+
+			if(localPlayer.skipNextTurn && opponentPlayer.skipNextTurn) {
+				localPlayer.skipNextTurn = false;
+				localPlayer.skipThisTurn = false;
+				opponentPlayer.skipNextTurn = false;
+				opponentPlayer.skipThisTurn = false;
+			}
 
 			if(!localPlayer.skipNextTurn && localPlayer.skipThisTurn) {
 				localPlayer.skipThisTurn = false;
@@ -1084,6 +1097,18 @@ public class GamePlayController : MonoBehaviour {
 		yield return new WaitForSeconds (1);
 
 		GUIController.instance.ShowEndTurnButton ();
+	}
+
+	private void ShowAdeverstisementWhenReady() {
+		StartCoroutine (ShowAdWhenReady ());
+	}
+
+	IEnumerator ShowAdWhenReady() {
+		while (!Advertisement.IsReady ()) {
+			yield return null;
+		}
+
+		Advertisement.Show ();
 	}
 
 	private void SetUpPlayerForSkippingNextTurn(Player player) {

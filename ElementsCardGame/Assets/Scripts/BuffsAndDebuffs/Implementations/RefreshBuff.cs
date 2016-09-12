@@ -13,8 +13,15 @@ public class RefreshBuff : BuffDebuff {
 			if(host.IsWet()) {
 				heal += 1;
 			}
+
 			if(host.IsBurned()) {
 				host.Debuffs.RemoveBurn ();
+			}
+
+			if (HasCounter) {
+				DecreaseRemainingTurn ();
+				host.DecreaseRefreshBuff ();
+				host.HideRefreshBuffOnZeroTurnCounters (RemainingTurns);
 			}
 
 			host.IncreaseHP (heal);

@@ -157,37 +157,116 @@ public class Player : MonoBehaviour {
 		return debuffs != null && debuffs.IsStatic;
 	}
 
+	public void DecreaseBleedDebuff() {
+		stats.debuffManager.bleedDebuff.DecreaseCounter ();
+	}
+
 	public void DecreaseBurnDebuff() {
 		stats.debuffManager.burnDebuff.DecreaseCounter ();
+	}
+
+	public void DecreaseBlindBuff() {
+		stats.debuffManager.blindDebuff.DecreaseCounter ();
 	}
 
 	public void DecreaseCurseDebuff() {
 		stats.debuffManager.curseDebuff.DecreaseCounter ();
 	}
 
+	public void DecreaseFreezeBuff() {
+		stats.debuffManager.freezeDebuff.DecreaseCounter ();
+	}
+
+	public void DecreasePoisonDebuff() {
+		stats.debuffManager.poisonDebuff.DecreaseCounter ();
+	}
+
+	public void DecreaseWetBuff() {
+		stats.debuffManager.wetDebuff.DecreaseCounter ();
+	}
+
 	public void DecreaseStaticBuff() {
 		stats.debuffManager.staticBuff.DecreaseCounter ();
+	}
+
+	public void DecreaseRefreshBuff() {
+		stats.debuffManager.refreshBuff.DecreaseCounter ();
+	}
+
+
+	/*****HIDE DEBUFFS ON ZERO TURN*****/
+
+	public void HideBleedDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.bleedDebuff.Hide ();
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Blood);
+			debuffs.RemoveBleed ();
+		}
 	}
 
 	public void HideBurnDebuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.burnDebuff.Hide ();
-			stats.debuffManager.RemoveDebuffMarker (CardElement.Fire);
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Fire);
+			debuffs.RemoveBurn ();
+		}
+	}
+
+	public void HideBlindDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.blindDebuff.Hide ();
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Light);
+			debuffs.RemoveBlind ();
 		}
 	}
 
 	public void HideCurseDebuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.curseDebuff.Hide ();
-			stats.debuffManager.RemoveDebuffMarker (CardElement.Shadow);
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Shadow);
+			debuffs.RemoveCurse ();
 		}
 	}
 
-	public void HideStaticDebuffOnZeroTurnCounters(int remainingTurns) {
+	public void HideFreezeDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.freezeDebuff.Hide ();
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Ice);
+			debuffs.RemoveFreeze ();
+		}
+	}
+
+	public void HidePoisonDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.poisonDebuff.Hide ();
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Nature);
+			debuffs.RemovePoison ();
+		}
+	}
+
+	public void HideWetDebuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.wetDebuff.Hide ();
+			//stats.debuffManager.RemoveDebuffMarker (CardElement.Water);
+			debuffs.RemoveWet ();
+		}
+	}
+
+	/*****HIDE BUFFS ON ZERO TURN*****/
+
+	public void HideStaticBuffOnZeroTurnCounters(int remainingTurns) {
 		if(remainingTurns <= 0) {
 			stats.debuffManager.staticBuff.Hide ();
-			stats.debuffManager.RemoveBuffMarker (CardElement.Lightning);
+			//stats.debuffManager.RemoveBuffMarker (CardElement.Lightning);
 			debuffs.RemoveStatics ();
+		}
+	}
+
+	public void HideRefreshBuffOnZeroTurnCounters(int remainingTurns) {
+		if(remainingTurns <= 0) {
+			stats.debuffManager.refreshBuff.Hide ();
+			//stats.debuffManager.RemoveBuffMarker (CardElement.Water);
+			debuffs.RemoveRefresh ();
 		}
 	}
 

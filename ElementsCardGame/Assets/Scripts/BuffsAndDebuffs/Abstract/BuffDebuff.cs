@@ -48,7 +48,7 @@ public abstract class BuffDebuff {
 		get { return active; }
 	}
 
-	public void ActivateDebuff(int currentTurn, int duration) {
+	public void ActivateDebuff(int duration) {
 		if (!active) {
 			active = true;
 		}

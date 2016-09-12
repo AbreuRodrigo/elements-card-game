@@ -45,11 +45,7 @@ public class MagmaSpell : SpellBase {
 		target.Debuffs.AddKnockDown ();
 
 		if(GamePlayController.instance.TakeAChanceUnder(50)) {
-			if (target.Debuffs.IsBurned) {
-				target.Debuffs.RemoveBurn ();
-			} else {
-				target.Debuffs.AddBurn (0);
-			}
+			target.Debuffs.AddBurn (0);
 		}
 
 		CauseDamage (damage, target);

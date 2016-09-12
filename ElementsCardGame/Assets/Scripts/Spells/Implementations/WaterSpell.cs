@@ -25,14 +25,14 @@ public class WaterSpell : SpellBase {
 			damage += 3;
 		}
 
-		target.Debuffs.AddWet ();
+		target.Debuffs.AddWet (5);
 		target.Debuffs.RemoveBurn ();
 
 		CauseDamage (damage, target);
 	}
 
 	private void Refresh(Player target, Player source) {
-		source.Debuffs.AddRefresh ();
+		source.Debuffs.AddRefresh (5);
 
 		source.Debuffs.RemoveBurn ();
 	}
@@ -47,11 +47,7 @@ public class WaterSpell : SpellBase {
 		source.skipNextTurn = true;
 		target.Debuffs.RemoveBurn ();
 
-		if(target.Debuffs.IsWet) {
-			target.Debuffs.RemoveWet ();
-		}else {
-			target.Debuffs.AddWet ();
-		}
+		target.Debuffs.AddWet (5);
 
 		CauseDamage (damage, target);
 	}

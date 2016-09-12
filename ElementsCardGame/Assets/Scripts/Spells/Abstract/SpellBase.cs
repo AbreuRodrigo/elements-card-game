@@ -42,12 +42,6 @@ public abstract class SpellBase {
 		target.IncreaseHP (amount);
 	}
 
-//	protected void TestReverseDamageForStaticTarget(Player target, Player source, int damage) {
-//		if(target.IsStatic()) {
-//			source.DecreaseHP (damage);
-//		}
-//	}
-
 	private void CauseDebuff() {
 	}
 }
